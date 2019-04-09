@@ -6,21 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MenuScene.unity
+    path: Assets/Scenes/AR_TEAM/MenuScene.unity
     guid: b393148ef811e084f95148df1f968db1
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Scenes/AR_TEAM/SampleScene.unity
     guid: e0ace4cdd6153644db404d7b922261aa
   - enabled: 1
-    path: Assets/Scenes/ARScene.unity
-    guid: 3394ee39effb3554189f3fd3bc7720c6
-  - enabled: 1
-    path: Assets/Scenes/GalleryScene.unity
+    path: Assets/Scenes/GALLERY_TEAM/GalleryScene.unity
     guid: 9093608657f0f1945bce12db21c82f5f
   - enabled: 1
-    path: Assets/Scenes/GamesScene.unity
+    path: Assets/Scenes/GAMES_TEAM/GamesScene.unity
     guid: abbe56ed820863040be15a3d134ec5c2
   - enabled: 1
-    path: Assets/AR_Team/Scenes/AR_Scene.unity
-    guid: 02654135e39976e499fab4fc15ddcf66
+    path: Assets/Scenes/AR_TEAM/ARScene.unity
+    guid: 861e3cf6c11549841ab7b95af82d7602
   m_configObjects: {}
