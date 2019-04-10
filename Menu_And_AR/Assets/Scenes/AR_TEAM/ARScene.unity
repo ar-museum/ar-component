@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 264757906}
   m_Layer: 0
   m_Name: TargetManager
-  m_TagString: Untagged
+  m_TagString: TargetManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,7 +138,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 264757905}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1965b7634706fd243bfe93416c251065, type: 3}
+  m_Script: {fileID: 11500000, guid: 90d8871ba381da54fa161be55c23ec3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentVuforiaDatabase: Muzeul-Mihai-Eminescu

@@ -23,27 +23,6 @@ public class TargetManager : MonoBehaviour
         VuforiaARController.Instance.UnregisterVuforiaStartedCallback(DoAfterVuforiaStarted);
     }
 
-    private void LoadDatabase(string databaseName)
-    {
-        ObjectTracker objectTracker = TrackerManager.Instance.GetTracker<ObjectTracker>();
-
-        objectTracker.Stop();
-
-        if (DataSet.Exists(databaseName))
-        {
-            // Delete the previous vuforia database and all its active targerts from tracking
-            objectTracker.DestroyAllDataSets(true);
-
-            DataSet dataSet = objectTracker.CreateDataSet();
-
-            // Load the given Vuforia Database
-            dataSet.Load(databaseName);
-            objectTracker.ActivateDataSet(dataSet);
-        }
-
-        objectTracker.Start();
-    }
-
     private void DoAfterVuforiaStarted()
     {
         // Load database
@@ -54,6 +33,30 @@ public class TargetManager : MonoBehaviour
 
         // Setup targets
         SetupTargets(Targets, ImageTargetChildPrefab);
+    }
+
+    public void LoadDatabase(string databaseName)
+    {
+        ObjectTracker objectTracker = TrackerManager.Instance.GetTracker<ObjectTracker>();
+
+        objectTracker.Stop();
+
+        if (DataSet.Exists(databaseName))
+        {
+            // Delete the previous vuforia database and all its active targerts from tracking
+            objectTracker.DestroyAllDataSets(false);
+
+            DataSet dataSet = objectTracker.CreateDataSet();
+
+            // Load the given Vuforia Database
+            dataSet.Load(databaseName);
+            objectTracker.ActivateDataSet(dataSet);
+        }
+        else
+        {
+            throw new System.ArgumentException("Invalid argument.", "databaseName");
+        }
+        objectTracker.Start();
     }
 
     private List<TrackableBehaviour> GetTargets()
