@@ -1,4 +1,0 @@
-sceneSetups:
-- path: Assets/AR_Team/Scenes/AR_Scene.unity
-  isLoaded: 1
-  isActive: 1
