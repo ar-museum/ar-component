@@ -43,8 +43,8 @@ public class TargetManager : MonoBehaviour
 
         if (DataSet.Exists(databaseName))
         {
-            // Delete the previous vuforia database and all its active targerts from tracking
-            objectTracker.DestroyAllDataSets(false);
+            // Delete the previous vuforia databases and all their active targerts from tracking
+            DeleteTargets(objectTracker);
 
             DataSet dataSet = objectTracker.CreateDataSet();
 
@@ -66,6 +66,31 @@ public class TargetManager : MonoBehaviour
         trackables = TrackerManager.Instance.GetStateManager().GetTrackableBehaviours().ToList();
 
         return trackables;
+    }
+
+    public void DeleteTargets(ObjectTracker objectTracker)
+    {
+        // Getting all the targets from the current Vuforia database and delete them both from 
+        // objectTracker's memory and from the initialised objects in unity
+        if (!objectTracker.IsActive)
+        {
+            var activeDataSets = objectTracker.GetActiveDataSets().ToList();
+            foreach (var dataset in activeDataSets)
+            {
+                objectTracker.DeactivateDataSet(dataset);
+                var trackables = dataset.GetTrackables().ToList();
+
+                foreach (var trackable in trackables)
+                {
+                    TrackerManager.Instance.GetStateManager().DestroyTrackableBehavioursForTrackable(trackable, true);
+                }
+            }
+            objectTracker.DestroyAllDataSets(false);
+        }
+        else
+        {
+            throw new System.ArgumentException("Cannot operate while the argument is still active. Please call Stop().", "objectTracker");
+        }
     }
 
     private void SetupTargets(List<TrackableBehaviour> targets, GameObject childPrefab)
