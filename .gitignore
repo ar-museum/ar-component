@@ -55,3 +55,29 @@ sysinfo.txt
 
 # Crashlytics generated file
 crashlytics-build.properties
+
+# ================= #
+# Android generated #
+# ================= #
+*.apk
+*.ap_
+*.dex
+*.class
+bin/
+gen/
+local.properties
+.classpath
+.project
+proguard/
+*.iml
+*.ipr
+*.iws
+.idea/
+gen-external-apklibs/
+out/
+target/
+.gradle/
+build/
+/*/build/
+*.log
+infer-out
