@@ -194,7 +194,7 @@ GameObject:
   - component: {fileID: 208256109}
   m_Layer: 0
   m_Name: MenuSceneControl
-  m_TagString: Untagged
+  m_TagString: SceneControl
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -254,7 +254,7 @@ GameObject:
   - component: {fileID: 285517179}
   m_Layer: 0
   m_Name: ButtonAR
-  m_TagString: Untagged
+  m_TagString: ButtonAR
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -524,7 +524,7 @@ GameObject:
   - component: {fileID: 445538219}
   m_Layer: 0
   m_Name: ButtonGallery
-  m_TagString: Untagged
+  m_TagString: ButtonGallery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -815,7 +815,7 @@ GameObject:
   - component: {fileID: 570148945}
   m_Layer: 0
   m_Name: Image1
-  m_TagString: Untagged
+  m_TagString: Image1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -891,7 +891,7 @@ GameObject:
   - component: {fileID: 636441320}
   m_Layer: 0
   m_Name: ButtonGames
-  m_TagString: Untagged
+  m_TagString: ButtonGames
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1100,7 +1100,7 @@ GameObject:
   - component: {fileID: 1169790946}
   m_Layer: 0
   m_Name: Image2
-  m_TagString: Untagged
+  m_TagString: Image2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1252,8 +1252,8 @@ Canvas:
   m_GameObject: {fileID: 1197814801}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 534669904}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -1277,7 +1277,7 @@ GameObject:
   - component: {fileID: 1367221529}
   m_Layer: 0
   m_Name: Image3
-  m_TagString: Untagged
+  m_TagString: Image3
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
