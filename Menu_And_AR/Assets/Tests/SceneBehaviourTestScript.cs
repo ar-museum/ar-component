@@ -30,7 +30,8 @@ namespace Tests
 
             //Act
             buttonAR.onClick.AddListener(() => { ClickButton("ARScene"); } );
-            yield return new WaitForSeconds(5);
+            buttonAR.onClick.Invoke();
+            //yield return new WaitForSeconds(5);
 
 
             //Assert
@@ -58,7 +59,8 @@ namespace Tests
 
             //Act
             buttonGallery.onClick.AddListener(() => { ClickButton("GalleryScene"); });
-            yield return new WaitForSeconds(5);
+            buttonGallery.onClick.Invoke();
+            //yield return new WaitForSeconds(5);
 
             //Assert
             Assert.True(isButtonClicked);
@@ -85,7 +87,8 @@ namespace Tests
 
             //Act
             buttonGames.onClick.AddListener(() => { ClickButton("GamesScene"); });
-            yield return new WaitForSeconds(5);
+            buttonGames.onClick.Invoke();
+            //yield return new WaitForSeconds(5);
 
             //Assert
             Assert.True(isButtonClicked);
@@ -112,7 +115,8 @@ namespace Tests
 
             //Act
             buttonBack.onClick.AddListener(() => { ClickButton("MenuScene"); });
-            yield return new WaitForSeconds(5);
+            buttonBack.onClick.Invoke();
+            //yield return new WaitForSeconds(5);
 
             //Assert
             Assert.True(isButtonClicked);
@@ -139,7 +143,8 @@ namespace Tests
 
             //Act
             buttonBack.onClick.AddListener(() => { ClickButton("MenuScene"); });
-            yield return new WaitForSeconds(5);
+            buttonBack.onClick.Invoke();
+            //yield return new WaitForSeconds(5);
 
             //Assert
             Assert.True(isButtonClicked);
@@ -166,7 +171,8 @@ namespace Tests
 
             //Act
             buttonBack.onClick.AddListener(() => { ClickButton("MenuScene"); });
-            yield return new WaitForSeconds(5);
+            buttonBack.onClick.Invoke();
+            //yield return new WaitForSeconds(5);
 
             //Assert
             Assert.True(isButtonClicked);
