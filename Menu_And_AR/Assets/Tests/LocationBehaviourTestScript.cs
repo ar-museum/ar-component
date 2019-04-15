@@ -67,5 +67,99 @@ namespace Tests
             //Assert
             Assert.True(rightImage);
         }
+
+        [UnityTest]
+        public IEnumerator LocationBehavior_MuzeulUnirii_LocationIsMuzeulUnirii_Test()
+        {
+            // Arrange
+            SceneManager.LoadScene("MenuScene");
+            yield return new WaitForSeconds(1);
+
+            double expected_latitude = 47.167430;
+            double expected_longitude = 27.578895;
+            double latitude = 0;
+            double longitude = 0;
+            int expected_result = 1;
+            int result;
+            // Act
+            Input.location.Start();
+            latitude = Input.location.lastData.latitude;
+            longitude = Input.location.lastData.longitude;
+            //latitude = 47.167430;
+            //longitude = 27.578895;
+            Input.location.Stop();
+
+            if (Math.Abs(latitude - expected_latitude) < 0.00010 && Math.Abs(longitude - expected_longitude) < 0.00010)
+            {
+                result = 1;
+            }
+            else result = 0;
+            // Assert
+            Assert.AreEqual(expected_result, result);
+        }
+
+        [UnityTest]
+        public IEnumerator LocationBehavior_MuzeulDeLiteratura_LocationIsMuzeulDeLiteratura_Test()
+        {
+            // Arrange
+            SceneManager.LoadScene("MenuScene");
+            yield return new WaitForSeconds(1);
+
+            double expected_latitude = 47.172032;
+            double expected_longitude = 27.576216;
+            double latitude = 0;
+            double longitude = 0;
+            int expected_result = 1;
+            int result;
+            // Act
+            Input.location.Start();
+            latitude = Input.location.lastData.latitude;
+            longitude = Input.location.lastData.longitude;
+            //latitude = 47.167430;
+            //longitude = 27.578895;
+            Input.location.Stop();
+            if (Math.Abs(latitude - expected_latitude) < 0.00010 && Math.Abs(longitude - expected_longitude) < 0.00010)
+            {
+                result = 1;
+            }
+            else result = 0;
+            // Assert
+            Assert.AreEqual(expected_result, result);
+        }
+
+        [UnityTest]
+        public IEnumerator LocationBehavior_DifferentLocation_LocationIsNotAccepted_Test()
+        {
+            // Arrange
+            SceneManager.LoadScene("MenuScene");
+            yield return new WaitForSeconds(1);
+
+            double latitude = 0;
+            double longitude = 0;
+            int expected_result = 1;
+            int result;
+            // Act
+            Input.location.Start();
+            latitude = Input.location.lastData.latitude;
+            longitude = Input.location.lastData.longitude;
+            //latitude = 47.167430;
+            //longitude = 27.578895;
+            Input.location.Stop();
+            if (Math.Abs(latitude - 47.172032) != 0.00010 && Math.Abs(longitude - 27.576216) != 0.00010)
+            {
+                result = 1;
+            }
+            else result = 0;
+            if (Math.Abs(latitude - 47.167430) != 0.00010 && Math.Abs(longitude - 27.578895) != 0.00010)
+            {
+                result = 1;
+            }
+            else result = 0;
+
+            // Assert
+            Assert.AreEqual(expected_result, result);
+        }
+
     }
 }
+
