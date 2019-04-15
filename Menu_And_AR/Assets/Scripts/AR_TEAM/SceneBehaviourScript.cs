@@ -35,6 +35,13 @@ public class SceneBehaviourScript : MonoBehaviour
 
     public void LoadScene(string sceneCamera)
     {
-        SceneManager.LoadScene(sceneCamera);
+        if (string.Compare(sceneCamera, "MenuScene") == 0 || string.Compare(sceneCamera, "ARScene") == 0 || string.Compare(sceneCamera, "GalleryScene") == 0 || string.Compare(sceneCamera, "GamesScene") == 0)
+        {
+            SceneManager.LoadScene(sceneCamera);
+        }
+        else
+        {
+            throw new System.ArgumentException("Invalid argument.", "sceneCamera");
+        }
     }
 }

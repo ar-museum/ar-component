@@ -10,8 +10,8 @@ public class LocationBehaviourScript : MonoBehaviour
     public GameObject img1;
     public GameObject img2;
     public GameObject img3;
-    double latitudine;
-    double longitudine;
+    double latitudine = 0;
+    double longitudine = 0;
     
     void Start()
     {
@@ -78,5 +78,15 @@ public class LocationBehaviourScript : MonoBehaviour
             img2.SetActive(false);
             img3.SetActive(false);
         }
+    }
+
+    public double getLatitude()
+    {
+        return this.latitudine;
+    }
+
+    public double getLongitude()
+    {
+        return this.longitudine;
     }
 }
