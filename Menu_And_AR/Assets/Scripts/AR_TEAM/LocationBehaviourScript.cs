@@ -53,6 +53,8 @@ public class LocationBehaviourScript : MonoBehaviour
         {
             latitudine = Input.location.lastData.latitude;
             longitudine = Input.location.lastData.longitude;
+            print("latitude: " + latitudine);
+            print("longitude: " + longitudine);
         }
 
         Input.location.Stop();
@@ -60,6 +62,7 @@ public class LocationBehaviourScript : MonoBehaviour
 
     void Update()
     {
+
         if (Math.Abs(latitudine - 47.172032) < 0.00001 && Math.Abs(longitudine - 27.576216) < 0.00001) // Muzeul de Literatura
         {
             img1.SetActive(false);
