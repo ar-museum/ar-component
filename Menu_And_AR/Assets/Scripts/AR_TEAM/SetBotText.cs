@@ -12,7 +12,7 @@ public class SetBotText : MonoBehaviour
 
         bot = GetComponent<TextMesh>();
 
-        SetTextBot("aaaaa");
+        //SetTextBot("aaaaa");
     }
 
     public void SetTextBot(String textBot)
