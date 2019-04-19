@@ -98,7 +98,7 @@ public class TargetManager : MonoBehaviour
         foreach(TrackableBehaviour target in targets)
         {
             // Other components needed to make this an ImageTarget
-            target.gameObject.AddComponent<DefaultTrackableEventHandler>();
+            target.gameObject.AddComponent<MyImageTargetTrackableEventHandler>();
             target.gameObject.AddComponent<TurnOffBehaviour>();
             // Child
             CreateChildOfTarget(target, childPrefab);
@@ -116,5 +116,24 @@ public class TargetManager : MonoBehaviour
         // The child is what will be shown when the target is recognized
         var child = Instantiate(childPrefab, target.transform);
         child.transform.parent = target.transform;
+        string targetName = target.TrackableName;
+
+
+
+        var authors = child.GetComponentsInChildren<SetBotText>(true);
+        var titles = child.GetComponentsInChildren<SetTopText>(true);
+
+        // Adding the title for each target
+        // The title coincides with the name of the target
+        foreach (var title in titles)
+        {
+            title.SetTextTop(targetName);
+        }
+        // Adding the author for each target
+        // TODO: get the author from the database based on the name of the target
+        foreach (var author in authors)
+        {
+            author.SetTextBot(targetName);
+        }
     }
 }

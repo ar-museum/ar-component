@@ -12,7 +12,7 @@ public class SetTopText : MonoBehaviour
 
         top = GetComponent<TextMesh>();
 
-        SetTextTop( "Default2");
+        //SetTextTop( "Default2");
     }
 
     public void SetTextTop(String textTop)
