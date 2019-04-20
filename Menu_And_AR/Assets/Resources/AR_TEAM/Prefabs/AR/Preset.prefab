@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6261476662348919799}
   m_Layer: 0
   m_Name: Preset
-  m_TagString: Untagged
+  m_TagString: TargetAttached
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -105,6 +105,7 @@ GameObject:
   - component: {fileID: 6261476663262296707}
   - component: {fileID: 6261476663262296705}
   - component: {fileID: 6261476663262296704}
+  - component: {fileID: 7604085560197334079}
   m_Layer: 0
   m_Name: textBottom
   m_TagString: Untagged
@@ -190,6 +191,19 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4278321666
+--- !u!114 &7604085560197334079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6261476663262296706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6074f62c652a2534f929dea426736e42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  top: {fileID: 6261476663262296704}
 --- !u!1 &6261476663282463355
 GameObject:
   m_ObjectHideFlags: 0
@@ -421,6 +435,7 @@ GameObject:
   - component: {fileID: 6261476663996161778}
   - component: {fileID: 6261476663996161776}
   - component: {fileID: 6261476663996161779}
+  - component: {fileID: 9123449656142900439}
   m_Layer: 0
   m_Name: textTop
   m_TagString: Untagged
