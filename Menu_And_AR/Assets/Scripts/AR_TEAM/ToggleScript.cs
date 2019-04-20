@@ -24,7 +24,7 @@ public class ToggleScript : MonoBehaviour
     public void ChangeToggle()
     {
         counter++;
-        if (counter % 2 == 1)
+        if (counter % 2 == 0)
         {
             btn_Toggle.image.overrideSprite = toggleOn;
         }

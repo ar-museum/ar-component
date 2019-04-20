@@ -23,7 +23,7 @@ public class PlayPauseScript : MonoBehaviour
     public void ChangePlayButton()
     {
         counter++;
-        if (counter % 2 == 1){
+        if (counter % 2 == 0){
             btn_Play.image.overrideSprite = playButton;
         }
         else
