@@ -116,24 +116,28 @@ public class TargetManager : MonoBehaviour
         // The child is what will be shown when the target is recognized
         var child = Instantiate(childPrefab, target.transform);
         child.transform.parent = target.transform;
+
+
         string targetName = target.TrackableName;
+        var textComponents = child.GetComponentsInChildren<SetText>(true);
+        SetInfoForTextComponents(textComponents, targetName);
+    }
 
-
-
-        var authors = child.GetComponentsInChildren<SetBotText>(true);
-        var titles = child.GetComponentsInChildren<SetTopText>(true);
-
-        // Adding the title for each target
-        // The title coincides with the name of the target
-        foreach (var title in titles)
+    public static void SetInfoForTextComponents(SetText[] texts, string targetName)
+    {
+        foreach (var textComponent in texts)
         {
-            title.SetTextTop(targetName);
-        }
-        // Adding the author for each target
-        // TODO: get the author from the database based on the name of the target
-        foreach (var author in authors)
-        {
-            author.SetTextBot(targetName);
+            if (textComponent.getTextType() == SetText.TextType.TopText)
+            {
+                // Title
+                textComponent.SetMyText(targetName);
+            }
+            else if (textComponent.getTextType() == SetText.TextType.BottomText)
+            {
+                // Author
+                // TODO: get the author from the database based on the name of the target
+                textComponent.SetMyText(targetName + "\'s author");
+            }
         }
     }
 }

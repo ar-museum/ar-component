@@ -3,6 +3,10 @@
 
 public class ARDisplayTypeSwitcherBehaviour : MonoBehaviour
 {
+    private void Start()
+    {
+        ARDisplayTypeSwitcher.ARDisplayTypeTargetAttached();
+    }
 
     public void SwitchARDisplayType()
     {
@@ -34,14 +38,64 @@ public class ARDisplayTypeSwitcher
         }
     }
 
-    private static void ARDisplayTypeTargetAttached()
+    public static void ARDisplayTypeTargetAttached()
     {
         if(displayType == DisplayType.TargetAttached)
         {
             // hide the ScreenAttached components
-
+            var screenAttachedComponents = getScreenAttachedObjects();
+            HideScreenAttachedComponents(screenAttachedComponents);
             // show the TargetAttached components
-            var targetAttachedComponents = GameObject.FindGameObjectsWithTag("TargetAttached");
+            var targetAttachedComponents = getTargetAttachedObjects ();
+            ShowTargetAttachedComponents(targetAttachedComponents);
+        }
+    }
+
+    public static void ARDisplayTypeScreenAttached()
+    {
+        if(displayType == DisplayType.ScreenAttached)
+        {
+            // hide the TargetAttached components
+            var targetAttachedComponents = getTargetAttachedObjects();
+            HideTargetAttachedComponents(targetAttachedComponents);
+
+            // show the ScreenAttached components
+            var screenAttachedComponents = getScreenAttachedObjects();
+            ShowScreenAttachedComponents(screenAttachedComponents);
+        }
+    }
+
+    public static void HideScreenAttachedComponents(GameObject[] screenAttachedComponents)
+    {
+        foreach (var screenAttachedComponent in screenAttachedComponents)
+        {
+            screenAttachedComponent.transform.localScale = new Vector3(0, 0, 0);
+        }
+    }
+
+    public static void ShowScreenAttachedComponents(GameObject[] screenAttachedComponents)
+    {
+        if( displayType == DisplayType.ScreenAttached)
+        {
+            foreach (var screenAttachedComponent in screenAttachedComponents)
+            {
+                screenAttachedComponent.transform.localScale = new Vector3(1, 0.1f, 1);
+            }
+        }
+    }
+
+    public static void HideTargetAttachedComponents(GameObject[] targetAttachedComponents)
+    {
+        foreach (var targetAttachedComponent in targetAttachedComponents)
+        {
+            targetAttachedComponent.transform.localScale = new Vector3(0, 0, 0);
+        }
+    }
+
+    public static void ShowTargetAttachedComponents(GameObject[] targetAttachedComponents)
+    {
+        if( displayType == DisplayType.TargetAttached)
+        {
             foreach (var targetAttachedComponent in targetAttachedComponents)
             {
                 targetAttachedComponent.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
@@ -49,18 +103,14 @@ public class ARDisplayTypeSwitcher
         }
     }
 
-    private static void ARDisplayTypeScreenAttached()
+    public static GameObject[] getTargetAttachedObjects()
     {
-        if(displayType == DisplayType.ScreenAttached)
-        {
-            // hide the TargetAttached components
-            var targetAttachedComponents = GameObject.FindGameObjectsWithTag("TargetAttached");
-            foreach(var targetAttachedComponent in targetAttachedComponents)
-            {
-                targetAttachedComponent.transform.localScale = new Vector3(0, 0, 0);
-            }
-
-            // show the ScreenAttached components
-        }
+        return GameObject.FindGameObjectsWithTag("TargetAttached");
     }
+
+    public static GameObject[] getScreenAttachedObjects()
+    {
+        return GameObject.FindGameObjectsWithTag("ScreenAttached");
+    }
+
 }
