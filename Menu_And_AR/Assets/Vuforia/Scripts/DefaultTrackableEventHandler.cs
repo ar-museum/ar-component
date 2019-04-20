@@ -91,6 +91,7 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
         TargetImage = GameObject.Find("/Canvas/target_image");
 
 
+
         // Enable rendering:
         foreach (var component in rendererComponents)
             component.enabled = true;
