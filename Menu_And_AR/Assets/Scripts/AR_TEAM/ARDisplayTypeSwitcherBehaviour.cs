@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using UnityEngine.UI;
 
 public class ARDisplayTypeSwitcherBehaviour : MonoBehaviour
 {
@@ -21,6 +21,7 @@ public class ARDisplayTypeSwitcher
         TargetAttached,
         ScreenAttached
     }
+
 
     private static DisplayType displayType = DisplayType.TargetAttached;
 
@@ -50,7 +51,8 @@ public class ARDisplayTypeSwitcher
 
     public static void ARDisplayTypeTargetAttached()
     {
-        if(displayType == DisplayType.TargetAttached)
+
+        if (displayType == DisplayType.TargetAttached)
         {
             // hide the ScreenAttached components
             var screenAttachedComponents = getScreenAttachedObjects();
@@ -58,12 +60,14 @@ public class ARDisplayTypeSwitcher
             // show the TargetAttached components
             var targetAttachedComponents = getTargetAttachedObjects ();
             ShowTargetAttachedComponents(targetAttachedComponents);
+
         }
     }
 
     public static void ARDisplayTypeScreenAttached()
     {
-        if(displayType == DisplayType.ScreenAttached)
+
+        if (displayType == DisplayType.ScreenAttached)
         {
             // hide the TargetAttached components
             var targetAttachedComponents = getTargetAttachedObjects();
@@ -72,6 +76,8 @@ public class ARDisplayTypeSwitcher
             // show the ScreenAttached components
             var screenAttachedComponents = getScreenAttachedObjects();
             ShowScreenAttachedComponents(screenAttachedComponents);
+
+
         }
     }
 
