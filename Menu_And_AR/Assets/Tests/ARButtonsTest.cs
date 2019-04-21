@@ -18,9 +18,8 @@ namespace Tests
             isButtonClicked = true;
         }
 
-
         [UnityTest]
-        public IEnumerator GivenARSceneWhenToggleButtonIsPressedThenImageMustChange()
+        public IEnumerator GivenARScenWhenToggleButtonIsPressedThenImageMustChange()
         {
             //Arrange
             SceneManager.LoadScene("ARScene");
@@ -38,7 +37,7 @@ namespace Tests
         }
 
         [UnityTest]
-        public IEnumerator GivenARSceneWhenPlayButtonIsPressedThenImageMustChange()
+        public IEnumerator GivenARScenWhenAudioButtonIsPressedThenImageMustChange()
         {
             //Arrange
             SceneManager.LoadScene("ARScene");
@@ -53,8 +52,19 @@ namespace Tests
             //yield return new WaitForSeconds(5);
 
             //Assert
+
+            var buttonToggle = GameObject.Find("ButtonAudio");
+            var togglebutton = buttonToggle.GetComponent<Button>();
+
+            isButtonClicked = false;
+            //Act
+
+            togglebutton.onClick.AddListener(Clicked);
+            togglebutton.onClick.Invoke();
+
             Assert.True(isButtonClicked);
         }
+
     }
 
     
