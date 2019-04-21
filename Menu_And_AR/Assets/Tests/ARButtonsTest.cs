@@ -32,7 +32,6 @@ namespace Tests
             //Act
             buttonBack.onClick.AddListener(Clicked);
             buttonBack.onClick.Invoke();
-            //yield return new WaitForSeconds(5);
 
             //Assert
             Assert.True(isButtonClicked);
