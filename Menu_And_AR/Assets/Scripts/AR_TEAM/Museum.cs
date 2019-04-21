@@ -8,13 +8,15 @@ public class Museum
     private double latitude;
     private double longitude;
     private int textNumber;
+    private GameObject museumImage;
 
-    public Museum(string numeMuzeu, double latitudine, double longitudine, int numarText)
+    public Museum(string numeMuzeu, double latitudine, double longitudine, int numarText, GameObject museumImage)
     {
         this.museumName = numeMuzeu;
         this.latitude = latitudine;
         this.longitude = longitudine;
         this.textNumber = numarText + 1;
+        this.museumImage = museumImage;
     }
 
     public string getMuseumName()
@@ -35,5 +37,10 @@ public class Museum
     public int getTextNumber()
     {
         return this.textNumber;
+    }
+
+    public GameObject getMuseumImage()
+    {
+        return this.museumImage;
     }
 }

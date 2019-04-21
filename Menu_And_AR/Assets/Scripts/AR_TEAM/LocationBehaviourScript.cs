@@ -15,6 +15,11 @@ public class LocationBehaviourScript : MonoBehaviour
     public GameObject text2;
     public GameObject text3;
 
+
+    public GameObject noMuseum;
+    public GameObject museulDeLiteratura;
+    public GameObject museulUniri;
+
     static double latitudine = 0;
     static double longitudine = 0;
 
@@ -38,8 +43,12 @@ public class LocationBehaviourScript : MonoBehaviour
         text2.SetActive(false);
         text3.SetActive(false);
 
-        museumsList.Add(new Museum("Muzeul de Literatura", 47.172032, 27.576216, 1));
-        museumsList.Add(new Museum("Muzeul Unirii", 47.167430, 27.578895, 2));
+        noMuseum.SetActive(false);
+        museulDeLiteratura.SetActive(false);
+        museulUniri.SetActive(false);
+
+        museumsList.Add(new Museum("Muzeul de Literatura", 47.172032, 27.576216, 1, museulDeLiteratura));
+        museumsList.Add(new Museum("Muzeul Unirii", 47.167430, 27.578895, 2, museulUniri));
 
     }
 
@@ -79,6 +88,7 @@ public class LocationBehaviourScript : MonoBehaviour
                         if (obiectText.name.Equals(tagCautat))
                         {
                             obiectText.SetActive(true);
+                            muzeu.getMuseumImage().SetActive(true);
                             gasit = true;
                         }
                     }
@@ -87,6 +97,7 @@ public class LocationBehaviourScript : MonoBehaviour
             if (!gasit) // alta locatie
             {
                 textObjectList[1].SetActive(true);
+                noMuseum.SetActive(true);
             }
         }
         yield return null;
