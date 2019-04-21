@@ -41,4 +41,9 @@ public class MyImageTargetTrackableEventHandler : DefaultTrackableEventHandler
             TargetManager.SetInfoForTextComponents(screenAttachedTexts, targetName);
         }
     }
+
+    public string GetTrackableName()
+    {
+        return mTrackableBehaviour.TrackableName;
+    }
 }

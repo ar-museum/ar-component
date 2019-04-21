@@ -1,7 +1,9 @@
 {
     "name": "Tests",
     "references": [
-        "ArTeamAsmdef"
+        "ArTeamAsmdef",
+        "VuforiaScripts",
+        "VuforiaEditorScripts"
     ],
     "optionalUnityReferences": [
         "TestAssemblies"
@@ -12,5 +14,6 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": []
+    "defineConstraints": [],
+    "versionDefines": []
 }

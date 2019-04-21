@@ -25,4 +25,13 @@ public class SetText : MonoBehaviour
         return textType;
     }
 
+    public string GetText()
+    {
+        if (GetComponent<Text>())
+            return GetComponent<Text>().text;
+        if (GetComponent<TextMesh>())
+            return GetComponent<TextMesh>().text;
+        return "";
+    }
+
 }
