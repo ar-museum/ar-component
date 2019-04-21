@@ -11,6 +11,7 @@ namespace Tests
 {
     public class ARButtonsTest
     {
+
         private bool isButtonClicked = false;
         public void Clicked()
         {
@@ -23,19 +24,18 @@ namespace Tests
             //Arrange
             SceneManager.LoadScene("ARScene");
             yield return new WaitForSeconds(1);
-          
 
-            var buttonToggle = GameObject.Find("ButtonToggle");
-            var togglebutton = buttonToggle.GetComponent<Button>();
+            var buttonBackObject = GameObject.Find("ButtonToggle");
+            var buttonBack = buttonBackObject.GetComponent<Button>();
 
-            isButtonClicked = false;
             //Act
-   
-            togglebutton.onClick.AddListener(Clicked);
-            togglebutton.onClick.Invoke();
+            buttonBack.onClick.AddListener(Clicked);
+            buttonBack.onClick.Invoke();
 
+            //Assert
             Assert.True(isButtonClicked);
         }
+
         [UnityTest]
         public IEnumerator GivenARScenWhenAudioButtonIsPressedThenImageMustChange()
         {
@@ -43,6 +43,15 @@ namespace Tests
             SceneManager.LoadScene("ARScene");
             yield return new WaitForSeconds(1);
 
+            var buttonBackObject = GameObject.Find("ButtonAudio");
+            var buttonBack = buttonBackObject.GetComponent<Button>();
+
+            //Act
+            buttonBack.onClick.AddListener(Clicked);
+            buttonBack.onClick.Invoke();
+            //yield return new WaitForSeconds(5);
+
+            //Assert
 
             var buttonToggle = GameObject.Find("ButtonAudio");
             var togglebutton = buttonToggle.GetComponent<Button>();
@@ -57,4 +66,6 @@ namespace Tests
         }
 
     }
+
+    
 }

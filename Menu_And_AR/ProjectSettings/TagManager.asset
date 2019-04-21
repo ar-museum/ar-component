@@ -7,6 +7,8 @@ TagManager:
   - TargetManager
   - TargetAttached
   - ARUIFrame
+  - SceneControl
+  - ScreenAttached
   layers:
   - Default
   - TransparentFX
