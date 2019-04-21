@@ -110,5 +110,75 @@ namespace Tests
             //Assert
             Assert.AreEqual(result, expected_result);
         }
+
+        // test 4 Matei Lipan
+        [UnityTest]
+        public IEnumerator DisplayTypeSwitcher_ARDisplayTypeTargetAttached_SetRightResultat()
+        {
+            //Arrange
+            SceneManager.LoadScene("ARScene");
+            yield return new WaitForSeconds(1);
+            //Act
+            var targetAttachedGameObjects = GameObject.FindGameObjectsWithTag("TargetAttached");
+            var screenAttachedGameObjects = GameObject.FindGameObjectsWithTag("ScreenAttached");
+            int numberOfModifiedTargetAttachedObjects = 0;
+            int numberOfModifiedScreenAttachedObjects = 0;
+
+            ARDisplayTypeSwitcher.SetDisplayType(ARDisplayTypeSwitcher.DisplayType.TargetAttached);
+            ARDisplayTypeSwitcher.ARDisplayTypeTargetAttached();
+
+            foreach (var targetAttachedGameObject in targetAttachedGameObjects)
+            {
+                if(targetAttachedGameObject.transform.localScale != new Vector3(0, 0, 0))
+                {
+                    numberOfModifiedTargetAttachedObjects++;
+                }
+            }
+            foreach (var screenAttachedGameObject in screenAttachedGameObjects)
+            {
+                if (screenAttachedGameObject.transform.localScale == new Vector3(0, 0, 0))
+                {
+                    numberOfModifiedScreenAttachedObjects++;
+                }
+            }
+            //Assert
+            Assert.AreEqual(numberOfModifiedTargetAttachedObjects, targetAttachedGameObjects.Length);
+            Assert.AreEqual(numberOfModifiedScreenAttachedObjects, screenAttachedGameObjects.Length);
+        }
+
+        // test 5 Matei Lipan
+        [UnityTest]
+        public IEnumerator DisplayTypeSwitcher_ARDisplayTypeScreenAttached_SetRightResultat()
+        {
+            //Arrange
+            SceneManager.LoadScene("ARScene");
+            yield return new WaitForSeconds(1);
+            //Act
+            var targetAttachedGameObjects = GameObject.FindGameObjectsWithTag("TargetAttached");
+            var screenAttachedGameObjects = GameObject.FindGameObjectsWithTag("ScreenAttached");
+            int numberOfModifiedTargetAttachedObjects = 0;
+            int numberOfModifiedScreenAttachedObjects = 0;
+
+            ARDisplayTypeSwitcher.SetDisplayType(ARDisplayTypeSwitcher.DisplayType.ScreenAttached);
+            ARDisplayTypeSwitcher.ARDisplayTypeScreenAttached();
+
+            foreach (var targetAttachedGameObject in targetAttachedGameObjects)
+            {
+                if (targetAttachedGameObject.transform.localScale == new Vector3(0, 0, 0))
+                {
+                    numberOfModifiedTargetAttachedObjects++;
+                }
+            }
+            foreach (var screenAttachedGameObject in screenAttachedGameObjects)
+            {
+                if (screenAttachedGameObject.transform.localScale != new Vector3(0, 0, 0))
+                {
+                    numberOfModifiedScreenAttachedObjects++;
+                }
+            }
+            //Assert
+            Assert.AreEqual(numberOfModifiedTargetAttachedObjects, targetAttachedGameObjects.Length);
+            Assert.AreEqual(numberOfModifiedScreenAttachedObjects, screenAttachedGameObjects.Length);
+        }
     }
 }

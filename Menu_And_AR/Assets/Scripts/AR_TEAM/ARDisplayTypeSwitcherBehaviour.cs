@@ -16,7 +16,7 @@ public class ARDisplayTypeSwitcherBehaviour : MonoBehaviour
 
 public class ARDisplayTypeSwitcher
 {
-    enum DisplayType
+    public enum DisplayType
     {
         TargetAttached,
         ScreenAttached
@@ -24,6 +24,16 @@ public class ARDisplayTypeSwitcher
 
 
     private static DisplayType displayType = DisplayType.TargetAttached;
+
+    public static DisplayType GetDisplayType()
+    {
+        return displayType;
+    }
+
+    public static void SetDisplayType(DisplayType value)
+    {
+        displayType = value;
+    }
 
     public static void SwitchARDisplayType()
     {
@@ -118,5 +128,4 @@ public class ARDisplayTypeSwitcher
     {
         return GameObject.FindGameObjectsWithTag("ScreenAttached");
     }
-
 }
