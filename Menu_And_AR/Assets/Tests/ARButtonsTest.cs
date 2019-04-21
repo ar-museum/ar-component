@@ -11,33 +11,52 @@ namespace Tests
 {
     public class ARButtonsTest
     {
+
         private bool isButtonClicked = false;
+        public void Clicked()
+        {
+            isButtonClicked = true;
+        }
+
 
         [UnityTest]
-        public IEnumerator GivenARSceneAndBackButtonWhenPressedThenImageMustChange()
+        public IEnumerator GivenARSceneWhenToggleButtonIsPressedThenImageMustChange()
         {
             //Arrange
             SceneManager.LoadScene("ARScene");
             yield return new WaitForSeconds(1);
-          
 
-            var buttonToggle = GameObject.Find("ButtonToggle");
-            var togglebutton = buttonToggle.GetComponent<Button>();
-            var expected_image = "toggleOff";
-            isButtonClicked = false;
-            int expected_result = 1;
-            int result = 1;
+            var buttonBackObject = GameObject.Find("ButtonToggle");
+            var buttonBack = buttonBackObject.GetComponent<Button>();
+
             //Act
-   
-            togglebutton.onClick.Invoke();
+            buttonBack.onClick.AddListener(Clicked);
+            buttonBack.onClick.Invoke();
             //yield return new WaitForSeconds(5);
-            if (togglebutton.GetComponent<Image>().sprite.Equals(expected_image))
-            {
-                result = 1;
-            }else result = 0;
 
             //Assert
-            Assert.AreEqual(result, expected_result);
+            Assert.True(isButtonClicked);
+        }
+
+        [UnityTest]
+        public IEnumerator GivenARSceneWhenPlayButtonIsPressedThenImageMustChange()
+        {
+            //Arrange
+            SceneManager.LoadScene("ARScene");
+            yield return new WaitForSeconds(1);
+
+            var buttonBackObject = GameObject.Find("ButtonAudio");
+            var buttonBack = buttonBackObject.GetComponent<Button>();
+
+            //Act
+            buttonBack.onClick.AddListener(Clicked);
+            buttonBack.onClick.Invoke();
+            //yield return new WaitForSeconds(5);
+
+            //Assert
+            Assert.True(isButtonClicked);
         }
     }
+
+    
 }
