@@ -2,13 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 using UnityEngine.UI;
-using UnityEngine.Android;
-using UnityEngine.SceneManagement;
 
 public class LocationBehaviourScript : MonoBehaviour
 {
+
 
     public GameObject text0;
     public GameObject text1;
@@ -50,10 +48,12 @@ public class LocationBehaviourScript : MonoBehaviour
         museumsList.Add(new Museum("Muzeul de Literatura", 47.172032, 27.576216, 1, museulDeLiteratura));
         museumsList.Add(new Museum("Muzeul Unirii", 47.167430, 27.578895, 2, museulUniri));
 
+
     }
 
-    IEnumerator Start()
+    IEnumerator StartLocationService()
     {
+
         if (Permission.HasUserAuthorizedPermission(Permission.FineLocation)) // aplicatia are acces la locatie
         {
                 if (latitudine == 0 && longitudine == 0)
@@ -106,12 +106,10 @@ public class LocationBehaviourScript : MonoBehaviour
     IEnumerator LocationService()
     {
 
+
         if (!Input.location.isEnabledByUser)
         {
             print("Utlizatorul nu a activat GPS-ul.");
-            latitudine = -1;
-            longitudine = -1;
-            yield return StartCoroutine(SetText());
             yield break;
         }
 
@@ -127,37 +125,61 @@ public class LocationBehaviourScript : MonoBehaviour
         if (maxWait < 1)
         {
             print("Timpul a expirat.");
-            latitudine = -1;
-            longitudine = -1;
-            yield return StartCoroutine(SetText());
             yield break;
         }
 
         if (Input.location.status == LocationServiceStatus.Failed)
         {
             print("Nu s-a putut determina locatia device-ului.");
-            latitudine = -1;
-            longitudine = -1;
-            yield return StartCoroutine(SetText());
             yield break;
         }
         else
         {
             latitudine = Input.location.lastData.latitude;
             longitudine = Input.location.lastData.longitude;
-            yield return StartCoroutine(SetText());
         }
 
         Input.location.Stop();
     }
 
+    void Update()
+    {
+        if (Math.Abs(latitudine - 47.172032) < 0.00001 && Math.Abs(longitudine - 27.576216) < 0.00001) // Muzeul de Literatura
+        {
+            img1.SetActive(false);
+            img2.SetActive(true);
+            img3.SetActive(false);
+            backroundMuzeulLiteraturi.SetActive(true);
+            backroundMuzeulUnirii.SetActive(false);
+            backroundNoMuzeum.SetActive(false);
+        }
+        else if (Math.Abs(latitudine - 47.167430) < 0.00001 && Math.Abs(longitudine - 27.578895) < 0.00001) // Muzeul Unirii
+        {
+            img1.SetActive(false);
+            img2.SetActive(false);
+            img3.SetActive(true);
+            backroundMuzeulLiteraturi.SetActive(false);
+            backroundMuzeulUnirii.SetActive(true);
+            backroundNoMuzeum.SetActive(false);
+        }
+        else
+        {
+            img1.SetActive(true);
+            img2.SetActive(false);
+            img3.SetActive(false);
+            backroundMuzeulLiteraturi.SetActive(false);
+            backroundMuzeulUnirii.SetActive(false);
+            backroundNoMuzeum.SetActive(true);
+        }
+    }
+
     public double getLatitude()
     {
-        return latitudine;
+        return this.latitudine;
     }
 
     public double getLongitude()
     {
-        return longitudine;
+        return this.longitudine;
     }
 }
