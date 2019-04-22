@@ -15,11 +15,20 @@ public class LocationBehaviourScript : MonoBehaviour
     public GameObject text2;
     public GameObject text3;
 
+    public GameObject imgNone;
+    public GameObject imgUnirii;
+    public GameObject imgLiteratura;
+
+    //Sprite sp = Resources.Load("Assets/AR_TEAM/images/Museums/muzeul_unirii") as Sprite;
+
+    public GameObject bg;
+
     static double latitudine = 0;
     static double longitudine = 0;
 
     ArrayList museumsList = new ArrayList();
     List<GameObject> textObjectList = new List<GameObject>();
+    List<GameObject> imageObjectList = new List<GameObject>();
 
     void Awake()
     {
@@ -33,13 +42,20 @@ public class LocationBehaviourScript : MonoBehaviour
         textObjectList.Add(text2);
         textObjectList.Add(text3);
 
+        imageObjectList.Add(imgNone);
+        imageObjectList.Add(imgUnirii);
+        imageObjectList.Add(imgLiteratura);
+
+        imgUnirii.SetActive(false);
+        imgLiteratura.SetActive(false);
+
         text0.SetActive(false);
         text1.SetActive(false);
         text2.SetActive(false);
         text3.SetActive(false);
 
-        museumsList.Add(new Museum("Muzeul de Literatura", 47.172032, 27.576216, 1));
-        museumsList.Add(new Museum("Muzeul Unirii", 47.167430, 27.578895, 2));
+        museumsList.Add(new Museum("Muzeul de Literatura", 47.172032, 27.576216, 1, "imgLiteratura"));
+        museumsList.Add(new Museum("Muzeul Unirii", 47.167430, 27.578895, 2, "imgUnirii"));
 
     }
 
@@ -73,6 +89,7 @@ public class LocationBehaviourScript : MonoBehaviour
                 if (Math.Abs(latitudine - muzeu.getLatitude()) < 0.00001 && Math.Abs(longitudine - muzeu.getLongitude()) < 0.00001)
                 {
                     string tagCautat = "Text" + muzeu.getTextNumber();
+                    string numeCautat = muzeu.getImgName();
 
                     foreach(GameObject obiectText in textObjectList)
                     {
@@ -81,11 +98,25 @@ public class LocationBehaviourScript : MonoBehaviour
                             obiectText.SetActive(true);
                             gasit = true;
                         }
+                        else
+                            obiectText.SetActive(false);
+                    }
+
+                    foreach(GameObject imgObj in imageObjectList)
+                    {
+                        if (imgObj.name.Equals(numeCautat))
+                        {
+                            imgObj.SetActive(true);
+                            gasit = true;
+                        }
+                        else
+                            imgObj.SetActive(false);
                     }
                 }
             }
             if (!gasit) // alta locatie
             {
+                imgNone.SetActive(true);
                 textObjectList[1].SetActive(true);
             }
         }

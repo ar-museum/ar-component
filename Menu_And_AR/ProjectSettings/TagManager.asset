@@ -9,6 +9,14 @@ TagManager:
   - ARUIFrame
   - SceneControl
   - ScreenAttached
+  - ButtonAR
+  - ButtonGallery
+  - Text3
+  - ButtonGames
+  - Text0
+  - Text2
+  - Text1
+  - Background
   layers:
   - Default
   - TransparentFX

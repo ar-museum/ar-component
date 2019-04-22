@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,13 +9,15 @@ public class Museum
     private double latitude;
     private double longitude;
     private int textNumber;
+    private string imgName;
 
-    public Museum(string numeMuzeu, double latitudine, double longitudine, int numarText)
+    public Museum(string numeMuzeu, double latitudine, double longitudine, int numarText, string img_Name)
     {
         this.museumName = numeMuzeu;
         this.latitude = latitudine;
         this.longitude = longitudine;
         this.textNumber = numarText + 1;
+        this.imgName = img_Name;
     }
 
     public string getMuseumName()
@@ -35,5 +38,10 @@ public class Museum
     public int getTextNumber()
     {
         return this.textNumber;
+    }
+
+    public string getImgName()
+    {
+        return this.imgName;
     }
 }
