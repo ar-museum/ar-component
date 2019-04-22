@@ -29,11 +29,11 @@ namespace Tests
             //Act
             if (Math.Abs(latitudine - 47.172032) < 0.00001 && Math.Abs(longitudine - 27.576216) < 0.00001) // Muzeul de Literatura
             {
-                var image2Object = GameObject.FindGameObjectWithTag("Image2");
-                if (image2Object != null)
+                var text3Object = GameObject.FindGameObjectWithTag("Text2");
+                if (text3Object != null)
                 {
-                    var image2 = image2Object.GetComponent<Image>();
-                    if (image2.IsActive())
+                    var text3 = text3Object.GetComponent<Text>();
+                    if (text3.IsActive())
                     {
                         rightImage = true;
                     }
@@ -41,11 +41,11 @@ namespace Tests
             }
             else if (Math.Abs(latitudine - 47.167430) < 0.00001 && Math.Abs(longitudine - 27.578895) < 0.00001) // Muzeul Unirii
             {
-                var image3Object = GameObject.FindGameObjectWithTag("Image3");
-                if (image3Object != null)
+                var text4Object = GameObject.FindGameObjectWithTag("Text3");
+                if (text4Object != null)
                 {
-                    var image3 = image3Object.GetComponent<Image>();
-                    if (image3.IsActive())
+                    var text4 = text4Object.GetComponent<Text>();
+                    if (text4.IsActive())
                     {
                         rightImage = true;
                     }
@@ -53,11 +53,11 @@ namespace Tests
             }
             else
             {
-                var image1Object = GameObject.Find("Image1");
-                if (image1Object != null)
+                var text2Object = GameObject.Find("Text1");
+                if (text2Object != null)
                 {
-                    var image1 = image1Object.GetComponent<Image>();
-                    if (image1.IsActive())
+                    var text2 = text2Object.GetComponent<Text>();
+                    if (text2.IsActive())
                     {
                         rightImage = true;
                     }
