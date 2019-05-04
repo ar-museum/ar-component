@@ -41,7 +41,7 @@ namespace Tests
 
             var targetManagerObject = GameObject.FindGameObjectWithTag("TargetManager");
             var targetManager = targetManagerObject.gameObject.GetComponent(typeof(TargetManager)) as TargetManager;
-            string databaseName = "Muzeul-Mihai-Eminescu"; // or something correct
+            string databaseName = "ARMuseum"; // or something correct
 
             //Act
 

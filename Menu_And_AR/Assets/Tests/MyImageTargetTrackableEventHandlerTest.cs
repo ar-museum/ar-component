@@ -19,7 +19,7 @@ namespace Tests
 
             //Act
             var imageTargetTrackableEventHandler = GameObject.FindGameObjectWithTag("TargetManager").GetComponentInChildren<MyImageTargetTrackableEventHandler>();
-            imageTargetTrackableEventHandler.UpdateScreenAttachedInfo();
+            ARDisplayTypeSwitcher.UpdateScreenAttachedInfo(imageTargetTrackableEventHandler.GetTrackableName());
             var setTexts = imageTargetTrackableEventHandler.GetComponents<SetText>();
 
             //Assert
@@ -41,7 +41,7 @@ namespace Tests
 
             //Act
             var imageTargetTrackableEventHandler = GameObject.FindGameObjectWithTag("TargetManager").GetComponentInChildren<MyImageTargetTrackableEventHandler>();
-            imageTargetTrackableEventHandler.CleanScreenAttachedInfo();
+            ARDisplayTypeSwitcher.CleanScreenAttachedInfo();
             var screenAttachedObjects =  ARDisplayTypeSwitcher.getScreenAttachedObjects();
 
             //Assert

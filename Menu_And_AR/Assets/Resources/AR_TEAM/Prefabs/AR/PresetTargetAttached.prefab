@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5002468874531740194}
   - component: {fileID: 1432989206093723459}
   - component: {fileID: 1428630675456373973}
-  - component: {fileID: 4478260024463791147}
   m_Layer: 0
   m_Name: Bot Info
   m_TagString: Untagged
@@ -97,19 +96,6 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4278321666
---- !u!114 &4478260024463791147
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5032654441226841782}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6074f62c652a2534f929dea426736e42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textType: 1
 --- !u!1 &6261476662348919798
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,7 +201,6 @@ GameObject:
   - component: {fileID: 6261476663262296707}
   - component: {fileID: 6261476663262296705}
   - component: {fileID: 6261476663262296704}
-  - component: {fileID: 7604085560197334079}
   m_Layer: 0
   m_Name: Top Info
   m_TagString: Untagged
@@ -301,19 +286,6 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4278321666
---- !u!114 &7604085560197334079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6261476663262296706}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6074f62c652a2534f929dea426736e42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textType: 0
 --- !u!1 &6261476663282463355
 GameObject:
   m_ObjectHideFlags: 0
