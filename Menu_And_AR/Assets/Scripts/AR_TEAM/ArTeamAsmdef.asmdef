@@ -2,7 +2,11 @@
     "name": "ArTeamAsmdef",
     "references": [
         "VuforiaScripts",
-        "VuforiaEditorScripts"
+        "VuforiaEditorScripts",
+        "Unity.TextMeshPro",
+        "Unity.TextMeshPro.Editor",
+        "Unity.Analytics.StandardEvents.EditorTests",
+        "Unity.TextMeshPro.Tests"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
@@ -11,5 +15,6 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": []
+    "defineConstraints": [],
+    "versionDefines": []
 }
