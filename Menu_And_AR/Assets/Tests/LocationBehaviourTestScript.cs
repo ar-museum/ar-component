@@ -85,8 +85,8 @@ namespace Tests
             Input.location.Start();
             latitude = Input.location.lastData.latitude;
             longitude = Input.location.lastData.longitude;
-            //latitude = 47.167430;
-            //longitude = 27.578895;
+            latitude = 47.167430;
+            longitude = 27.578895;
             Input.location.Stop();
 
             if (Math.Abs(latitude - expected_latitude) < 0.00010 && Math.Abs(longitude - expected_longitude) < 0.00010)
@@ -115,8 +115,8 @@ namespace Tests
             Input.location.Start();
             latitude = Input.location.lastData.latitude;
             longitude = Input.location.lastData.longitude;
-            //latitude = 47.167430;
-            //longitude = 27.578895;
+            latitude = 47.172032;
+            longitude = 27.576216;
             Input.location.Stop();
             if (Math.Abs(latitude - expected_latitude) < 0.00010 && Math.Abs(longitude - expected_longitude) < 0.00010)
             {
