@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Assets.Scripts.AR_TEAM.HttpRequests;
 
 public class SceneLoader : MonoBehaviour
 {
@@ -11,10 +12,10 @@ public class SceneLoader : MonoBehaviour
 
     static ArrayList sceneStack = new ArrayList();
 
-    void Start()
+    IEnumerator Start()
     {
         currentScene = SceneManager.GetActiveScene();
-
+        return new HttpRequests().GetMcStats();
     }
 
     void Update()
