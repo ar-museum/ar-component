@@ -11,11 +11,16 @@ namespace Assets.Scripts.AR_TEAM.HttpRequests {
         private static readonly string JSON_TOKEN_INPUT =
             "{ \"deviceId\": \"2535C5EB-D6ED-4ABC-956B-4ACF29938F26\", \"token\": \"680bff9eb1ba0a8d48badd598be95c5642ad2939\" }";
         private static readonly string API_URL = "museum.lc/web-admin/public/api/";
-        private static readonly string EXHIBIT_URL = API_URL + "exhibit";
+        private static readonly string EXHIBITS_URL = API_URL + "exhibit";
+        private static readonly string AUTHORS_URL = API_URL + "author";
 
         private delegate void RequestCallback(string json);
 
         public delegate void OnComplete<T>(T x);
+
+        private List<Exhibit> Exhibits { get; set; }
+        private List<Author> Authors { get; set; }
+        private int Completed { get; set; }
 
         private IEnumerator DoRequest(string url, string json, RequestCallback callback) {
             var request = new UnityWebRequest(url, "POST");
@@ -34,14 +39,23 @@ namespace Assets.Scripts.AR_TEAM.HttpRequests {
             }
         }
 
-        public IEnumerator GetExhibits(OnComplete<List<Exhibit>> onComplete) {
-            return DoRequest(EXHIBIT_URL, JSON_TOKEN_INPUT, json => OnExhibitCompleted(json, onComplete));
+        public IEnumerator GetEverything(OnComplete<(List<Exhibit>, List<Author>)> onComplete) {
+            yield return DoRequest(EXHIBITS_URL, JSON_TOKEN_INPUT, OnExhibitCompleted);
+            yield return DoRequest(AUTHORS_URL, JSON_TOKEN_INPUT, OnAuthorsCompleted);
+
+            onComplete((Exhibits, Authors));
         }
 
-        private void OnExhibitCompleted(string json, OnComplete<List<Exhibit>> onComplete) {
+        private void OnExhibitCompleted(string json) {
             var node = JSON.Parse(json);
-            var exhibits = Deserializers.DeserializeExhibitList(node);
-            onComplete(exhibits);
+            Exhibits = Deserializers.DeserializeExhibitList(node);
+            ++Completed;
+        }
+
+        private void OnAuthorsCompleted(string json) {
+            var node = JSON.Parse(json);
+            Authors = Deserializers.DeserializeAuthorList(node);
+            ++Completed;
         }
     }
 }
