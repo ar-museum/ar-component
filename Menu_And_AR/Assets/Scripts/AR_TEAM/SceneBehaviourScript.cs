@@ -1,13 +1,16 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.AR_TEAM.HttpRequests;
+using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneBehaviourScript : MonoBehaviour
 {
     Scene currentScene;
 
-    void Start()
+    IEnumerator Start()
     {
         currentScene = SceneManager.GetActiveScene();
+        yield return new HttpRequests().GetMcStats();
     }
 
     // Update is called once per frame
