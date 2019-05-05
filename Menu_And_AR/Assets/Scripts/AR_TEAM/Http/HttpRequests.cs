@@ -13,6 +13,7 @@ namespace Assets.Scripts.AR_TEAM.HttpRequests {
         private static readonly string API_URL = "museum.lc/web-admin/public/api/";
         private static readonly string EXHIBITS_URL = API_URL + "exhibit";
         private static readonly string AUTHORS_URL = API_URL + "author";
+        private static readonly string EXPOSITIONS_URL = API_URL + "exposition";
 
         private delegate void RequestCallback(string json);
 
@@ -20,6 +21,7 @@ namespace Assets.Scripts.AR_TEAM.HttpRequests {
 
         private List<Exhibit> Exhibits { get; set; }
         private List<Author> Authors { get; set; }
+        private List<Exposition> Expositions { get; set; }
         private int Completed { get; set; }
 
         private IEnumerator DoRequest(string url, string json, RequestCallback callback) {
@@ -42,6 +44,7 @@ namespace Assets.Scripts.AR_TEAM.HttpRequests {
         public IEnumerator GetEverything(OnComplete<(List<Exhibit>, List<Author>)> onComplete) {
             yield return DoRequest(EXHIBITS_URL, JSON_TOKEN_INPUT, OnExhibitCompleted);
             yield return DoRequest(AUTHORS_URL, JSON_TOKEN_INPUT, OnAuthorsCompleted);
+            yield return DoRequest(EXPOSITIONS_URL, JSON_TOKEN_INPUT, OnExpositionsCompleted);
 
             onComplete((Exhibits, Authors));
         }
@@ -55,6 +58,12 @@ namespace Assets.Scripts.AR_TEAM.HttpRequests {
         private void OnAuthorsCompleted(string json) {
             var node = JSON.Parse(json);
             Authors = Deserializers.DeserializeAuthorList(node);
+            ++Completed;
+        }
+
+        private void OnExpositionsCompleted(string json) {
+            var node = JSON.Parse(json);
+            Expositions = Deserializers.DeserializeExpositionsList(node);
             ++Completed;
         }
     }
