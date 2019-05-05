@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Assets.Scripts.AR_TEAM.HttpRequests;
+using Assets.Scripts.AR_TEAM.Http;
 
 public class SceneLoader : MonoBehaviour
 {
@@ -15,7 +16,11 @@ public class SceneLoader : MonoBehaviour
     IEnumerator Start()
     {
         currentScene = SceneManager.GetActiveScene();
-        return new HttpRequests().GetMcStats();
+        return new HttpRequests().GetExhibits(OnExhibitLoaded);
+    }
+
+    void OnExhibitLoaded(List<Exhibit> exhibits) {
+        Debug.Log(exhibits);
     }
 
     void Update()
