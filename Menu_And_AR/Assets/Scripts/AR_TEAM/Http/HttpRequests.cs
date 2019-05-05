@@ -1,15 +1,23 @@
-﻿using System;
+﻿using Assets.Scripts.AR_TEAM.Http;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
+using SimpleJSON;
+using System.Collections.Generic;
 
 namespace Assets.Scripts.AR_TEAM.HttpRequests {
     class HttpRequests {
-        public IEnumerator PostRequest(string url, string json) {
+        private static readonly string JSON_TOKEN_INPUT =
+            "{ \"deviceId\": \"2535C5EB-D6ED-4ABC-956B-4ACF29938F26\", \"token\": \"680bff9eb1ba0a8d48badd598be95c5642ad2939\" }";
+        private static readonly string API_URL = "museum.lc/web-admin/public/api/";
+        private static readonly string EXHIBIT_URL = API_URL + "exhibit";
+
+        private delegate void RequestCallback(string json);
+
+        public delegate void OnComplete<T>(T x);
+
+        private IEnumerator DoRequest(string url, string json, RequestCallback callback) {
             var request = new UnityWebRequest(url, "POST");
             var bytes = Encoding.UTF8.GetBytes(json);
             request.uploadHandler = new UploadHandlerRaw(bytes);
@@ -22,12 +30,18 @@ namespace Assets.Scripts.AR_TEAM.HttpRequests {
                 Debug.Log("Error While Sending: " + request.error);
             } else {
                 Debug.Log("Received: " + request.downloadHandler.text);
+                callback(request.downloadHandler.text);
             }
         }
 
-        public IEnumerator GetMcStats() {
-            return PostRequest("https://api.mojang.com/orders/statistics",
-                "{\"metricKeys\": [\"item_sold_minecraft\",\"prepaid_card_redeemed_minecraft\"]}");
+        public IEnumerator GetExhibits(OnComplete<List<Exhibit>> onComplete) {
+            return DoRequest(EXHIBIT_URL, JSON_TOKEN_INPUT, json => OnExhibitCompleted(json, onComplete));
+        }
+
+        private void OnExhibitCompleted(string json, OnComplete<List<Exhibit>> onComplete) {
+            var node = JSON.Parse(json);
+            var exhibits = Deserializers.DeserializeExhibitList(node);
+            onComplete(exhibits);
         }
     }
 }
