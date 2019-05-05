@@ -23,15 +23,26 @@ public class LoadFindData : MonoBehaviour
 
     IEnumerator Start()
     {
-        if (Permission.HasUserAuthorizedPermission(Permission.FineLocation))
-        {
-            yield return StartCoroutine(LocationService());
-        }
+        #if UNITY_EDITOR
+            latitudine = 47.179035;
+            longitudine = 27.567063;
 
-        this.LoadMuseumJson();
+            this.LoadMuseumJson();
 
-        SceneManager.LoadScene("MenuScene");
-        //yield return null;
+            SceneManager.LoadScene("MenuScene");
+            yield return null;
+        #endif
+
+        #if UNITY_ANDROID
+            if (Permission.HasUserAuthorizedPermission(Permission.FineLocation))
+            {
+                yield return StartCoroutine(LocationService());
+            }
+
+            this.LoadMuseumJson();
+
+            SceneManager.LoadScene("MenuScene");
+        #endif
     }
 
     IEnumerator LocationService()

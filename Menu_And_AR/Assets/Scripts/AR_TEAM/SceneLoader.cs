@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Assets.Scripts.AR_TEAM.HttpRequests;
+using Assets.Scripts.AR_TEAM.Http;
 
 public class SceneLoader : MonoBehaviour
 {
@@ -11,10 +13,15 @@ public class SceneLoader : MonoBehaviour
 
     static ArrayList sceneStack = new ArrayList();
 
-    void Start()
+    IEnumerator Start()
     {
         currentScene = SceneManager.GetActiveScene();
+        return new HttpRequests().GetEverything(OnExhibitLoaded);
+    }
 
+    void OnExhibitLoaded((List<Exhibit>, List<Author>) tuple) {
+        Debug.Log(tuple.Item1);
+        Debug.Log(tuple.Item2);
     }
 
     void Update()
