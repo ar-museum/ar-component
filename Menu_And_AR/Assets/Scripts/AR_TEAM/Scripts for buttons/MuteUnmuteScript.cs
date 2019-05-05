@@ -11,13 +11,13 @@ public class MuteUnmuteScript : MonoBehaviour
     public Sprite toggleOff;
 
     public int counter = 0;
-
-    // Start is called before the first frame update
+    
     void Start()
     {
 
     }
-    
+
+    // ARButtonsTest test 3
     public void ChangeMuteUnmute()
     {
         counter++;

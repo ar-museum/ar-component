@@ -10,6 +10,7 @@ namespace Tests
 {
     public class TargetManagerTests
     {
+        // test 1 Lipan Matei
         [UnityTest]
         public IEnumerator TargetManager_LoadDatabase_WrongDatabase_Test()
         {
@@ -31,6 +32,7 @@ namespace Tests
             yield return null;
         }
 
+        // test 2 Lipan Matei
         [UnityTest]
         public IEnumerator TargetManager_LoadDatabase_RightDatabase_Test()
         {
@@ -54,6 +56,7 @@ namespace Tests
             yield return null;
         }
 
+        // test 3 Lipan Matei
         [UnityTest]
         public IEnumerator TargetManager_DoAfterVuforiaStarted_RightNumberOfTrackedObjects_Test()
         {
@@ -76,6 +79,7 @@ namespace Tests
             yield return null;
         }
 
+        // test 4 Lipan Matei
         [UnityTest]
         public IEnumerator TargetManager_DeleteTargets_DeletesAll_Test()
         {
@@ -110,6 +114,7 @@ namespace Tests
             yield return null;
         }
 
+        // test 5 Lipan Matei
         [UnityTest]
         public IEnumerator TargetManager_DeleteTargets_ActiveObjectTracker_Test()
         {

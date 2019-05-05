@@ -11,9 +11,8 @@ namespace Tests
 {
     public class DisplayTypeSwitcherTest
     {
-        // test 1
+        
         private static DisplayType displayType = DisplayType.TargetAttached;
-
 
         private bool isButtonClicked = false;
         public void Clicked()
@@ -21,6 +20,7 @@ namespace Tests
             isButtonClicked = true;
         }
 
+        // test 1
         [UnityTest]
         public IEnumerator GivenDisplayTypeTargetWhenToggleButtonIsPressedThenChangeDisplayType()
         {
@@ -54,14 +54,14 @@ namespace Tests
         }
 
         GameObject[] targetAttachedObjects = GameObject.FindGameObjectsWithTag("TargetAttached");
-        
+
         [UnityTest]
         public IEnumerator GivenGetTargetAttachedObjectsWhenToggleButtonIsPressedThenTargetAttachedObjectsNotBeNull()
         {
             //Arrange
             SceneManager.LoadScene("ARScene");
             yield return new WaitForSeconds(1);
-            int result=0; int expected_result = 1;
+            int result = 0; int expected_result = 1;
 
             var buttonBackObject = GameObject.Find("ButtonToggle");
             var buttonBack = buttonBackObject.GetComponent<Button>();
@@ -69,7 +69,8 @@ namespace Tests
             //Act
             buttonBack.onClick.AddListener(Clicked);
             buttonBack.onClick.Invoke();
-            if (isButtonClicked) {
+            if (isButtonClicked)
+            {
                 if (targetAttachedObjects != null)
                 {
                     result = 1;
@@ -129,7 +130,7 @@ namespace Tests
 
             foreach (var targetAttachedGameObject in targetAttachedGameObjects)
             {
-                if(targetAttachedGameObject.transform.localScale != new Vector3(0, 0, 0))
+                if (targetAttachedGameObject.transform.localScale != new Vector3(0, 0, 0))
                 {
                     numberOfModifiedTargetAttachedObjects++;
                 }
@@ -179,6 +180,81 @@ namespace Tests
             //Assert
             Assert.AreEqual(numberOfModifiedTargetAttachedObjects, targetAttachedGameObjects.Length);
             Assert.AreEqual(numberOfModifiedScreenAttachedObjects, screenAttachedGameObjects.Length);
+        }
+
+        // test 6 Matei Lipan
+        [UnityTest]
+        public IEnumerator DisplayTypeSwitcher_UpdateScreenAttachedInfo_Test()
+        {
+            //Arrange
+            SceneManager.LoadScene("ARScene");
+            yield return new WaitForSeconds(1);
+
+            //Act
+            var imageTargetTrackableEventHandler = GameObject.FindGameObjectWithTag("TargetManager").GetComponentInChildren<MyImageTargetTrackableEventHandler>();
+            ARDisplayTypeSwitcher.UpdateScreenAttachedInfo(imageTargetTrackableEventHandler.GetTrackableName());
+            var setTexts = imageTargetTrackableEventHandler.GetComponents<SetText>();
+
+            //Assert
+            foreach (var setText in setTexts)
+            {
+                if (setText.textType == SetText.TextType.TopText)
+                {
+                    Assert.AreEqual(imageTargetTrackableEventHandler.GetTrackableName(), setText.GetText());
+                }
+            }
+        }
+
+        // test 7 Matei Lipan
+        [UnityTest]
+        public IEnumerator DisplayTypeSwitcher_CleanScreenAttachedInfo_Test()
+        {
+            //Arrange
+            SceneManager.LoadScene("ARScene");
+            yield return new WaitForSeconds(1);
+
+            //Act
+            var imageTargetTrackableEventHandler = GameObject.FindGameObjectWithTag("TargetManager").GetComponentInChildren<MyImageTargetTrackableEventHandler>();
+            ARDisplayTypeSwitcher.CleanScreenAttachedInfo();
+            var screenAttachedObjects = ARDisplayTypeSwitcher.getScreenAttachedObjects();
+
+            //Assert
+            foreach (var screenAttachedObject in screenAttachedObjects)
+            {
+                var childrenTransform = screenAttachedObject.GetComponentsInChildren<Transform>();
+                foreach (var childTransform in childrenTransform)
+                {
+                    Assert.IsTrue(childTransform.localScale == new Vector3(0, 0, 0));
+                }
+            }
+        }
+
+        // test 8 Matei Lipan
+        [UnityTest]
+        public IEnumerator DisplayTypeSwitcher_HideElement_Test()
+        {
+            //Arrange
+            SceneManager.LoadScene("ARScene");
+            yield return new WaitForSeconds(1);
+            var gameObject = GameObject.FindGameObjectWithTag("ARUIFrame");
+            //Act
+            ARDisplayTypeSwitcher.HideElement(gameObject.transform);
+            //Assert
+            Assert.IsTrue(gameObject.transform.localScale == new Vector3(0,0,0));
+        }
+
+        // test 9 Matei Lipan
+        [UnityTest]
+        public IEnumerator DisplayTypeSwitcher_ShowElement_Test()
+        {
+            //Arrange
+            SceneManager.LoadScene("ARScene");
+            yield return new WaitForSeconds(1);
+            var gameObject = GameObject.FindGameObjectWithTag("ARUIFrame");
+            //Act
+            ARDisplayTypeSwitcher.ShowElement(gameObject.transform);
+            //Assert
+            Assert.IsTrue(gameObject.transform.localScale == new Vector3(1, 1, 1));
         }
     }
 }

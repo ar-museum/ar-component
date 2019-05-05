@@ -22,6 +22,7 @@ public class TargetManager : MonoBehaviour
         VuforiaARController.Instance.UnregisterVuforiaStartedCallback(DoAfterVuforiaStarted);
     }
 
+    // TargetManagerTests test 3
     private void DoAfterVuforiaStarted()
     {
         // Load database
@@ -34,6 +35,7 @@ public class TargetManager : MonoBehaviour
         SetupTargets(Targets, ImageTargetChildPrefab);
     }
 
+    // TargetManagerTests test 1 test 2 test 3
     public void LoadDatabase(string databaseName)
     {
         ObjectTracker objectTracker = TrackerManager.Instance.GetTracker<ObjectTracker>();
@@ -58,6 +60,7 @@ public class TargetManager : MonoBehaviour
         objectTracker.Start();
     }
 
+    // TargetManagerTests test 3
     private List<TrackableBehaviour> GetTargets()
     {
         // Getting all the targets from the current Vuforia database
@@ -67,6 +70,7 @@ public class TargetManager : MonoBehaviour
         return trackables;
     }
 
+    // TargetManagerTests test 3 test 4 test 5
     public void DeleteTargets(ObjectTracker objectTracker)
     {
         // Getting all the targets from the current Vuforia database and delete them both from 
@@ -92,6 +96,7 @@ public class TargetManager : MonoBehaviour
         }
     }
 
+    // TargetManagerTests test 3
     private void SetupTargets(List<TrackableBehaviour> targets, GameObject childPrefab)
     {
         foreach(TrackableBehaviour target in targets)
@@ -110,6 +115,7 @@ public class TargetManager : MonoBehaviour
         }
     }
 
+    // TargetManagerTests test 3
     private void CreateChildOfTarget(TrackableBehaviour target, GameObject childPrefab)
     {
         // The child is what will be shown when the target is recognized
