@@ -60,5 +60,25 @@ namespace Assets.Scripts.AR_TEAM.Http {
 
             return author;
         }
+
+        public static List<Exposition> DeserializeExpositionsList(JSONNode node) => DeserializeList(node, DeserializeExposition);
+
+        public static Exposition DeserializeExposition(JSONNode node) {
+            var exposition = new Exposition();
+
+            exposition.ExpositionId = node["exposition_id"];
+            exposition.Title = node["title"];
+            exposition.Description = node["description"];
+            exposition.MuseumId = node["museum_id"];
+            exposition.StaffId = node["staff_id"];
+            exposition.PhotoId = node["photo_id"];
+            string createdAt = node["created_at"];
+            exposition.CreatedAt = Convert.ToDateTime(createdAt);
+            string updatedAt = node["updated_at"];
+            exposition.UpdatedAt = Convert.ToDateTime(updatedAt);
+            exposition.PhotoPath = node["photo_path"];
+
+            return exposition;
+        }
     }
 }
