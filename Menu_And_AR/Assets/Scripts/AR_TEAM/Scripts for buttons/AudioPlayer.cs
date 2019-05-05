@@ -21,6 +21,7 @@ public class AudioPlayer : MonoBehaviour
     public Sprite pauseButton;
     public int counterPlay = 0;
     public int counter = 0;
+    private int playv = 0;
     private float playTime = (float)0;
 
 
@@ -37,11 +38,14 @@ public class AudioPlayer : MonoBehaviour
             
             playTime = source.time;
             source.Stop();
+            ChangePlayButton();
             ChangeMuteUnmute();
+            playv = 0;
 
         }
         else
         {
+            playv = 1;
             source.clip = music;
             source.Play();
             source.time = playTime;
@@ -67,13 +71,14 @@ public class AudioPlayer : MonoBehaviour
     public void MuteMusic()
     {
         source.mute = !source.mute;
+        ChangeMuteUnmute();
     }
      
 
     public void ChangePlayButton()
     {
         
-        counterPlay++;
+        counterPlay = counterPlay + 1;
         if (counterPlay % 2 == 0)
         {
             btn_Play.image.overrideSprite = pauseButton;
@@ -88,14 +93,17 @@ public class AudioPlayer : MonoBehaviour
     // ARButtonsTest test 3
     public void ChangeMuteUnmute()
     {
-        counter++;
-        if (counter % 2 == 0)
+        if(playv == 1)
         {
-            btn_Toggle.image.overrideSprite = toggleOn;
-        }
-        else
-        {
-            btn_Toggle.image.overrideSprite = toggleOff;
+            counter++;
+            if (counter % 2 == 0)
+            {
+                btn_Toggle.image.overrideSprite = toggleOn;
+            }
+            else
+            {
+                btn_Toggle.image.overrideSprite = toggleOff;
+            }
         }
         
     }
