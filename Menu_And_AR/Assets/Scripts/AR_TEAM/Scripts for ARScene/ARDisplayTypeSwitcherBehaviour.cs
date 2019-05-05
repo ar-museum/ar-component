@@ -41,6 +41,7 @@ public class ARDisplayTypeSwitcher
         displayType = value;
     }
 
+    // DisplayTypeSwitcherTest test 1 test 2 test 3
     public static void SwitchARDisplayType()
     {
         if(displayType == DisplayType.ScreenAttached)
@@ -55,6 +56,7 @@ public class ARDisplayTypeSwitcher
         }
     }
 
+    // DisplayTypeSwitcherTest test 2 test 4
     public static void ARDisplayTypeTargetAttached()
     {
 
@@ -70,6 +72,7 @@ public class ARDisplayTypeSwitcher
         }
     }
 
+    // DisplayTypeSwitcherTest test 3 test 5
     public static void ARDisplayTypeScreenAttached()
     {
 
@@ -87,6 +90,7 @@ public class ARDisplayTypeSwitcher
         }
     }
 
+    // DisplayTypeSwitcherTest test 2 test 4
     public static void HideScreenAttachedComponents(GameObject[] screenAttachedComponents)
     {
         foreach (var screenAttachedComponent in screenAttachedComponents)
@@ -95,6 +99,7 @@ public class ARDisplayTypeSwitcher
         }
     }
 
+    // DisplayTypeSwitcherTest test 3 test 5
     public static void ShowScreenAttachedComponents(GameObject[] screenAttachedComponents)
     {
         if( displayType == DisplayType.ScreenAttached)
@@ -106,6 +111,7 @@ public class ARDisplayTypeSwitcher
         }
     }
 
+    // DisplayTypeSwitcherTest test 3 test 5
     public static void HideTargetAttachedComponents(GameObject[] targetAttachedComponents)
     {
         foreach (var targetAttachedComponent in targetAttachedComponents)
@@ -114,6 +120,7 @@ public class ARDisplayTypeSwitcher
         }
     }
 
+    // DisplayTypeSwitcherTest test 2 test 4
     public static void ShowTargetAttachedComponents(GameObject[] targetAttachedComponents)
     {
         if( displayType == DisplayType.TargetAttached)
@@ -125,26 +132,31 @@ public class ARDisplayTypeSwitcher
         }
     }
 
+    // DisplayTypeSwitcherTest test 2 test 3 test 4 test 5
     public static GameObject[] getTargetAttachedObjects()
     {
         return GameObject.FindGameObjectsWithTag("TargetAttached");
     }
 
+    // DisplayTypeSwitcherTest test 2 test 3 test 4 test 5
     public static GameObject[] getScreenAttachedObjects()
     {
         return GameObject.FindGameObjectsWithTag("ScreenAttached");
     }
 
+    // DisplayTypeSwitcherTest test 8
     public static void HideElement(Transform element)
     {
         element.localScale = new Vector3(0, 0, 0);
     }
 
+    // DisplayTypeSwitcherTest test 9
     public static void ShowElement(Transform element)
     {
         element.localScale = new Vector3(1, 1, 1);
     }
 
+    // DisplayTypeSwitcherTest test 6
     public static void UpdateScreenAttachedInfo(string targetName)
     {
         var screenAttachedComponents = getScreenAttachedObjects();
@@ -167,6 +179,7 @@ public class ARDisplayTypeSwitcher
         }
     }
 
+    // DisplayTypeSwitcherTest test 7
     public static void CleanScreenAttachedInfo()
     {
         var screenAttachedComponents = getScreenAttachedObjects();
