@@ -2,19 +2,19 @@
 
 public class SceneBehaviourProxy : MonoBehaviour
 {
-    private SceneBehaviourScript sceneManager;
+    private SceneLoader sceneManager;
     // Start is called before the first frame update
     void Start()
     {
         GameObject sceneManagerGameObject = GameObject.FindGameObjectWithTag("SceneControl");
         if(sceneManagerGameObject != null)
         {
-            sceneManager = sceneManagerGameObject.GetComponent<SceneBehaviourScript>();
+            sceneManager = sceneManagerGameObject.GetComponent<SceneLoader>();
         }
     }
 
     public void LoadScene(string sceneCamera)
     {
-        sceneManager.LoadScene(sceneCamera);
+        sceneManager.LoadNextScene(sceneCamera);
     }
 }

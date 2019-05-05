@@ -1,0 +1,19 @@
+{
+  "museums" : [
+    {
+      "name": "Muzeul de Literatura",
+      "latitude": 47.17214175, 
+      "longitude": 27.57621925
+    },
+    {
+      "name": "Muzeul Unirii",
+      "latitude": 47.167454,
+      "longitude": 27.57897925
+    },
+    {
+      "name": "Muzeul Mihai Eminescu",
+      "latitude": 47.179218, 
+      "longitude": 27.56691275
+    }
+  ]
+}
