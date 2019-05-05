@@ -12,21 +12,25 @@ public class SetText : MonoBehaviour
 
     [SerializeField] public TextType textType;
 
+    // SetTextTest test 1
     public void SetMyText(String text)
     {
         GetComponent<TextMeshProUGUI>().text = text;
     }
 
+    // SetTextTest test 1
     public TextType getTextType()
     {
         return textType;
     }
 
+    // SetTextTest test 1
     public string GetText()
     {
         return GetComponent<TextMeshProUGUI>().text;
     }
 
+    // SetTextTest test 1
     public static void SetInfoForTextComponents(SetText[] texts, string targetName)
     {
         foreach (var textComponent in texts)

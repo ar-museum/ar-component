@@ -3,6 +3,8 @@
 public class SceneBehaviourProxy : MonoBehaviour
 {
     private SceneLoader sceneManager;
+
+    // SceneBehaviourProxyTest test 1
     // Start is called before the first frame update
     void Start()
     {
@@ -13,6 +15,7 @@ public class SceneBehaviourProxy : MonoBehaviour
         }
     }
 
+    // SceneBehaviourProxyTest test 1
     public void LoadScene(string sceneCamera)
     {
         sceneManager.LoadNextScene(sceneCamera);
