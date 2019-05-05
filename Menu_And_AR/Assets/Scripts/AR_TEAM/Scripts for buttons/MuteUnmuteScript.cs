@@ -10,7 +10,7 @@ public class MuteUnmuteScript : MonoBehaviour
     public Sprite toggleOn;
     public Sprite toggleOff;
 
-    public int counter = 0;
+    public int counter = 1;
     
     void Start()
     {
