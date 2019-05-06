@@ -3,7 +3,7 @@
 public class MyImageTargetTrackableEventHandler : DefaultTrackableEventHandler
 {
     private GameObject ARUIFrame;
-
+    
     override
     protected void Start()
     {
@@ -18,6 +18,8 @@ public class MyImageTargetTrackableEventHandler : DefaultTrackableEventHandler
         HideARUIFrame();
         ARDisplayTypeSwitcher.UpdateScreenAttachedInfo(GetTrackableName());
         ARDisplayTypeSwitcher.ShowScreenAttachedComponents(ARDisplayTypeSwitcher.getScreenAttachedObjects());
+
+        
     }
 
     override
