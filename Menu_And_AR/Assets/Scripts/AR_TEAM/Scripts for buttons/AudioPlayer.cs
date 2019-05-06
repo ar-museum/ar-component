@@ -39,7 +39,7 @@ public class AudioPlayer : MonoBehaviour
             playTime = source.time;
             source.Stop();
             ChangePlayButton();
-            ChangeMuteUnmute();
+            //ChangeMuteUnmute();
             playv = 0;
 
         }
@@ -50,7 +50,7 @@ public class AudioPlayer : MonoBehaviour
             source.Play();
             source.time = playTime;
             ChangePlayButton();
-            ChangeMuteUnmute();
+            //ChangeMuteUnmute();
         }
         
     }
