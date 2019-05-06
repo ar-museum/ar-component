@@ -94,7 +94,7 @@ public class AudioPlayer : MonoBehaviour
     // ARButtonsTest test 3
     public void ChangeMuteUnmute()
     {
-        if(playv == 1)
+        //if(playv == 1)
         {
             counter++;
             if (counter % 2 == 0)
