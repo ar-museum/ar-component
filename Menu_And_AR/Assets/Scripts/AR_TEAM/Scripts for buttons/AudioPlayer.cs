@@ -81,11 +81,12 @@ public class AudioPlayer : MonoBehaviour
         counterPlay = counterPlay + 1;
         if (counterPlay % 2 == 0)
         {
-            btn_Play.image.overrideSprite = pauseButton;
+            btn_Play.image.overrideSprite = playButton;
         }
         else
         {
-            btn_Play.image.overrideSprite = playButton;
+            btn_Play.image.overrideSprite = pauseButton;
+            
         }
         
     }
