@@ -12,12 +12,6 @@ public class SettingsBasedOnLocation : MonoBehaviour
 
     void Awake()
     {
-        //testing porposes
-        //Trebuie eliminata si vazut maine cum inlocuita sa nu pice testele
-        //testele pica pentru ca lista de muzee este goala si  LoadFindData.museumData.museums.Count da null pointer exception
-        //de asta am pus si metoda asta aici
-        setLoadMuseum();
-
         GameObject textBoxErrorObject = GameObject.Find("TextBoxError");
         textBoxErrorObject.SetActive(false);
 
@@ -49,7 +43,6 @@ public class SettingsBasedOnLocation : MonoBehaviour
             else
             {
                 bool gasit = false;
-                
                 for (int i = 0; i < LoadFindData.museumData.museums.Count; ++i)
                 {
                     if (Math.Abs(LoadFindData.latitudine - LoadFindData.museumData.museums[i].latitude) < 0.001 && Math.Abs(LoadFindData.longitudine - LoadFindData.museumData.museums[i].longitude) < 0.001)
@@ -110,13 +103,5 @@ public class SettingsBasedOnLocation : MonoBehaviour
     public double getLongitude()
     {
         return LoadFindData.longitudine;
-    }
-
-    public void setLoadMuseum()
-    {
-        string dataPath = "AR_TEAM/MuseumsData";
-        TextAsset json = Resources.Load<TextAsset>(dataPath);
-
-        LoadFindData.museumData = JsonUtility.FromJson<MuseumArray>(json.text);
     }
 }

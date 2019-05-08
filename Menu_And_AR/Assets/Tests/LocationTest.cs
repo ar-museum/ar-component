@@ -11,32 +11,29 @@ namespace Tests
 {
     public class LocationTest
     {
-        [UnityTest] 
+        [UnityTest]
         public IEnumerator Image_Based_On_Location_Test()
         {
             //Arrange
             SceneManager.LoadScene("MenuScene");
             yield return new WaitForSeconds(1);
 
-            
-
             var controlScriptObject = GameObject.FindGameObjectWithTag("SceneControl");
             var controlScript = controlScriptObject.gameObject.GetComponent(typeof(SettingsBasedOnLocation)) as SettingsBasedOnLocation;
-         
+
             double latitudine = controlScript.getLatitude();
             double longitudine = controlScript.getLongitude();
-          
+
             bool rightImage = false;
 
             //Act
             if (Math.Abs(latitudine - 47.172032) < 0.00001 && Math.Abs(longitudine - 27.576216) < 0.00001) // Muzeul de Literatura
             {
-                GameObject text2Object = GameObject.Find("TextBoxMuseum/Text");
-                if (text2Object != null)
+                var text3Object = GameObject.FindGameObjectWithTag("Text2");
+                if (text3Object != null)
                 {
-                    var text2 = text2Object.GetComponent<Text>();
-
-                    if (text2.text == "Bine ati venit la\n" + "Muzeul de Literatura")
+                    var text3 = text3Object.GetComponent<Text>();
+                    if (text3.IsActive())
                     {
                         rightImage = true;
                     }
@@ -44,12 +41,11 @@ namespace Tests
             }
             else if (Math.Abs(latitudine - 47.167430) < 0.00001 && Math.Abs(longitudine - 27.578895) < 0.00001) // Muzeul Unirii
             {
-                GameObject text2Object = GameObject.Find("TextBoxMuseum/Text");
-                if (text2Object != null)
+                var text4Object = GameObject.FindGameObjectWithTag("Text3");
+                if (text4Object != null)
                 {
-                    var text2 = text2Object.GetComponent<Text>();
-
-                    if (text2.text == "Bine ati venit la\n" + "Muzeul Unirii")
+                    var text4 = text4Object.GetComponent<Text>();
+                    if (text4.IsActive())
                     {
                         rightImage = true;
                     }
@@ -57,12 +53,11 @@ namespace Tests
             }
             else
             {
-                GameObject text2Object = GameObject.Find("TextBoxMuseum/Text");
+                var text2Object = GameObject.Find("Text1");
                 if (text2Object != null)
                 {
                     var text2 = text2Object.GetComponent<Text>();
-
-                    if (text2.text == "Nu va aflati in\n incinta unui muzeu")
+                    if (text2.IsActive())
                     {
                         rightImage = true;
                     }
@@ -84,7 +79,7 @@ namespace Tests
             double expected_longitude = 27.578895;
             double latitude = 0;
             double longitude = 0;
-            int expected_result = 0;
+            int expected_result = 1;
             int result;
             // Act
             Input.location.Start();
@@ -114,7 +109,7 @@ namespace Tests
             double expected_longitude = 27.576216;
             double latitude = 0;
             double longitude = 0;
-            int expected_result = 0;
+            int expected_result = 1;
             int result;
             // Act
             Input.location.Start();

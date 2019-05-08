@@ -20,7 +20,6 @@ public class MyImageTargetTrackableEventHandler : DefaultTrackableEventHandler
         ARDisplayTypeSwitcher.ShowScreenAttachedComponents(ARDisplayTypeSwitcher.getScreenAttachedObjects());
 
         
-        GameObject.Find("ScreenCanvas").GetComponent<AudioPlayer>().PlayMusic();   
     }
 
     override
@@ -30,8 +29,6 @@ public class MyImageTargetTrackableEventHandler : DefaultTrackableEventHandler
         ShowARUIFrame();
         ARDisplayTypeSwitcher.CleanScreenAttachedInfo();
         ARDisplayTypeSwitcher.HideScreenAttachedComponents(ARDisplayTypeSwitcher.getScreenAttachedObjects());
-
-        GameObject.Find("ScreenCanvas").GetComponent<AudioPlayer>().StopMusic();
     }
 
     private void HideARUIFrame()
