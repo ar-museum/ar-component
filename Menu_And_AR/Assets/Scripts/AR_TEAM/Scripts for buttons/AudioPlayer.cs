@@ -29,7 +29,6 @@ public class AudioPlayer : MonoBehaviour
     {
         path = "file://" + Application.streamingAssetsPath + "/Sound/";
         source = GetComponent<AudioSource>();
-        //PlayMusic();
     }
 
     private IEnumerator LoadAudio()
