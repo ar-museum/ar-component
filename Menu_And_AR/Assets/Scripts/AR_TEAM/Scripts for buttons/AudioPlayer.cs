@@ -9,29 +9,55 @@ using UnityEngine.Audio;
 [RequireComponent(typeof(AudioSource))]
 public class AudioPlayer : MonoBehaviour
 {
-    public AudioClip music;
+    private AudioClip music;
 
     private AudioSource source;
     public Button btn_Toggle;
     public Button btn_Play;
 
-    public Sprite toggleOn;
-    public Sprite toggleOff;
     public Sprite playButton;
     public Sprite pauseButton;
     public int counterPlay = 0;
     public int counter = 0;
     private int playv = 0;
     private float playTime = (float)0;
-
+    private string filename = "";
+    private string path;
+    private string song;
 
     void Start()
     {
+        path = "file://" + Application.streamingAssetsPath + "/Sound/";
         source = GetComponent<AudioSource>();
         //PlayMusic();
     }
 
-    public void PlayMusic()
+    private IEnumerator LoadAudio()
+    {
+        WWW request = GetAudioFromFile(path, filename);
+        yield return request;
+
+        music = request.GetAudioClip();
+        music.name = filename;
+
+        PlayAudioFile();
+    }
+
+    private void PlayAudioFile()
+    {
+        source.clip = music;
+        source.time = playTime;
+        source.Play();
+    }
+
+    private WWW GetAudioFromFile(string path, string filename)
+    {
+        string audioToLoad = string.Format(path + "{0}", filename);
+        WWW request = new WWW(audioToLoad);
+        return request;
+    }
+
+    public void PlayMusic(string songname)
     {
         if(source.isPlaying)
         {
@@ -39,42 +65,36 @@ public class AudioPlayer : MonoBehaviour
             playTime = source.time;
             source.Stop();
             ChangePlayButton();
-            //ChangeMuteUnmute();
-            playv = 0;
-
+            StopCoroutine(LoadAudio());
+            btn_Play.image.overrideSprite = playButton;
         }
         else
         {
-            playv = 1;
-            source.clip = music;
-            source.Play();
-            source.time = playTime;
             ChangePlayButton();
-            //ChangeMuteUnmute();
+            song = songname;
+            filename = songname + ".wav";
+            StartCoroutine(LoadAudio());
+            btn_Play.image.overrideSprite = pauseButton;
         }
         
     }
 
-    IEnumerator WaitForMusicClip()
-    {
-        while(source.isPlaying)
-        {
-            yield return null;
-        }
-    }
-
     public void StopMusic()
     {
+        song = "";
+        filename = "";
         source.Stop();
+        StopCoroutine(LoadAudio());
+        btn_Play.image.overrideSprite = playButton;
     } 
 
-    public void MuteMusic()
+    public void PlayMusic()
     {
-        source.mute = !source.mute;
-        ChangeMuteUnmute();
+        if(filename != "")
+        {
+            PlayMusic(song);
+        }
     }
-     
-
     public void ChangePlayButton()
     {
         
@@ -91,21 +111,14 @@ public class AudioPlayer : MonoBehaviour
         
     }
     
-    // ARButtonsTest test 3
-    public void ChangeMuteUnmute()
+
+    public void ReplayMusic()
     {
-        //if(playv == 1)
+        if(filename != "")
         {
-            counter++;
-            if (counter % 2 == 0)
-            {
-                btn_Toggle.image.overrideSprite = toggleOn;
-            }
-            else
-            {
-                btn_Toggle.image.overrideSprite = toggleOff;
-            }
+            source.Stop();
+            source.Play();
+            btn_Play.image.overrideSprite = pauseButton;
         }
-        
     }
 }
