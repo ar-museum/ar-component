@@ -25,10 +25,18 @@ public class AudioPlayer : MonoBehaviour
     private string path;
     private string song;
 
+    IEnumerator ienum;
+
     void Start()
     {
-        path = "file://" + Application.streamingAssetsPath + "/Sound/";
+        path = "file://" + Application.streamingAssetsPath + '/';
+        if (Application.isMobilePlatform)
+        {
+            path = "jar:file://" + Application.dataPath + "!/assets/";
+        }
+        path += "Sound/";
         source = GetComponent<AudioSource>();
+        ienum = LoadAudio();
     }
 
     private IEnumerator LoadAudio()
@@ -40,6 +48,7 @@ public class AudioPlayer : MonoBehaviour
         music.name = filename;
 
         PlayAudioFile();
+        yield break;
     }
 
     private void PlayAudioFile()
@@ -64,7 +73,7 @@ public class AudioPlayer : MonoBehaviour
             playTime = source.time;
             source.Stop();
             ChangePlayButton();
-            StopCoroutine(LoadAudio());
+            StopCoroutine(ienum);
             btn_Play.image.overrideSprite = playButton;
         }
         else
@@ -72,7 +81,9 @@ public class AudioPlayer : MonoBehaviour
             ChangePlayButton();
             song = songname;
             filename = songname + ".wav";
-            StartCoroutine(LoadAudio());
+            StopCoroutine(ienum);
+            ienum = LoadAudio();
+            StartCoroutine(ienum);
             btn_Play.image.overrideSprite = pauseButton;
         }
         
@@ -83,8 +94,13 @@ public class AudioPlayer : MonoBehaviour
         song = "";
         filename = "";
         source.Stop();
-        StopCoroutine(LoadAudio());
-        btn_Play.image.overrideSprite = playButton;
+        source.time = 0;
+        playTime = 0;
+        StopCoroutine(ienum);
+        if (btn_Play.image != null)
+        {
+            btn_Play.image.overrideSprite = playButton;
+        }
     } 
 
     public void PlayMusic()
@@ -94,6 +110,7 @@ public class AudioPlayer : MonoBehaviour
             PlayMusic(song);
         }
     }
+
     public void ChangePlayButton()
     {
         
@@ -110,12 +127,12 @@ public class AudioPlayer : MonoBehaviour
         
     }
     
-
     public void ReplayMusic()
     {
         if(filename != "")
         {
             source.Stop();
+            source.time = 0;
             source.Play();
             btn_Play.image.overrideSprite = pauseButton;
         }
