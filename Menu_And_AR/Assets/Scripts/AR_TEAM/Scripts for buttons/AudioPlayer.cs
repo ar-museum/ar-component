@@ -18,19 +18,27 @@ public class AudioPlayer : MonoBehaviour
     public Sprite playButton;
     public Sprite pauseButton;
     public int counterPlay = 0;
-    public int counter = 0;
     private int playv = 0;
     private float playTime = (float)0;
     private string filename = "";
     private string path;
     private string song;
 
+    IEnumerator ienum;
+
     void Start()
     {
-        path = "file://" + Application.streamingAssetsPath + "/Sound/";
+        path = "file://" + Application.streamingAssetsPath + '/';
+        if (Application.isMobilePlatform)
+        {
+            path = "jar:file://" + Application.dataPath + "!/assets/";
+        }
+        path += "Sound/";
         source = GetComponent<AudioSource>();
+        ienum = LoadAudio();
     }
 
+    // AudioPlayerTests test 1 test 2 test 3 test 4
     private IEnumerator LoadAudio()
     {
         WWW request = GetAudioFromFile(path, filename);
@@ -40,8 +48,10 @@ public class AudioPlayer : MonoBehaviour
         music.name = filename;
 
         PlayAudioFile();
+        yield break;
     }
 
+    // AudioPlayerTests test 1 test 2 test 3 test 4
     private void PlayAudioFile()
     {
         source.clip = music;
@@ -49,6 +59,7 @@ public class AudioPlayer : MonoBehaviour
         source.Play();
     }
 
+    // AudioPlayerTests test 1 test 2 test 3 test 4
     private WWW GetAudioFromFile(string path, string filename)
     {
         string audioToLoad = string.Format(path + "{0}", filename);
@@ -56,37 +67,37 @@ public class AudioPlayer : MonoBehaviour
         return request;
     }
 
+    // AudioPlayerTests test 1 test 2 test 3 test 4
     public void PlayMusic(string songname)
     {
         if(source.isPlaying)
         {
-            
-            playTime = source.time;
-            source.Stop();
-            ChangePlayButton();
-            StopCoroutine(LoadAudio());
-            btn_Play.image.overrideSprite = playButton;
+            // test 2 test 3 test 4
+            StopMusic();
         }
         else
         {
+            // test 1 test 2 test 3 test 4
             ChangePlayButton();
             song = songname;
             filename = songname + ".wav";
-            StartCoroutine(LoadAudio());
+            StopCoroutine(ienum);
+            ienum = LoadAudio();
+            StartCoroutine(ienum);
             btn_Play.image.overrideSprite = pauseButton;
         }
         
     }
-
+    // AudioPlayerTests test 2 test 3 test 4
     public void StopMusic()
     {
-        song = "";
-        filename = "";
+        playTime = source.time;
         source.Stop();
-        StopCoroutine(LoadAudio());
+        ChangePlayButton();
+        StopCoroutine(ienum);
         btn_Play.image.overrideSprite = playButton;
-    } 
-
+    }
+    // AudioPlayerTests test 3 test 4
     public void PlayMusic()
     {
         if(filename != "")
@@ -94,6 +105,8 @@ public class AudioPlayer : MonoBehaviour
             PlayMusic(song);
         }
     }
+
+    // ARButtonsTest test 2
     public void ChangePlayButton()
     {
         
@@ -109,13 +122,14 @@ public class AudioPlayer : MonoBehaviour
         }
         
     }
-    
 
+    // AudioPlayerTests test 4
     public void ReplayMusic()
     {
         if(filename != "")
         {
             source.Stop();
+            source.time = 0;
             source.Play();
             btn_Play.image.overrideSprite = pauseButton;
         }
