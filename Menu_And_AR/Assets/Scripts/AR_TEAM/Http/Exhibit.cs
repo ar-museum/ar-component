@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace Assets.Scripts.AR_TEAM.Http {
-    class Exhibit {
+    public class Exhibit {
         public int ExhibitId { get; set; }
         public int ExpositionId { get; set; }
         public int StaffId { get; set; }

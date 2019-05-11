@@ -16,12 +16,11 @@ public class SceneLoader : MonoBehaviour
     IEnumerator Start()
     {
         currentScene = SceneManager.GetActiveScene();
-        return new HttpRequests().GetEverything(OnExhibitLoaded);
+        return new HttpRequests().GetMuseumData(OnMuseumLoaded, 1);
     }
 
-    void OnExhibitLoaded((List<Exhibit>, List<Author>) tuple) {
-        Debug.Log(tuple.Item1);
-        Debug.Log(tuple.Item2);
+    void OnMuseumLoaded(Assets.Scripts.AR_TEAM.Http.Museum museum) {
+        Debug.Log(museum);
     }
 
     void Update()

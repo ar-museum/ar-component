@@ -77,8 +77,24 @@ namespace Assets.Scripts.AR_TEAM.Http {
             string updatedAt = node["updated_at"];
             exposition.UpdatedAt = Convert.ToDateTime(updatedAt);
             exposition.PhotoPath = node["photo_path"];
-
+            if (node["exhibits"] != null) {
+                exposition.Exhibits = DeserializeExhibitList(node["exhibits"]);
+            }
             return exposition;
+        }
+
+        public static Museum DeserializeMuseum(JSONNode node) {
+            var museum = new Museum();
+
+            museum.MuseumId = node["museum_id"];
+            museum.Name = node["name"];
+            museum.Address = node["address"];
+            museum.Latitude = node["latitude"];
+            museum.Longitude = node["longitude"];
+            museum.PhotoPath = node["photo_path"];
+            museum.Expositions = DeserializeExpositionsList(node["expositions"]);
+
+            return museum;
         }
     }
 }
