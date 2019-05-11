@@ -3,7 +3,7 @@
 public class MyImageTargetTrackableEventHandler : DefaultTrackableEventHandler
 {
     private GameObject ARUIFrame;
-
+    
     override
     protected void Start()
     {
@@ -18,6 +18,9 @@ public class MyImageTargetTrackableEventHandler : DefaultTrackableEventHandler
         HideARUIFrame();
         ARDisplayTypeSwitcher.UpdateScreenAttachedInfo(GetTrackableName());
         ARDisplayTypeSwitcher.ShowScreenAttachedComponents(ARDisplayTypeSwitcher.getScreenAttachedObjects());
+
+        string songname = GetTrackableName();
+        GameObject.Find("Audio Source").GetComponent<AudioPlayer>().PlayMusic(songname);   
     }
 
     override
@@ -27,6 +30,8 @@ public class MyImageTargetTrackableEventHandler : DefaultTrackableEventHandler
         ShowARUIFrame();
         ARDisplayTypeSwitcher.CleanScreenAttachedInfo();
         ARDisplayTypeSwitcher.HideScreenAttachedComponents(ARDisplayTypeSwitcher.getScreenAttachedObjects());
+
+        GameObject.Find("Audio Source").GetComponent<AudioPlayer>().StopMusic();
     }
 
     private void HideARUIFrame()
