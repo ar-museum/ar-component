@@ -529,7 +529,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 624156972}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecb1ee7c68bba03458b5b3d6dc5e8e7e, type: 3}
+  m_Script: {fileID: 11500000, guid: 6074f62c652a2534f929dea426736e42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   textType: 1
@@ -795,7 +795,6 @@ MonoBehaviour:
   playButton: {fileID: 21300000, guid: 339b8d0b0a89cf84cbe29efbd87f3bde, type: 3}
   pauseButton: {fileID: 21300000, guid: 55e57b38258bc6846a66c49844f06816, type: 3}
   counterPlay: 0
-  counter: 0
 --- !u!4 &760873741
 Transform:
   m_ObjectHideFlags: 0
@@ -1118,7 +1117,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1170698659}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecb1ee7c68bba03458b5b3d6dc5e8e7e, type: 3}
+  m_Script: {fileID: 11500000, guid: 6074f62c652a2534f929dea426736e42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   textType: 0

@@ -31,9 +31,9 @@ public class SetText : MonoBehaviour
     }
 
     // SetTextTest test 1
-    public static void SetInfoForTextComponents(SetText[] texts, string targetName)
+    public static void SetInfoForTextComponents(SetText[] texts, string targetID)
     {
-        var (title, author, id) = LoadFindData.MuseumDto.FindArSceneInfoByExhibitId(5);
+        var (title, author, id) = LoadFindData.MuseumDto.FindArSceneInfoByExhibitId(Convert.ToInt32(targetID));
 
         foreach (var textComponent in texts)
         {
@@ -46,7 +46,7 @@ public class SetText : MonoBehaviour
             {
                 // Author
                 // TODO: get the author from the database based on the name of the target
-                textComponent.SetMyText(author + "\'s author");
+                textComponent.SetMyText(author);
             }
         }
     }
