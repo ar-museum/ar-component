@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace Assets.Scripts.AR_TEAM.Http {
-    class Exhibit {
+    public class Exhibit {
         public int ExhibitId { get; set; }
         public int ExpositionId { get; set; }
         public int StaffId { get; set; }
@@ -15,5 +15,6 @@ namespace Assets.Scripts.AR_TEAM.Http {
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public string PhotoUrl { get; set; }
+        public Author Author { get; set; }
     }
 }

@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Assets.Scripts.AR_TEAM.Http {
-    class Exposition {
+    public class Exposition {
         public int ExpositionId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
@@ -11,5 +12,6 @@ namespace Assets.Scripts.AR_TEAM.Http {
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public string PhotoPath { get; set; }
+        public List<Exhibit> Exhibits { get; set; }
     }
 }

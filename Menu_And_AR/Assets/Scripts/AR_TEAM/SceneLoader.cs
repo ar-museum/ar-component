@@ -13,15 +13,9 @@ public class SceneLoader : MonoBehaviour
 
     static ArrayList sceneStack = new ArrayList();
 
-    IEnumerator Start()
+    void Start()
     {
         currentScene = SceneManager.GetActiveScene();
-        return new HttpRequests().GetEverything(OnExhibitLoaded);
-    }
-
-    void OnExhibitLoaded((List<Exhibit>, List<Author>) tuple) {
-        Debug.Log(tuple.Item1);
-        Debug.Log(tuple.Item2);
     }
 
     void Update()

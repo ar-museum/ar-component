@@ -1,17 +1,16 @@
-﻿using System.IO;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEditor;
-using UnityEngine.UI;
 using UnityEngine.Android;
 using UnityEngine.SceneManagement;
+using Assets.Scripts.AR_TEAM.HttpRequests;
+using Assets.Scripts.AR_TEAM.Http;
 
 public class LoadFindData : MonoBehaviour
 {
     public static double latitudine = 0;
     public static double longitudine = 0;
     public static MuseumArray museumData;
+    public static MuseumDto MuseumDto { get; private set; }
 
     void Awake()
     {
@@ -21,8 +20,17 @@ public class LoadFindData : MonoBehaviour
         }
     }
 
+    void OnMuseumLoaded(MuseumDto museum) {
+        museum.PopulateExhibits();
+        MuseumDto = museum;
+
+        var (title, author, id) = museum.FindArSceneInfoByExhibitId(4);
+        Debug.Log(museum);
+    }
+
     IEnumerator Start()
     {
+        yield return new HttpRequests().GetMuseumData(OnMuseumLoaded, 1);
         #if UNITY_EDITOR
             latitudine = 47.179035;
             longitudine = 27.567063;
@@ -30,10 +38,10 @@ public class LoadFindData : MonoBehaviour
             this.LoadMuseumJson();
 
             SceneManager.LoadScene("MenuScene");
-            yield return null;
-        #endif
+        yield return null;
+#endif
 
-        #if UNITY_ANDROID
+#if UNITY_ANDROID
             if (Permission.HasUserAuthorizedPermission(Permission.FineLocation))
             {
                 yield return StartCoroutine(LocationService());
@@ -42,7 +50,7 @@ public class LoadFindData : MonoBehaviour
             this.LoadMuseumJson();
 
             SceneManager.LoadScene("MenuScene");
-        #endif
+#endif
     }
 
     IEnumerator LocationService()

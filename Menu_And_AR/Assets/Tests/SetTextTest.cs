@@ -32,7 +32,7 @@ namespace Tests
                 var screenAttachedTexts = screenAttachedObject.GetComponentsInChildren<SetText>();
                 foreach( var screenAttachedText in screenAttachedTexts)
                 {
-                    if(screenAttachedText.getTextType() == SetText.TextType.TopText)
+                    if(screenAttachedText.GetTextType() == SetText.TextType.TopText)
                     {
                         Assert.AreEqual("test", screenAttachedText.GetText());
                     }
