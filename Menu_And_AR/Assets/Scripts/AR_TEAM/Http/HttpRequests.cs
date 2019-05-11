@@ -11,6 +11,7 @@ namespace Assets.Scripts.AR_TEAM.HttpRequests {
             "{ \"deviceId\": \"2535C5EB-D6ED-4ABC-956B-4ACF29938F26\", \"token\": \"680bff9eb1ba0a8d48badd598be95c5642ad2939\" }";
         private static readonly string API_URL = "https://armuseum.ml/api/";
         private static readonly string EXHIBITS_URL = API_URL + "exhibit";
+        private static readonly string EXHIBITS_RELS_URL = API_URL + "exh/rels";
         private static readonly string AUTHORS_URL = API_URL + "author";
         private static readonly string EXPOSITIONS_URL = API_URL + "exposition";
         private static readonly string MUSEUMS_URL = API_URL + "museum";
@@ -20,10 +21,8 @@ namespace Assets.Scripts.AR_TEAM.HttpRequests {
         public delegate void OnComplete<T>(T x);
         public delegate IEnumerator OnCompleteYield<T>(T x);
 
-        private List<Exhibit> Exhibits { get; set; }
-        private List<Author> Authors { get; set; }
-        private List<Exposition> Expositions { get; set; }
-        private int Completed { get; set; }
+        private OnComplete<MuseumDto> OnCompleteFunction { get; set; }
+        private MuseumDto Museum { get; set; }
 
         private static void SetHeaders(UnityWebRequest request) {
             request.SetRequestHeader("Content-Type", "application/json");
@@ -79,47 +78,40 @@ namespace Assets.Scripts.AR_TEAM.HttpRequests {
             }
         }
 
-        public IEnumerator GetMuseumData(OnComplete<Http.Museum> onComplete, int id) {
+        public IEnumerator GetMuseumData(OnComplete<MuseumDto> onComplete, int id) {
+            OnCompleteFunction = onComplete;
             yield return DoGetRequest($"{MUSEUMS_RELS_URL}/{id}", OnMuseumCompleted);
         }
-
-        //public IEnumerator GetEverything(OnComplete<(List<Exhibit>, List<Author>)> onComplete) {
-        //    yield return DoRequest(EXHIBITS_URL, JSON_TOKEN_INPUT, OnExhibitCompleted);
-        //    yield return DoRequest(AUTHORS_URL, JSON_TOKEN_INPUT, OnAuthorsCompleted);
-        //    yield return DoRequest(EXPOSITIONS_URL, JSON_TOKEN_INPUT, OnExpositionsCompleted);
-
-        //    onComplete((Exhibits, Authors));
-        //}
 
         private IEnumerator OnMuseumCompleted(string json) {
             var node = JSON.Parse(json);
             var museum = Deserializers.DeserializeMuseum(node);
+            Museum = museum;
 
             foreach (var expo in museum.Expositions) {
-                yield return DoGetRequest(EXPOSITIONS_RELS_URL, j => OnExhibitComplete(j, expo)));
+                yield return DoGetRequest($"{EXPOSITIONS_RELS_URL}/{expo.ExpositionId}", j => OnExpositionComplete(j, expo));
             }
         }
 
-        private void OnExhibitComplete(string json, Exposition exposition) {
+        private IEnumerator OnExpositionComplete(string json, Exposition exposition) {
+            var node = JSON.Parse(json);
+            exposition.Exhibits = Deserializers.DeserializeExhibitList(node["exhibits"]);
 
+            foreach (var exh in exposition.Exhibits) {
+                yield return DoGetRequest($"{EXHIBITS_RELS_URL}/{exh.ExhibitId}", j => OnExhibitComplete(j, exh));
+            }
+
+            OnCompleteFunction(Museum);
         }
 
-        private void OnExhibitCompleted(string json) {
+        private void OnExhibitComplete(string json, Exhibit exposition) {
             var node = JSON.Parse(json);
-            Exhibits = Deserializers.DeserializeExhibitList(node);
-            ++Completed;
+            exposition.Author = Deserializers.DeserializeAuthor(node["authors"]);
         }
 
-        private void OnAuthorsCompleted(string json) {
+        private void OnAuthorComplete(string json, Exhibit exhibit) {
             var node = JSON.Parse(json);
-            Authors = Deserializers.DeserializeAuthorList(node);
-            ++Completed;
-        }
-
-        private void OnExpositionsCompleted(string json) {
-            var node = JSON.Parse(json);
-            Expositions = Deserializers.DeserializeExpositionsList(node);
-            ++Completed;
+            exhibit.Author = Deserializers.DeserializeAuthor(node);
         }
     }
 }

@@ -51,7 +51,7 @@ public class TargetManager : MonoBehaviour
 #elif UNITY_ANDROID
         path = androiddddd; //"jar:file://" + Application.dataPath + "!/assets/RealTime.xml";
 #else
-		path = Application.dataPath + "/StreamingAssets/Vuforia/testy/StreamingAssets/ARMuseum.xml";
+		path = @"D:\facultate\anul2sem2\ip\ar-component\Menu_And_AR\Assets\StreamingAssets\Vuforia\ARMuseum.xml";
 #endif
 
         bool status = false;

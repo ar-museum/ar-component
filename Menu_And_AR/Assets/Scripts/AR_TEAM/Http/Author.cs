@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace Assets.Scripts.AR_TEAM.Http {
-    class Author {
+    public class Author {
         public int AuthorId { get; set; }
         public string FullName { get; set; }
         public int BornYear { get; set; }

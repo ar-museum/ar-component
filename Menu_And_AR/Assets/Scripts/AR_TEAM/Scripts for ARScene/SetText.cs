@@ -13,13 +13,13 @@ public class SetText : MonoBehaviour
     [SerializeField] public TextType textType;
 
     // SetTextTest test 1
-    public void SetMyText(String text)
+    public void SetMyText(string text)
     {
         GetComponent<TextMeshProUGUI>().text = text;
     }
 
     // SetTextTest test 1
-    public TextType getTextType()
+    public TextType GetTextType()
     {
         return textType;
     }
@@ -33,18 +33,20 @@ public class SetText : MonoBehaviour
     // SetTextTest test 1
     public static void SetInfoForTextComponents(SetText[] texts, string targetName)
     {
+        var (title, author, id) = LoadFindData.MuseumDto.FindArSceneInfoByExhibitId(5);
+
         foreach (var textComponent in texts)
         {
-            if (textComponent.getTextType() == SetText.TextType.TopText)
+            if (textComponent.GetTextType() == SetText.TextType.TopText)
             {
                 // Title
-                textComponent.SetMyText(targetName);
+                textComponent.SetMyText(title);
             }
-            else if (textComponent.getTextType() == SetText.TextType.BottomText)
+            else if (textComponent.GetTextType() == SetText.TextType.BottomText)
             {
                 // Author
                 // TODO: get the author from the database based on the name of the target
-                textComponent.SetMyText(targetName + "\'s author");
+                textComponent.SetMyText(author + "\'s author");
             }
         }
     }

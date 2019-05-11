@@ -13,14 +13,9 @@ public class SceneLoader : MonoBehaviour
 
     static ArrayList sceneStack = new ArrayList();
 
-    IEnumerator Start()
+    void Start()
     {
         currentScene = SceneManager.GetActiveScene();
-        return new HttpRequests().GetMuseumData(OnMuseumLoaded, 1);
-    }
-
-    void OnMuseumLoaded(Assets.Scripts.AR_TEAM.Http.Museum museum) {
-        Debug.Log(museum);
     }
 
     void Update()

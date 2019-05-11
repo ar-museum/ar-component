@@ -36,6 +36,9 @@ namespace Assets.Scripts.AR_TEAM.Http {
             string updatedAt = node["updated_at"];
             exhibit.UpdatedAt = Convert.ToDateTime(updatedAt);
             exhibit.PhotoUrl = node["photo_path"];
+            if (node["authors"] != null) {
+                exhibit.Author = DeserializeAuthor(node["authors"]);
+            }
 
             return exhibit;
         }
@@ -83,8 +86,8 @@ namespace Assets.Scripts.AR_TEAM.Http {
             return exposition;
         }
 
-        public static Museum DeserializeMuseum(JSONNode node) {
-            var museum = new Museum();
+        public static MuseumDto DeserializeMuseum(JSONNode node) {
+            var museum = new MuseumDto();
 
             museum.MuseumId = node["museum_id"];
             museum.Name = node["name"];
