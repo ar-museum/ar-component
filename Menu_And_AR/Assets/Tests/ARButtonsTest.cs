@@ -65,28 +65,6 @@ namespace Tests
 
             Assert.True(isButtonClicked);
         }
-
-
-        // test 3 Lipan Matei
-        [UnityTest]
-        public IEnumerator GivenARScenWhenMuteButtonIsPressedThenImageMustChange()
-        {
-            //Arrange
-            SceneManager.LoadScene("ARScene");
-            yield return new WaitForSeconds(1);
-
-            var buttonMuteObject = GameObject.Find("ButtonMute");
-            var buttonMute = buttonMuteObject.GetComponent<Button>();
-            var buttonMuteImageNameBefore = buttonMute.GetComponent<Image>().overrideSprite.name;
-
-            //Act
-            buttonMute.onClick.AddListener(Clicked);
-            buttonMute.onClick.Invoke();
-            var buttonMuteImageNameAfter = buttonMute.GetComponent<Image>().overrideSprite.name;
-
-            //Assert
-            Assert.AreNotEqual(buttonMuteImageNameBefore, buttonMuteImageNameAfter);
-        }
     }
 
     

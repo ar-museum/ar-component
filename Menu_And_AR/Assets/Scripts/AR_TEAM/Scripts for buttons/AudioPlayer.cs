@@ -18,7 +18,6 @@ public class AudioPlayer : MonoBehaviour
     public Sprite playButton;
     public Sprite pauseButton;
     public int counterPlay = 0;
-    public int counter = 0;
     private int playv = 0;
     private float playTime = (float)0;
     private string filename = "";
@@ -39,6 +38,7 @@ public class AudioPlayer : MonoBehaviour
         ienum = LoadAudio();
     }
 
+    // AudioPlayerTests test 1 test 2 test 3 test 4
     private IEnumerator LoadAudio()
     {
         WWW request = GetAudioFromFile(path, filename);
@@ -51,6 +51,7 @@ public class AudioPlayer : MonoBehaviour
         yield break;
     }
 
+    // AudioPlayerTests test 1 test 2 test 3 test 4
     private void PlayAudioFile()
     {
         source.clip = music;
@@ -58,6 +59,7 @@ public class AudioPlayer : MonoBehaviour
         source.Play();
     }
 
+    // AudioPlayerTests test 1 test 2 test 3 test 4
     private WWW GetAudioFromFile(string path, string filename)
     {
         string audioToLoad = string.Format(path + "{0}", filename);
@@ -65,19 +67,17 @@ public class AudioPlayer : MonoBehaviour
         return request;
     }
 
+    // AudioPlayerTests test 1 test 2 test 3 test 4
     public void PlayMusic(string songname)
     {
         if(source.isPlaying)
         {
-            
-            playTime = source.time;
-            source.Stop();
-            ChangePlayButton();
-            StopCoroutine(ienum);
-            btn_Play.image.overrideSprite = playButton;
+            // test 2 test 3 test 4
+            StopMusic();
         }
         else
         {
+            // test 1 test 2 test 3 test 4
             ChangePlayButton();
             song = songname;
             filename = songname + ".wav";
@@ -88,21 +88,16 @@ public class AudioPlayer : MonoBehaviour
         }
         
     }
-
+    // AudioPlayerTests test 2 test 3 test 4
     public void StopMusic()
     {
-        song = "";
-        filename = "";
+        playTime = source.time;
         source.Stop();
-        source.time = 0;
-        playTime = 0;
+        ChangePlayButton();
         StopCoroutine(ienum);
-        if (btn_Play.image != null)
-        {
-            btn_Play.image.overrideSprite = playButton;
-        }
-    } 
-
+        btn_Play.image.overrideSprite = playButton;
+    }
+    // AudioPlayerTests test 3 test 4
     public void PlayMusic()
     {
         if(filename != "")
@@ -111,6 +106,7 @@ public class AudioPlayer : MonoBehaviour
         }
     }
 
+    // ARButtonsTest test 2
     public void ChangePlayButton()
     {
         
@@ -126,7 +122,8 @@ public class AudioPlayer : MonoBehaviour
         }
         
     }
-    
+
+    // AudioPlayerTests test 4
     public void ReplayMusic()
     {
         if(filename != "")
