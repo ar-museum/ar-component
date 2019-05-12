@@ -31,7 +31,7 @@ public class SceneLoader : MonoBehaviour
                 }
                 else
                 {
-                    int backSceneIndex = (int) sceneStack[sceneStack.Count - 1];
+                    int backSceneIndex = (int)sceneStack[sceneStack.Count - 1];
                     sceneStack.RemoveAt(sceneStack.Count - 1);
                     SceneManager.LoadScene(backSceneIndex);
                 }
@@ -43,7 +43,7 @@ public class SceneLoader : MonoBehaviour
     {
         if (pauseStatus)
         {
-            pausedTime = Time.realtimeSinceStartup; 
+            pausedTime = Time.realtimeSinceStartup;
         }
         else
         {
@@ -66,9 +66,16 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadBackScene()
     {
-        int backSceneIndex = (int) sceneStack[sceneStack.Count - 1];
-        sceneStack.RemoveAt(sceneStack.Count - 1);
-        SceneManager.LoadScene(backSceneIndex);
+        if (sceneStack.Count > 0)
+        {
+            int backSceneIndex = (int)sceneStack[sceneStack.Count - 1];
+            sceneStack.RemoveAt(sceneStack.Count - 1);
+            SceneManager.LoadScene(backSceneIndex);
+        }
+        else
+        {
+            SceneManager.LoadScene("MenuScene");
+        }
     }
 
     public void LoadNextScene(string sceneCamera)

@@ -2,18 +2,27 @@
   "museums" : [
     {
       "name": "Muzeul de Literatura",
+      "name_eng": "Literary Museum",
       "latitude": 47.17214175, 
       "longitude": 27.57621925
     },
     {
       "name": "Muzeul Unirii",
+      "name_eng" : "Union Museum",
       "latitude": 47.167454,
       "longitude": 27.57897925
     },
     {
       "name": "Muzeul Mihai Eminescu",
+      "name_eng": "Mihai Eminescu Museum",
       "latitude": 47.179218, 
       "longitude": 27.56691275
+    },
+    {
+      "name": "Muzeul de Istorie Naturala",
+      "name_eng": "National History Museum",
+      "latitude": 47.16686875,
+      "longitude" : 27.5841265
     }
   ]
 }

@@ -11,159 +11,271 @@ namespace Tests
 {
     public class LocationTest
     {
-        [UnityTest] 
-        public IEnumerator Image_Based_On_Location_Test()
+        const string imagePath = "AR_TEAM/images/Museums/";
+        public static MuseumArray museumData;
+
+        [UnityTest]
+        public IEnumerator Activate_Location_Test()
         {
             //Arrange
-            SceneManager.LoadScene("MenuScene");
+            LoadFindData.latitudine = -1;
+            LoadFindData.longitudine = -1;
+            LoadFindData.isUnitTest = true;
+            Sprite imageNeeded = Resources.Load<Sprite>(imagePath + "No_Museum");
+            SceneManager.LoadScene(0);
             yield return new WaitForSeconds(1);
 
-            
-
-            var controlScriptObject = GameObject.FindGameObjectWithTag("SceneControl");
-            var controlScript = controlScriptObject.gameObject.GetComponent(typeof(SettingsBasedOnLocation)) as SettingsBasedOnLocation;
-         
-            double latitudine = controlScript.getLatitude();
-            double longitudine = controlScript.getLongitude();
-          
-            bool rightImage = false;
+            bool rightLoader = false;
 
             //Act
-            if (Math.Abs(latitudine - 47.172032) < 0.00001 && Math.Abs(longitudine - 27.576216) < 0.00001) // Muzeul de Literatura
+            GameObject imageObject = GameObject.Find("BackgroundImage");
+            GameObject textObject = GameObject.Find("TextBoxError/Text");
+            if (imageObject != null && textObject != null)
             {
-                GameObject text2Object = GameObject.Find("TextBoxMuseum/Text");
-                if (text2Object != null)
-                {
-                    var text2 = text2Object.GetComponent<Text>();
+                Image image = imageObject.GetComponent<Image>();
+                Text text = textObject.GetComponent<Text>();
 
-                    if (text2.text == "Bine ati venit la\n" + "Muzeul de Literatura")
-                    {
-                        rightImage = true;
-                    }
-                }
-            }
-            else if (Math.Abs(latitudine - 47.167430) < 0.00001 && Math.Abs(longitudine - 27.578895) < 0.00001) // Muzeul Unirii
-            {
-                GameObject text2Object = GameObject.Find("TextBoxMuseum/Text");
-                if (text2Object != null)
+                if (text.text == "Enable the location to let the application access the current coordinates of your position." && image.sprite == imageNeeded)
                 {
-                    var text2 = text2Object.GetComponent<Text>();
+                    GameObject buttonARObject = GameObject.Find("ButtonAR");
+                    GameObject buttonGalleryObject = GameObject.Find("ButtonGallery");
+                    GameObject buttonGamesObject = GameObject.Find("ButtonGames");
 
-                    if (text2.text == "Bine ati venit la\n" + "Muzeul Unirii")
+                    if (buttonARObject == null && buttonGalleryObject == null && buttonGamesObject == null)
                     {
-                        rightImage = true;
-                    }
-                }
-            }
-            else
-            {
-                GameObject text2Object = GameObject.Find("TextBoxMuseum/Text");
-                if (text2Object != null)
-                {
-                    var text2 = text2Object.GetComponent<Text>();
-
-                    if (text2.text == "Nu va aflati in\n incinta unui muzeu")
-                    {
-                        rightImage = true;
+                        rightLoader = true;
                     }
                 }
             }
 
             //Assert
-            Assert.True(rightImage);
+            Assert.True(rightLoader);
         }
 
         [UnityTest]
-        public IEnumerator LocationBehavior_MuzeulUnirii_LocationIsMuzeulUnirii_Test()
+        public IEnumerator Location_Test_No_Museum()
         {
-            // Arrange
-            SceneManager.LoadScene("MenuScene");
+            //Arrange
+            LoadFindData.latitudine = 1;
+            LoadFindData.longitudine = 1;
+            LoadFindData.isUnitTest = true;
+            Sprite imageNeeded = Resources.Load<Sprite>(imagePath + "No_Museum");
+            SceneManager.LoadScene(0);
             yield return new WaitForSeconds(1);
 
-            double expected_latitude = 47.167430;
-            double expected_longitude = 27.578895;
-            double latitude = 0;
-            double longitude = 0;
-            int expected_result = 0;
-            int result;
-            // Act
-            Input.location.Start();
-            latitude = Input.location.lastData.latitude;
-            longitude = Input.location.lastData.longitude;
-            //latitude = 47.167430;
-            //longitude = 27.578895;
-            Input.location.Stop();
+            bool rightLoader = false;
 
-            if (Math.Abs(latitude - expected_latitude) < 0.00010 && Math.Abs(longitude - expected_longitude) < 0.00010)
+            //Act
+            GameObject imageObject = GameObject.Find("BackgroundImage");
+            GameObject textObject = GameObject.Find("TextBoxMuseum/Text");
+            if (imageObject != null && textObject != null)
             {
-                result = 1;
+                Image image = imageObject.GetComponent<Image>();
+                Text text = textObject.GetComponent<Text>();
+
+                if (text.text == "You are not\n inside a museum" && image.sprite == imageNeeded)
+                {
+                    GameObject buttonARObject = GameObject.Find("ButtonAR");
+                    GameObject buttonGalleryObject = GameObject.Find("ButtonGallery");
+                    GameObject buttonGamesObject = GameObject.Find("ButtonGames");
+
+                    if (buttonARObject == null && buttonGalleryObject && buttonGamesObject)
+                    {
+                        rightLoader = true;
+                    }
+                }
             }
-            else result = 0;
-            // Assert
-            Assert.AreEqual(expected_result, result);
+
+            //Assert
+            Assert.True(rightLoader);
+        }
+
+        void LoadMuseumJson()
+        {
+            string dataPath = "AR_TEAM/MuseumsData";
+            TextAsset json = Resources.Load<TextAsset>(dataPath);
+
+            museumData = JsonUtility.FromJson<MuseumArray>(json.text);
         }
 
         [UnityTest]
-        public IEnumerator LocationBehavior_MuzeulDeLiteratura_LocationIsMuzeulDeLiteratura_Test()
+        public IEnumerator Location_Test_Literary_Museum()
         {
-            // Arrange
-            SceneManager.LoadScene("MenuScene");
+            //Arrange
+            this.LoadMuseumJson();
+            for (int i = 0; i < museumData.museums.Count; ++i)
+            {
+                if (museumData.museums[i].name.Equals("Muzeul de Literatura"))
+                {
+                    LoadFindData.latitudine = museumData.museums[i].latitude;
+                    LoadFindData.longitudine = museumData.museums[i].longitude;
+                }
+            }
+            LoadFindData.isUnitTest = true;
+            Sprite imageNeeded = Resources.Load<Sprite>(imagePath + "Muzeul_de_Literatura");
+            SceneManager.LoadScene(0);
             yield return new WaitForSeconds(1);
 
-            double expected_latitude = 47.172032;
-            double expected_longitude = 27.576216;
-            double latitude = 0;
-            double longitude = 0;
-            int expected_result = 0;
-            int result;
-            // Act
-            Input.location.Start();
-            latitude = Input.location.lastData.latitude;
-            longitude = Input.location.lastData.longitude;
-            //latitude = 47.167430;
-            //longitude = 27.578895;
-            Input.location.Stop();
-            if (Math.Abs(latitude - expected_latitude) < 0.00010 && Math.Abs(longitude - expected_longitude) < 0.00010)
+            bool rightLoader = false;
+
+            //Act
+            GameObject imageObject = GameObject.Find("BackgroundImage");
+            GameObject textObject = GameObject.Find("TextBoxMuseum/Text");
+            if (imageObject != null && textObject != null)
             {
-                result = 1;
+                Image image = imageObject.GetComponent<Image>();
+                Text text = textObject.GetComponent<Text>();
+
+                if (text.text == "Welcome to\nLiterary Museum" && image.sprite == imageNeeded)
+                {
+                    GameObject buttonARObject = GameObject.Find("ButtonAR");
+                    GameObject buttonGalleryObject = GameObject.Find("ButtonGallery");
+                    GameObject buttonGamesObject = GameObject.Find("ButtonGames");
+
+                    if (buttonARObject && buttonGalleryObject && buttonGamesObject)
+                    {
+                        rightLoader = true;
+                    }
+                }
             }
-            else result = 0;
-            // Assert
-            Assert.AreEqual(expected_result, result);
+
+            //Assert
+            Assert.True(rightLoader);
         }
 
         [UnityTest]
-        public IEnumerator LocationBehavior_DifferentLocation_LocationIsNotAccepted_Test()
+        public IEnumerator Location_Test_Union_Museum()
         {
-            // Arrange
-            SceneManager.LoadScene("MenuScene");
+            //Arrange
+            this.LoadMuseumJson();
+            for (int i = 0; i < museumData.museums.Count; ++i)
+            {
+                if (museumData.museums[i].name.Equals("Muzeul Unirii"))
+                {
+                    LoadFindData.latitudine = museumData.museums[i].latitude;
+                    LoadFindData.longitudine = museumData.museums[i].longitude;
+                }
+            }
+            LoadFindData.isUnitTest = true;
+            Sprite imageNeeded = Resources.Load<Sprite>(imagePath + "Muzeul_Unirii");
+            SceneManager.LoadScene(0);
             yield return new WaitForSeconds(1);
 
-            double latitude = 0;
-            double longitude = 0;
-            int expected_result = 1;
-            int result;
-            // Act
-            Input.location.Start();
-            latitude = Input.location.lastData.latitude;
-            longitude = Input.location.lastData.longitude;
-            //latitude = 47.167430;
-            //longitude = 27.578895;
-            Input.location.Stop();
-            if (Math.Abs(latitude - 47.172032) != 0.00010 && Math.Abs(longitude - 27.576216) != 0.00010)
-            {
-                result = 1;
-            }
-            else result = 0;
-            if (Math.Abs(latitude - 47.167430) != 0.00010 && Math.Abs(longitude - 27.578895) != 0.00010)
-            {
-                result = 1;
-            }
-            else result = 0;
+            bool rightLoader = false;
 
-            // Assert
-            Assert.AreEqual(expected_result, result);
+            //Act
+            GameObject imageObject = GameObject.Find("BackgroundImage");
+            GameObject textObject = GameObject.Find("TextBoxMuseum/Text");
+            if (imageObject != null && textObject != null)
+            {
+                Image image = imageObject.GetComponent<Image>();
+                Text text = textObject.GetComponent<Text>();
+
+                if (text.text == "Welcome to\nUnion Museum" && image.sprite == imageNeeded)
+                {
+                    GameObject buttonARObject = GameObject.Find("ButtonAR");
+                    GameObject buttonGalleryObject = GameObject.Find("ButtonGallery");
+                    GameObject buttonGamesObject = GameObject.Find("ButtonGames");
+
+                    if (buttonARObject && buttonGalleryObject && buttonGamesObject)
+                    {
+                        rightLoader = true;
+                    }
+                }
+            }
+
+            //Assert
+            Assert.True(rightLoader);
         }
 
+        [UnityTest]
+        public IEnumerator Location_Test_Mihai_Eminescu_Museum()
+        {
+            //Arrange
+            this.LoadMuseumJson();
+            for (int i = 0; i < museumData.museums.Count; ++i)
+            {
+                if (museumData.museums[i].name.Equals("Muzeul Mihai Eminescu"))
+                {
+                    LoadFindData.latitudine = museumData.museums[i].latitude;
+                    LoadFindData.longitudine = museumData.museums[i].longitude;
+                }
+            }
+            LoadFindData.isUnitTest = true;
+            Sprite imageNeeded = Resources.Load<Sprite>(imagePath + "Muzeul_Mihai_Eminescu");
+            SceneManager.LoadScene(0);
+            yield return new WaitForSeconds(1);
+
+            bool rightLoader = false;
+
+            //Act
+            GameObject imageObject = GameObject.Find("BackgroundImage");
+            GameObject textObject = GameObject.Find("TextBoxMuseum/Text");
+            if (imageObject != null && textObject != null)
+            {
+                Image image = imageObject.GetComponent<Image>();
+                Text text = textObject.GetComponent<Text>();
+
+                if (text.text == "Welcome to\nMihai Eminescu Museum" && image.sprite == imageNeeded)
+                {
+                    GameObject buttonARObject = GameObject.Find("ButtonAR");
+                    GameObject buttonGalleryObject = GameObject.Find("ButtonGallery");
+                    GameObject buttonGamesObject = GameObject.Find("ButtonGames");
+
+                    if (buttonARObject && buttonGalleryObject && buttonGamesObject)
+                    {
+                        rightLoader = true;
+                    }
+                }
+            }
+
+            //Assert
+            Assert.True(rightLoader);
+        }
+
+        [UnityTest]
+        public IEnumerator Location_Test_National_History_Museum()
+        {
+            //Arrange
+            this.LoadMuseumJson();
+            for (int i = 0; i < museumData.museums.Count; ++i)
+            {
+                if (museumData.museums[i].name.Equals("Muzeul de Istorie Naturala"))
+                {
+                    LoadFindData.latitudine = museumData.museums[i].latitude;
+                    LoadFindData.longitudine = museumData.museums[i].longitude;
+                }
+            }
+            LoadFindData.isUnitTest = true;
+            Sprite imageNeeded = Resources.Load<Sprite>(imagePath + "Muzeul_de_Istorie_Naturala");
+            SceneManager.LoadScene(0);
+            yield return new WaitForSeconds(1);
+
+            bool rightLoader = false;
+
+            //Act
+            GameObject imageObject = GameObject.Find("BackgroundImage");
+            GameObject textObject = GameObject.Find("TextBoxMuseum/Text");
+            if (imageObject != null && textObject != null)
+            {
+                Image image = imageObject.GetComponent<Image>();
+                Text text = textObject.GetComponent<Text>();
+
+                if (text.text == "Welcome to\nNational History Museum" && image.sprite == imageNeeded)
+                {
+                    GameObject buttonARObject = GameObject.Find("ButtonAR");
+                    GameObject buttonGalleryObject = GameObject.Find("ButtonGallery");
+                    GameObject buttonGamesObject = GameObject.Find("ButtonGames");
+
+                    if (buttonARObject && buttonGalleryObject && buttonGamesObject)
+                    {
+                        rightLoader = true;
+                    }
+                }
+            }
+
+            //Assert
+            Assert.True(rightLoader);
+        }
     }
 }

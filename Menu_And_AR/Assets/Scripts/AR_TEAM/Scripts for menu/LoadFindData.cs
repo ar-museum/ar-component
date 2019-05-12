@@ -9,6 +9,7 @@ public class LoadFindData : MonoBehaviour
 {
     public static double latitudine = 0;
     public static double longitudine = 0;
+    public static bool isUnitTest = false;
     public static MuseumArray museumData;
     
 
@@ -23,27 +24,33 @@ public class LoadFindData : MonoBehaviour
     IEnumerator Start()
     {
         // TODO: id-ul trebuie obtinut pe baza locatiei
-        yield return MuseumManager.Instance.RequestMuseumByID(1);
-#if UNITY_EDITOR
-        latitudine = 47.179035;
-            longitudine = 27.567063;
-
-            this.LoadMuseumJson();
-
-            SceneManager.LoadScene("MenuScene");
-        yield return null;
-#endif
-
-#if UNITY_ANDROID
-            if (Permission.HasUserAuthorizedPermission(Permission.FineLocation))
+        if(!isUnitTest)
+        {
+            yield return MuseumManager.Instance.RequestMuseumByID(1);
+        }
+        #if UNITY_EDITOR
+            if (latitudine == 0 && longitudine == 0)
             {
-                yield return StartCoroutine(LocationService());
+                latitudine = 47.179035; 
+                longitudine = 27.567063; 
             }
 
             this.LoadMuseumJson();
 
             SceneManager.LoadScene("MenuScene");
-#endif
+            yield return null;
+        #endif
+
+        #if UNITY_ANDROID
+            if (Permission.HasUserAuthorizedPermission(Permission.FineLocation))
+                {
+                    yield return StartCoroutine(LocationService());
+                }
+
+            this.LoadMuseumJson();
+
+            SceneManager.LoadScene("MenuScene");
+        #endif
     }
 
     IEnumerator LocationService()

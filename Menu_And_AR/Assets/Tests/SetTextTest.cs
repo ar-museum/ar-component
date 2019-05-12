@@ -15,6 +15,7 @@ namespace Tests
         public IEnumerator SetText_SetInfoForTextComponents_Test()
         {
             //Arrange
+            LoadFindData.isUnitTest = false;
             SceneManager.LoadScene("PreloadScene");
             yield return new WaitForSeconds(10);
             SceneManager.LoadScene("ARScene");

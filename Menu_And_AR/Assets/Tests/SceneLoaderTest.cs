@@ -17,10 +17,9 @@ namespace Tests
         public IEnumerator MenuScene_ARButton_Press_Test()
         {
             //Arrange
+            LoadFindData.isUnitTest = true;
             SceneManager.LoadScene("PreloadScene");
-            yield return new WaitForSeconds(10);
-            //SceneManager.LoadScene("MenuScene");
-            //yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1);
 
             var buttonARObject = GameObject.Find("ButtonAR");
             var buttonAR = buttonARObject.GetComponent<Button>();
@@ -33,10 +32,8 @@ namespace Tests
             isButtonClicked = false;
 
             //Act
-            buttonAR.onClick.AddListener(() => { ClickButton("ARScene"); } );
+            buttonAR.onClick.AddListener(() => { ClickButton("ARScene"); });
             buttonAR.onClick.Invoke();
-            //yield return new WaitForSeconds(5);
-
 
             //Assert
             Assert.True(isButtonClicked);
@@ -50,7 +47,8 @@ namespace Tests
         public IEnumerator MenuScene_GalleryButton_Press_Test()
         {
             //Arrange
-            SceneManager.LoadScene("MenuScene");
+            LoadFindData.isUnitTest = true;
+            SceneManager.LoadScene("PreloadScene");
             yield return new WaitForSeconds(1);
 
             var buttonGalleryObject = GameObject.Find("ButtonGallery");
@@ -64,7 +62,6 @@ namespace Tests
             //Act
             buttonGallery.onClick.AddListener(() => { ClickButton("GalleryScene"); });
             buttonGallery.onClick.Invoke();
-            //yield return new WaitForSeconds(5);
 
             //Assert
             Assert.True(isButtonClicked);
@@ -78,7 +75,8 @@ namespace Tests
         public IEnumerator MenuScene_GamesButton_Press_Test()
         {
             //Arrange
-            SceneManager.LoadScene("MenuScene");
+            LoadFindData.isUnitTest = true;
+            SceneManager.LoadScene("PreloadScene");
             yield return new WaitForSeconds(1);
 
             var buttonGamesObject = GameObject.Find("ButtonGames");
@@ -92,7 +90,6 @@ namespace Tests
             //Act
             buttonGames.onClick.AddListener(() => { ClickButton("GamesScene"); });
             buttonGames.onClick.Invoke();
-            //yield return new WaitForSeconds(5);
 
             //Assert
             Assert.True(isButtonClicked);
@@ -106,29 +103,28 @@ namespace Tests
         public IEnumerator ARScene_BackButton_Press_Test()
         {
             //Arrange
-            SceneManager.LoadScene("MenuScene");
-            yield return new WaitForSeconds(1);
-            var controlScriptObject = GameObject.FindGameObjectWithTag("SceneControl");
-            var controlScript = controlScriptObject.gameObject.GetComponent(typeof(SceneLoader)) as SceneLoader;
-
-            controlScript.LoadNextScene("ARScene");
+            //SceneManager.LoadScene("PreloadScene");
+            //yield return new WaitForSeconds(10);
+            SceneManager.LoadScene("ARScene");
             yield return new WaitForSeconds(1);
 
             var buttonBackObject = GameObject.Find("ButtonBack");
             var buttonBack = buttonBackObject.GetComponent<Button>();
 
+            var controlScriptObject = GameObject.FindGameObjectWithTag("SceneControl");
+            var controlScript = controlScriptObject.gameObject.GetComponent(typeof(SceneLoader)) as SceneLoader;
+
             isButtonClicked = false;
 
             //Act
-            buttonBack.onClick.AddListener(() => { ClickButton("MenuScene"); });
+            buttonBack.onClick.AddListener(() => { ClickButton(""); });
             buttonBack.onClick.Invoke();
-            //yield return new WaitForSeconds(5);
 
             //Assert
             Assert.True(isButtonClicked);
             if (isButtonClicked)
             {
-                Assert.DoesNotThrow(() => { controlScript.LoadNextScene(sceneToLoad); });
+                Assert.DoesNotThrow(() => { controlScript.LoadBackScene(); });
             }
         }
 
@@ -136,30 +132,26 @@ namespace Tests
         public IEnumerator GalleryScene_BackButton_Press_Test()
         {
             //Arrange
-            SceneManager.LoadScene("MenuScene");
-            yield return new WaitForSeconds(1);
-            var controlScriptObject = GameObject.FindGameObjectWithTag("SceneControl");
-            var controlScript = controlScriptObject.gameObject.GetComponent(typeof(SceneLoader)) as SceneLoader;
-
-            controlScript.LoadNextScene("GalleryScene");
+            SceneManager.LoadScene("GalleryScene");
             yield return new WaitForSeconds(1);
 
             var buttonBackObject = GameObject.Find("ButtonBack");
             var buttonBack = buttonBackObject.GetComponent<Button>();
 
+            var controlScriptObject = GameObject.FindGameObjectWithTag("SceneControl");
+            var controlScript = controlScriptObject.gameObject.GetComponent(typeof(SceneLoader)) as SceneLoader;
 
             isButtonClicked = false;
 
             //Act
-            buttonBack.onClick.AddListener(() => { ClickButton("MenuScene"); });
+            buttonBack.onClick.AddListener(() => { ClickButton(""); });
             buttonBack.onClick.Invoke();
-            //yield return new WaitForSeconds(5);
 
             //Assert
             Assert.True(isButtonClicked);
             if (isButtonClicked)
             {
-                Assert.DoesNotThrow(() => { controlScript.LoadNextScene(sceneToLoad); });
+                Assert.DoesNotThrow(() => { controlScript.LoadBackScene(); });
             }
         }
 
@@ -167,29 +159,26 @@ namespace Tests
         public IEnumerator GamesScene_BackButton_Press_Test()
         {
             //Arrange
-            SceneManager.LoadScene("MenuScene");
-            yield return new WaitForSeconds(1);
-            var controlScriptObject = GameObject.FindGameObjectWithTag("SceneControl");
-            var controlScript = controlScriptObject.gameObject.GetComponent(typeof(SceneLoader)) as SceneLoader;
-
-            controlScript.LoadNextScene("GamesScene");
+            SceneManager.LoadScene("GamesScene");
             yield return new WaitForSeconds(1);
 
             var buttonBackObject = GameObject.Find("ButtonBack");
             var buttonBack = buttonBackObject.GetComponent<Button>();
 
+            var controlScriptObject = GameObject.FindGameObjectWithTag("SceneControl");
+            var controlScript = controlScriptObject.gameObject.GetComponent(typeof(SceneLoader)) as SceneLoader;
+
             isButtonClicked = false;
 
             //Act
-            buttonBack.onClick.AddListener(() => { ClickButton("MenuScene"); });
+            buttonBack.onClick.AddListener(() => { ClickButton(""); });
             buttonBack.onClick.Invoke();
-            //yield return new WaitForSeconds(5);
 
             //Assert
             Assert.True(isButtonClicked);
             if (isButtonClicked)
             {
-                Assert.DoesNotThrow(() => { controlScript.LoadNextScene(sceneToLoad); });
+                Assert.DoesNotThrow(() => { controlScript.LoadBackScene(); });
             }
         }
 
@@ -203,12 +192,12 @@ namespace Tests
         public IEnumerator LoadScene_WrongScene_Test()
         {
             //Arrange
-            SceneManager.LoadScene("MenuScene");
+            LoadFindData.isUnitTest = true;
+            SceneManager.LoadScene("PreloadScene");
             yield return new WaitForSeconds(1);
 
             var menuControlObject = GameObject.FindGameObjectWithTag("SceneControl");
             var menuControl = menuControlObject.gameObject.GetComponent(typeof(SceneLoader)) as SceneLoader;
-            //Debug.Log(menuControl);
             sceneToLoad = "Scene";
 
             //Act
@@ -221,7 +210,8 @@ namespace Tests
         public IEnumerator LoadScene_RightScene_Test()
         {
             //Arrange
-            SceneManager.LoadScene("MenuScene");
+            LoadFindData.isUnitTest = true;
+            SceneManager.LoadScene("PreloadScene");
             yield return new WaitForSeconds(1);
 
             var menuControlObject = GameObject.FindGameObjectWithTag("SceneControl");

@@ -8,16 +8,21 @@ using UnityEngine.Android;
 
 public class SettingsBasedOnLocation : MonoBehaviour
 {
-    string imagePath = "AR_TEAM/images/Museums/";
+    const string imagePath = "AR_TEAM/images/Museums/";
+    string textAllowLocation_ro = "Permiteti aplicatiei sa aiba acces la locatia dumneavoastra astfel incat sa puteti fi localizat.";
+    string textAllowLocation_eng = "Allow the application to access your location so you can be located.";
+    string textActivateLocation_ro = "Activati locatia pentru a putea permite aplicatiei sa acceseze coordonatele actuale ale pozitiei dumneavoastra.";
+    string textActivateLocation_eng = "Enable the location to let the application access the current coordinates of your position.";
+    string textWelcome_ro = "Bine ati venit la\n";
+    string textWelcome_eng = "Welcome to\n";
+    string textNoMuseum_ro = "Nu va aflati in\n incinta unui muzeu";
+    string textNoMuseum_eng = "You are not\n inside a museum";
+    const double pi = 3.141592653589793;
+    const double radius = 6371;
+    const double distanceMuseum = 0.1; //0.1 km
 
     void Awake()
     {
-        //testing porposes
-        //Trebuie eliminata si vazut maine cum inlocuita sa nu pice testele
-        //testele pica pentru ca lista de muzee este goala si  LoadFindData.museumData.museums.Count da null pointer exception
-        //de asta am pus si metoda asta aici
-        setLoadMuseum();
-
         GameObject textBoxErrorObject = GameObject.Find("TextBoxError");
         textBoxErrorObject.SetActive(false);
 
@@ -44,19 +49,20 @@ public class SettingsBasedOnLocation : MonoBehaviour
                 textBoxErrorObject.SetActive(true);
                 GameObject textErrorObject = GameObject.Find("TextBoxError/Text");
                 Text textError = textErrorObject.GetComponent<Text>();
-                textError.text = "Activati locatia pentru a putea permite aplicatiei sa acceseze coordonatele actuale ale pozitiei dumneavoastra.";
+                textError.text = textActivateLocation_eng;
             }
             else
             {
                 bool gasit = false;
-                
+
+
                 for (int i = 0; i < LoadFindData.museumData.museums.Count; ++i)
                 {
-                    if (Math.Abs(LoadFindData.latitudine - LoadFindData.museumData.museums[i].latitude) < 0.001 && Math.Abs(LoadFindData.longitudine - LoadFindData.museumData.museums[i].longitude) < 0.001)
+                    if (verifyLocation(LoadFindData.museumData.museums[i].latitude, LoadFindData.museumData.museums[i].longitude))
                     {
                         gasit = true;
-                        Sprite image = Resources.Load <Sprite> (imagePath + LoadFindData.museumData.museums[i].name.Replace(" ","_"));
-                        if(image == null)
+                        Sprite image = Resources.Load<Sprite>(imagePath + LoadFindData.museumData.museums[i].name.Replace(" ", "_"));
+                        if (image == null)
                         {
                             image = Resources.Load<Sprite>(imagePath + "No_Museum");
                         }
@@ -66,7 +72,7 @@ public class SettingsBasedOnLocation : MonoBehaviour
                         textBoxMuseumObject.SetActive(true);
                         GameObject textMuseumObject = GameObject.Find("TextBoxMuseum/Text");
                         Text textMuseum = textMuseumObject.GetComponent<Text>();
-                        textMuseum.text = "Bine ati venit la\n" + LoadFindData.museumData.museums[i].name;
+                        textMuseum.text = textWelcome_eng + LoadFindData.museumData.museums[i].name_eng;
 
                         buttonARObject.SetActive(true);
                         buttonGalleryObject.SetActive(true);
@@ -82,7 +88,7 @@ public class SettingsBasedOnLocation : MonoBehaviour
                     textBoxMuseumObject.SetActive(true);
                     GameObject textMuseumObject = GameObject.Find("TextBoxMuseum/Text");
                     Text textMuseum = textMuseumObject.GetComponent<Text>();
-                    textMuseum.text = "Nu va aflati in\n incinta unui muzeu";
+                    textMuseum.text = textNoMuseum_eng;
 
                     buttonGalleryObject.SetActive(true);
                     buttonGamesObject.SetActive(true);
@@ -98,25 +104,27 @@ public class SettingsBasedOnLocation : MonoBehaviour
             textBoxErrorObject.SetActive(true);
             GameObject textErrorObject = GameObject.Find("TextBoxError/Text");
             Text textError = textErrorObject.GetComponent<Text>();
-            textError.text = "Permiteti aplicatiei sa aiba acces la locatia dumneavoastra astfel incat sa puteti fi localizat.";
+            textError.text = textAllowLocation_eng;
         }
     }
 
-    public double getLatitude()
+    public bool verifyLocation(double latitude, double longitude)
     {
-        return LoadFindData.latitudine;
+        double latitudeUserRad = degreesToRadians(LoadFindData.latitudine);
+        double latitudeLocationRad = degreesToRadians(latitude);
+
+        double distanceLatitudeRad = degreesToRadians(LoadFindData.latitudine - latitude);
+        double distanceLongitudeRad = degreesToRadians(LoadFindData.longitudine - longitude);
+
+        double value = Math.Sin(distanceLatitudeRad / 2) * Math.Sin(distanceLatitudeRad / 2) + Math.Cos(latitudeUserRad) * Math.Cos(latitudeLocationRad) * Math.Sin(distanceLongitudeRad / 2) * Math.Sin(distanceLongitudeRad / 2);
+        double result = 2 * radius * Math.Atan2(Math.Sqrt(value), Math.Sqrt(1 - value));
+
+        if (result <= distanceMuseum) return true;
+        else return false;
     }
 
-    public double getLongitude()
+    public double degreesToRadians(double value)
     {
-        return LoadFindData.longitudine;
-    }
-
-    public void setLoadMuseum()
-    {
-        string dataPath = "AR_TEAM/MuseumsData";
-        TextAsset json = Resources.Load<TextAsset>(dataPath);
-
-        LoadFindData.museumData = JsonUtility.FromJson<MuseumArray>(json.text);
+        return value * pi / 180.0;
     }
 }
