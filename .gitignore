@@ -7,6 +7,7 @@
 */[Bb]uilds/
 */[Ll]ogs/
 */PlayerDataCache/
+*/QCAR/
 
 # Never ignore Asset meta data
 !/[Aa]ssets/**/*.meta
