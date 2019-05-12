@@ -34,5 +34,13 @@ namespace Assets.Scripts.AR_TEAM.Http {
             }
             return (exhibit.Title, exhibit.Author.FullName, exhibit.Author.AuthorId);
         }
+
+        public string GetSongForExhibitId(int id)
+        {
+            return Exhibits
+                .Where(x => x.ExhibitId == id)
+                .Select(x => x.AudioPathOnDisk)
+                .First();
+        }
     }
 }

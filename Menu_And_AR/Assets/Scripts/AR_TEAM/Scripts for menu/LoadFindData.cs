@@ -23,34 +23,28 @@ public class LoadFindData : MonoBehaviour
 
     IEnumerator Start()
     {
-        // TODO: id-ul trebuie obtinut pe baza locatiei
-        if(!isUnitTest)
+#if UNITY_EDITOR
+        if (latitudine == 0 && longitudine == 0)
         {
-            yield return MuseumManager.Instance.RequestMuseumInfo(new GeoCoordinate(322.44234, -23.1132324));
+            latitudine = 47.179035; 
+            longitudine = 27.567063;
         }
-        #if UNITY_EDITOR
-            if (latitudine == 0 && longitudine == 0)
-            {
-                latitudine = 47.179035; 
-                longitudine = 27.567063; 
-            }
+#elif UNITY_ANDROID
+        if (Permission.HasUserAuthorizedPermission(Permission.FineLocation))
+        {
+            yield return StartCoroutine(LocationService());
+        }
+#endif
+        // TODO: id-ul trebuie obtinut pe baza locatiei
+        if (!isUnitTest)
+        {
+            yield return MuseumManager.Instance.RequestMuseumInfo(new GeoCoordinate(latitudine, longitudine));
+        }
 
-            this.LoadMuseumJson();
+        this.LoadMuseumJson();
 
-            SceneManager.LoadScene("MenuScene");
-            yield return null;
-        #endif
-
-        #if UNITY_ANDROID
-            if (Permission.HasUserAuthorizedPermission(Permission.FineLocation))
-                {
-                    yield return StartCoroutine(LocationService());
-                }
-
-            this.LoadMuseumJson();
-
-            SceneManager.LoadScene("MenuScene");
-        #endif
+        SceneManager.LoadScene("MenuScene");
+        yield return null;
     }
 
     IEnumerator LocationService()
