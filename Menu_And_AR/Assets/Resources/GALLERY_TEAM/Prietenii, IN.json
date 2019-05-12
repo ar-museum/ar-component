@@ -1,0 +1,16 @@
+{
+    "exhibit_id" : "56",
+	"title": "Prietenii",
+	"short_description": "Pictura.",
+	"description": "Tablou realizat in ulei, pe panza, il infatiseaza Mihai Eminescu, alaturi de prietenul sau, scriitorul Ion Creanga, dar si de marea lui iubire, Veronica Micle, intr-un cadru mult indragit de poet: codrul.",
+	"start_year" : "1989",
+	"end_year":"1989",
+	"author_id" : "37",
+	"size" : "-",
+	"exposition_id" : "8",
+	"location" : "Iasi",
+	"staff_id" : "2",
+	"photo_id" : "86",
+	"video_id" : "-",
+	"audio_id" : "-"
+}

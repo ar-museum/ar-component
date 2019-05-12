@@ -80,10 +80,16 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadNextScene(string sceneCamera)
     {
-        if (string.Compare(sceneCamera, "MenuScene") == 0 || string.Compare(sceneCamera, "ARScene") == 0 || string.Compare(sceneCamera, "GalleryScene") == 0 || string.Compare(sceneCamera, "GamesScene") == 0)
+        if (string.Compare(sceneCamera, "MenuScene") == 0 || string.Compare(sceneCamera, "ARScene") == 0 || string.Compare(sceneCamera, "GalleryScene") == 0 || string.Compare(sceneCamera, "GamesScene") == 0 || string.Compare(sceneCamera, "AuthorScene") == 0 || string.Compare(sceneCamera, "ExhibitScene") == 0)
         {
             sceneStack.Add(currentScene.buildIndex);
             SceneManager.LoadScene(sceneCamera);
+            if(string.Compare(currentScene.name, "ARScene") == 0)
+            {
+                PlayerPrefs.SetString("author", "Mircea_Ispir");
+                PlayerPrefs.SetString("exhibit", "Mirtil_si_Chloe");
+               
+            }
         }
         else
         {
