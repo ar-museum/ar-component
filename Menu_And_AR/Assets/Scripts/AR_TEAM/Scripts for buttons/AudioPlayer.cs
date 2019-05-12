@@ -20,38 +20,31 @@ public class AudioPlayer : MonoBehaviour
     public int counterPlay = 0;
     private int playv = 0;
     private float playTime = (float)0;
-    private string filename = "";
-    private string path;
-    private string song;
+    private string songPath = "";
 
     IEnumerator ienum;
 
     void Start()
     {
-        path = "file://" + Application.streamingAssetsPath + '/';
-        if (Application.isMobilePlatform)
-        {
-            path = "file://" + Application.persistentDataPath + '/';
-        }
-        path += "Sound/";
+        
         source = GetComponent<AudioSource>();
         ienum = LoadAudio();
     }
 
-    // AudioPlayerTests test 1 test 2 test 3 test 4
+    // AudioPlayerTests test 1 test 2 test 3 test 4 test 5
     private IEnumerator LoadAudio()
     {
-        WWW request = GetAudioFromFile(path, filename);
+        WWW request = new WWW("file://" + songPath);
         yield return request;
 
         music = request.GetAudioClip();
-        music.name = filename;
+        music.name = songPath;
 
         PlayAudioFile();
         yield break;
     }
 
-    // AudioPlayerTests test 1 test 2 test 3 test 4
+    // AudioPlayerTests test 1 test 2 test 3 test 4 test 5
     private void PlayAudioFile()
     {
         source.clip = music;
@@ -59,28 +52,19 @@ public class AudioPlayer : MonoBehaviour
         source.Play();
     }
 
-    // AudioPlayerTests test 1 test 2 test 3 test 4
-    private WWW GetAudioFromFile(string path, string filename)
-    {
-        string audioToLoad = string.Format(path + "{0}", filename);
-        WWW request = new WWW(audioToLoad);
-        return request;
-    }
-
-    // AudioPlayerTests test 1 test 2 test 3 test 4
-    public void PlayMusic(string songname)
+    // AudioPlayerTests test 1 test 2 test 3 test 4 test 5
+    public void PlayMusic(string songPath)
     {
         if(source.isPlaying)
         {
             // test 2 test 3 test 4
-            StopMusic();
+            PauseMusic();
         }
         else
         {
             // test 1 test 2 test 3 test 4
             ChangePlayButton();
-            song = songname;
-            filename = songname + ".wav";
+            this.songPath = songPath;
             StopCoroutine(ienum);
             ienum = LoadAudio();
             StartCoroutine(ienum);
@@ -89,7 +73,7 @@ public class AudioPlayer : MonoBehaviour
         
     }
     // AudioPlayerTests test 2 test 3 test 4
-    public void StopMusic()
+    public void PauseMusic()
     {
         playTime = source.time;
         source.Stop();
@@ -97,12 +81,23 @@ public class AudioPlayer : MonoBehaviour
         StopCoroutine(ienum);
         btn_Play.image.overrideSprite = playButton;
     }
+    // AudioPlayerTests test 5
+    public void StopMusic()
+    {
+        source.Stop();
+        source.time = 0;
+        songPath = "";
+        ChangePlayButton();
+        StopCoroutine(ienum);
+        btn_Play.image.overrideSprite = playButton;
+    }
+
     // AudioPlayerTests test 3 test 4
     public void PlayMusic()
     {
-        if(filename != "")
+        if(songPath != "")
         {
-            PlayMusic(song);
+            PlayMusic(songPath);
         }
     }
 
@@ -126,7 +121,7 @@ public class AudioPlayer : MonoBehaviour
     // AudioPlayerTests test 4
     public void ReplayMusic()
     {
-        if(filename != "")
+        if(songPath != "")
         {
             source.Stop();
             source.time = 0;

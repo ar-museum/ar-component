@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class MyImageTargetTrackableEventHandler : DefaultTrackableEventHandler
 {
@@ -39,8 +40,8 @@ public class MyImageTargetTrackableEventHandler : DefaultTrackableEventHandler
     {
         if(AudioPlayer != null)
         {
-            string songname = GetTrackableID();
-            AudioPlayer.PlayMusic(songname);
+            var songPath = MuseumManager.Instance.CurrentMuseum.GetSongForExhibitId(Convert.ToInt32(GetTrackableID()));
+            AudioPlayer.PlayMusic(songPath);
         }
     }
 
