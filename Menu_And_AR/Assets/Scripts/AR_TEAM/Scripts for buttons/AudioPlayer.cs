@@ -31,7 +31,7 @@ public class AudioPlayer : MonoBehaviour
         path = "file://" + Application.streamingAssetsPath + '/';
         if (Application.isMobilePlatform)
         {
-            path = "jar:file://" + Application.dataPath + "!/assets/";
+            path = "file://" + Application.persistentDataPath + '/';
         }
         path += "Sound/";
         source = GetComponent<AudioSource>();

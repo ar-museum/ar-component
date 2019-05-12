@@ -10,7 +10,7 @@ public class LoadFindData : MonoBehaviour
     public static double latitudine = 0;
     public static double longitudine = 0;
     public static MuseumArray museumData;
-    public static MuseumDto MuseumDto { get; private set; }
+    
 
     void Awake()
     {
@@ -20,19 +20,12 @@ public class LoadFindData : MonoBehaviour
         }
     }
 
-    void OnMuseumLoaded(MuseumDto museum) {
-        museum.PopulateExhibits();
-        MuseumDto = museum;
-
-        var (title, author, id) = museum.FindArSceneInfoByExhibitId(4);
-        Debug.Log(museum);
-    }
-
     IEnumerator Start()
     {
-        yield return new HttpRequests().GetMuseumData(OnMuseumLoaded, 1);
-        #if UNITY_EDITOR
-            latitudine = 47.179035;
+        // TODO: id-ul trebuie obtinut pe baza locatiei
+        yield return MuseumManager.Instance.RequestMuseumByID(1);
+#if UNITY_EDITOR
+        latitudine = 47.179035;
             longitudine = 27.567063;
 
             this.LoadMuseumJson();
@@ -55,7 +48,6 @@ public class LoadFindData : MonoBehaviour
 
     IEnumerator LocationService()
     {
-
         if (!Input.location.isEnabledByUser)
         {
             print("Utlizatorul nu a activat GPS-ul.");

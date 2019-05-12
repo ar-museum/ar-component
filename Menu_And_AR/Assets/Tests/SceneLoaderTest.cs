@@ -17,8 +17,10 @@ namespace Tests
         public IEnumerator MenuScene_ARButton_Press_Test()
         {
             //Arrange
-            SceneManager.LoadScene("MenuScene");
-            yield return new WaitForSeconds(1);
+            SceneManager.LoadScene("PreloadScene");
+            yield return new WaitForSeconds(10);
+            //SceneManager.LoadScene("MenuScene");
+            //yield return new WaitForSeconds(1);
 
             var buttonARObject = GameObject.Find("ButtonAR");
             var buttonAR = buttonARObject.GetComponent<Button>();
@@ -104,14 +106,16 @@ namespace Tests
         public IEnumerator ARScene_BackButton_Press_Test()
         {
             //Arrange
-            SceneManager.LoadScene("ARScene");
+            SceneManager.LoadScene("MenuScene");
+            yield return new WaitForSeconds(1);
+            var controlScriptObject = GameObject.FindGameObjectWithTag("SceneControl");
+            var controlScript = controlScriptObject.gameObject.GetComponent(typeof(SceneLoader)) as SceneLoader;
+
+            controlScript.LoadNextScene("ARScene");
             yield return new WaitForSeconds(1);
 
             var buttonBackObject = GameObject.Find("ButtonBack");
             var buttonBack = buttonBackObject.GetComponent<Button>();
-
-            var controlScriptObject = GameObject.FindGameObjectWithTag("SceneControl");
-            var controlScript = controlScriptObject.gameObject.GetComponent(typeof(SceneLoader)) as SceneLoader;
 
             isButtonClicked = false;
 
@@ -132,14 +136,17 @@ namespace Tests
         public IEnumerator GalleryScene_BackButton_Press_Test()
         {
             //Arrange
-            SceneManager.LoadScene("GalleryScene");
+            SceneManager.LoadScene("MenuScene");
+            yield return new WaitForSeconds(1);
+            var controlScriptObject = GameObject.FindGameObjectWithTag("SceneControl");
+            var controlScript = controlScriptObject.gameObject.GetComponent(typeof(SceneLoader)) as SceneLoader;
+
+            controlScript.LoadNextScene("GalleryScene");
             yield return new WaitForSeconds(1);
 
             var buttonBackObject = GameObject.Find("ButtonBack");
             var buttonBack = buttonBackObject.GetComponent<Button>();
 
-            var controlScriptObject = GameObject.FindGameObjectWithTag("SceneControl");
-            var controlScript = controlScriptObject.gameObject.GetComponent(typeof(SceneLoader)) as SceneLoader;
 
             isButtonClicked = false;
 
@@ -160,14 +167,16 @@ namespace Tests
         public IEnumerator GamesScene_BackButton_Press_Test()
         {
             //Arrange
-            SceneManager.LoadScene("GamesScene");
+            SceneManager.LoadScene("MenuScene");
+            yield return new WaitForSeconds(1);
+            var controlScriptObject = GameObject.FindGameObjectWithTag("SceneControl");
+            var controlScript = controlScriptObject.gameObject.GetComponent(typeof(SceneLoader)) as SceneLoader;
+
+            controlScript.LoadNextScene("GamesScene");
             yield return new WaitForSeconds(1);
 
             var buttonBackObject = GameObject.Find("ButtonBack");
             var buttonBack = buttonBackObject.GetComponent<Button>();
-
-            var controlScriptObject = GameObject.FindGameObjectWithTag("SceneControl");
-            var controlScript = controlScriptObject.gameObject.GetComponent(typeof(SceneLoader)) as SceneLoader;
 
             isButtonClicked = false;
 

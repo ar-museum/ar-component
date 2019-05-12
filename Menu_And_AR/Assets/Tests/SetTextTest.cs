@@ -1,29 +1,33 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
+using System;
 
 namespace Tests
 {
     public class SetTextTest
     {
+
         // test 1 Lipan Matei
         [UnityTest]
         public IEnumerator SetText_SetInfoForTextComponents_Test()
         {
             //Arrange
+            SceneManager.LoadScene("PreloadScene");
+            yield return new WaitForSeconds(10);
             SceneManager.LoadScene("ARScene");
             yield return new WaitForSeconds(1);
             var screeenAttachedObjects = GameObject.FindGameObjectsWithTag("ScreenAttached");
+            var (title, author, id) = MuseumManager.Instance.CurrentMuseum.FindArSceneInfoByExhibitId(Convert.ToInt32(1));
 
             //Act
             foreach (var screenAttachedObject in screeenAttachedObjects)
             {
                 var screenAttachedTexts = screenAttachedObject.GetComponentsInChildren<SetText>();
                 // update text
-                SetText.SetInfoForTextComponents(screenAttachedTexts, "test");
+                SetText.SetInfoForTextComponents(screenAttachedTexts, "1");
             }
 
             //Assert
@@ -34,11 +38,11 @@ namespace Tests
                 {
                     if(screenAttachedText.GetTextType() == SetText.TextType.TopText)
                     {
-                        Assert.AreEqual("test", screenAttachedText.GetText());
+                        Assert.AreEqual(title, screenAttachedText.GetText());
                     }
                     else
                     {
-                        Assert.AreEqual("test's author", screenAttachedText.GetText());
+                        Assert.AreEqual(author, screenAttachedText.GetText());
                     }
                 }
             }

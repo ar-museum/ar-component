@@ -19,14 +19,14 @@ namespace Tests
 
             //Act
             var imageTargetTrackableEventHandler = GameObject.FindGameObjectWithTag("TargetManager").GetComponentInChildren<MyImageTargetTrackableEventHandler>();
-            ARDisplayTypeSwitcher.UpdateScreenAttachedInfo(imageTargetTrackableEventHandler.GetTrackableName());
+            ARDisplayTypeSwitcher.UpdateScreenAttachedInfo(imageTargetTrackableEventHandler.GetTrackableID());
             var setTexts = imageTargetTrackableEventHandler.GetComponents<SetText>();
 
             //Assert
             foreach(var setText in setTexts) {
                 if (setText.textType == SetText.TextType.TopText)
                 {
-                    Assert.AreEqual(imageTargetTrackableEventHandler.GetTrackableName(), setText.GetText());
+                    Assert.AreEqual(imageTargetTrackableEventHandler.GetTrackableID(), setText.GetText());
                 }
             }
         }
