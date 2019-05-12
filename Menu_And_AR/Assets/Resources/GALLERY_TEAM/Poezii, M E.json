@@ -1,0 +1,16 @@
+{
+    "exhibit_id" : "51",
+	"title": "Poezii",
+	"short_description": "Volum poezii.",
+	"description": "Volum de poezii publicat postmortem de Editura Ministerelor de Arta si Propaganda, avand 262 de pagini si coperta brosata.",
+	"start_year" : "-",
+	"end_year":"1941",
+	"author_id" : "34",
+	"size" : "285 x 220 x 25 mm",
+	"exposition_id" : "7",
+	"location" : "Iasi",
+	"staff_id" : "2",
+	"photo_id" : "81",
+	"video_id" : "-",
+	"audio_id" : "-"
+}

@@ -19,7 +19,13 @@ EditorBuildSettings:
     guid: 861e3cf6c11549841ab7b95af82d7602
   - enabled: 1
     path: Assets/Scenes/GALLERY_TEAM/GalleryScene.unity
-    guid: 9093608657f0f1945bce12db21c82f5f
+    guid: bbdd97b01ffdecc4ba7c761a6eb2bba0
+  - enabled: 1
+    path: Assets/Scenes/GALLERY_TEAM/AuthorScene.unity
+    guid: 559d47717621eb34fa5b07f418439919
+  - enabled: 1
+    path: Assets/Scenes/GALLERY_TEAM/ExhibitScene.unity
+    guid: 817331614e5dcf142af00da395bb7543
   - enabled: 1
     path: Assets/Scenes/GAMES_TEAM/GamesScene.unity
     guid: abbe56ed820863040be15a3d134ec5c2

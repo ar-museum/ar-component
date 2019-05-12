@@ -623,7 +623,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Galerie
+  m_Text: Gallery
 --- !u!222 &323675368
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1597,7 +1597,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Jocuri
+  m_Text: Games
 --- !u!222 &2066369395
 CanvasRenderer:
   m_ObjectHideFlags: 0

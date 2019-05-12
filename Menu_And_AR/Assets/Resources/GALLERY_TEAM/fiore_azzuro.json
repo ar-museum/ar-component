@@ -1,0 +1,16 @@
+{
+    "exhibit_id" : "102",
+	"title": "Fiore Azzuro",
+	"short_description": "Floare Albastra",
+	"description": "Floare Albastra de Mihai Eminescu tradusa in italiana de la editura Minerva",
+	"start_year" : "1989",
+	"end_year":"1989",
+	"author_id" : "34",
+	"size" : "-",
+	"exposition_id" : "8",
+	"location" : "Iasi",
+	"staff_id" : "1",
+	"photo_id" : "152",
+	"video_id" : "-",
+	"audio_id" : "-"
+}

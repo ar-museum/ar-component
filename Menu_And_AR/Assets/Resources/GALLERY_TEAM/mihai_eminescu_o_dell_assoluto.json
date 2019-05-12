@@ -1,0 +1,16 @@
+{
+    "exhibit_id" : "101",
+	"title": "Mihai Eminescu o dell' Assoluto",
+	"short_description": "Eminescu sau despre absolut",
+	"description": "O carte de critica si istorie literara scrisa de Rosa Del Conte",
+	"start_year" : "1962",
+	"end_year":"1962",
+	"author_id" : "201",
+	"size" : "-",
+	"exposition_id" : "8",
+	"location" : "Iasi",
+	"staff_id" : "1",
+	"photo_id" : "151",
+	"video_id" : "-",
+	"audio_id" : "-"
+}

@@ -1,0 +1,16 @@
+{
+    "exhibit_id" : "55",
+	"title": "Mihai Eminescu",
+	"short_description": "Sculptura.",
+	"description": "Sculptura a bustului poetului Mihai Eminescu, infatisandu-l cu o atitudine serioasa, ganditoare, specifica acestuia.",
+	"start_year" : "1935",
+	"end_year":"1935",
+	"author_id" : "36",
+	"size" : "-",
+	"exposition_id" : "8",
+	"location" : "Iasi",
+	"staff_id" : "2",
+	"photo_id" : "85",
+	"video_id" : "-",
+	"audio_id" : "-"
+}

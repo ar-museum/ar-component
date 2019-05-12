@@ -1,0 +1,16 @@
+{
+    "exhibit_id" : "53",
+	"title": "Poesii",
+	"short_description": "Volum poezii.",
+	"description": "Singurul volum de poezii aparut in timpul vietii marelui poet, lansat prin editura Socec, are un continut de 306 pagini cu poeme bine selectionate de criticul Titu Maiorescu. Continutul are o legatura originala, cu decor in aur pe coperta1, titlul pe cotor si un buchet imprimat la rece pe coperta 4.",
+	"start_year" : "-",
+	"end_year":"1883",
+	"author_id" : "34",
+	"size" : "-",
+	"exposition_id" : "7",
+	"location" : "Iasi",
+	"staff_id" : "2",
+	"photo_id" : "83",
+	"video_id" : "-",
+	"audio_id" : "-"
+}

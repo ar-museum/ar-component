@@ -1,0 +1,16 @@
+{
+    "exhibit_id" : "52",
+	"title": "Poezii",
+	"short_description": "Volum poezii.",
+	"description": "Volum omagial, publicat de Editura de Stat, cu prilejul a 100 de ani de la nasterea marelui poet. Contine, in 276 de pagini, unele din cele mai reusite poezii ale lui Eminescu, dar si ilustratii Siegfried si planse color realizate de Perahim.",
+	"start_year" : "-",
+	"end_year":"1950",
+	"author_id" : "34",
+	"size" : "",
+	"exposition_id" : "7",
+	"location" : "Iasi",
+	"staff_id" : "2",
+	"photo_id" : "82",
+	"video_id" : "-",
+	"audio_id" : "-"
+}
