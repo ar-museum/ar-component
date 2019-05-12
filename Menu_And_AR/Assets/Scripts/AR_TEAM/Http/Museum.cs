@@ -18,6 +18,13 @@ namespace Assets.Scripts.AR_TEAM.Http {
                 .Distinct()
                 .ToList();
         }
+        
+        public void ResolvePaths() {
+            Expositions
+                .SelectMany(x => x.Exhibits)
+                .ToList()
+                .ForEach(x => x.AudioUrl = HttpRequests.HttpRequests.SITE_URL + x.AudioUrl);
+        }
 
         public (string /*title*/, string /*author*/, int /*author_id*/) FindArSceneInfoByExhibitId(int id) {
             var exhibit = Exhibits

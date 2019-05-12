@@ -26,7 +26,7 @@ public class LoadFindData : MonoBehaviour
         // TODO: id-ul trebuie obtinut pe baza locatiei
         if(!isUnitTest)
         {
-            yield return MuseumManager.Instance.RequestMuseumByID(1);
+            yield return MuseumManager.Instance.RequestMuseumInfo(new GeoCoordinate(322.44234, -23.1132324));
         }
         #if UNITY_EDITOR
             if (latitudine == 0 && longitudine == 0)
