@@ -8,7 +8,7 @@ namespace Tests
 {
     public class AudioPlayerTests
     {
-        private string audiofile = "FeteDace"; // or other existing .wav from StreamingAssets/Sound
+        private string audiofile = "6"; // or other existing .wav from StreamingAssets/Sound
 
         // test 1 Lipan Matei
         [UnityTest]

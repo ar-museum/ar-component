@@ -45,7 +45,7 @@ public class TargetManager : MonoBehaviour
         ObjectTracker objectTracker = TrackerManager.Instance.GetTracker<ObjectTracker>();
 
         objectTracker.Stop();
-        string path = Application.persistentDataPath + "/" + databaseName + ".xml";
+        string path = Application.persistentDataPath + "/Vuforia/" + databaseName + ".xml";
         if (DataSet.Exists(databaseName) || 
             (Application.isMobilePlatform && DataSet.Exists(path, VuforiaUnity.StorageType.STORAGE_ABSOLUTE)))
         {
@@ -55,7 +55,6 @@ public class TargetManager : MonoBehaviour
             DataSet dataSet = objectTracker.CreateDataSet();
 
             // Load the given Vuforia Database
-            //dataSet.Load(databaseName);
             if (Application.isMobilePlatform)
             {
                 dataSet.Load(path, VuforiaUnity.StorageType.STORAGE_ABSOLUTE);

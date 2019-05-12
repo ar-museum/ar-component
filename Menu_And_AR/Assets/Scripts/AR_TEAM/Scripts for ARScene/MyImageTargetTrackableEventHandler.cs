@@ -18,7 +18,7 @@ public class MyImageTargetTrackableEventHandler : DefaultTrackableEventHandler
     {
         base.OnTrackingFound();
         HideARUIFrame();
-        ARDisplayTypeSwitcher.UpdateScreenAttachedInfo(GetTrackableName());
+        ARDisplayTypeSwitcher.UpdateScreenAttachedInfo(GetTrackableID());
         ARDisplayTypeSwitcher.ShowScreenAttachedComponents(ARDisplayTypeSwitcher.getScreenAttachedObjects());
 
         PlayAudio(); 
@@ -39,7 +39,7 @@ public class MyImageTargetTrackableEventHandler : DefaultTrackableEventHandler
     {
         if(AudioPlayer != null)
         {
-            string songname = GetTrackableName();
+            string songname = GetTrackableID();
             AudioPlayer.PlayMusic(songname);
         }
     }
@@ -68,7 +68,7 @@ public class MyImageTargetTrackableEventHandler : DefaultTrackableEventHandler
         }
     }
 
-    public string GetTrackableName()
+    public string GetTrackableID()
     {
         return mTrackableBehaviour.TrackableName;
     }

@@ -33,7 +33,14 @@ public class SetText : MonoBehaviour
     // SetTextTest test 1
     public static void SetInfoForTextComponents(SetText[] texts, string targetID)
     {
-        var (title, author, id) = LoadFindData.MuseumDto.FindArSceneInfoByExhibitId(Convert.ToInt32(targetID));
+        string title, author;
+        int id;
+        if(MuseumManager.Instance.CurrentMuseum != null)
+            (title, author, id) = MuseumManager.Instance.CurrentMuseum.FindArSceneInfoByExhibitId(Convert.ToInt32(targetID));
+        else
+        {
+            (title, author, id) = ("Missing Museum", "Missing Museum", 0);
+        }
 
         foreach (var textComponent in texts)
         {
