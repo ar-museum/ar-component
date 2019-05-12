@@ -3,13 +3,15 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 using SimpleJSON;
-using System.Collections.Generic;
+using System.Text;
+using System.Linq;
 
 namespace Assets.Scripts.AR_TEAM.HttpRequests {
     class HttpRequests {
         private static readonly string JSON_TOKEN_INPUT =
             "{ \"deviceId\": \"2535C5EB-D6ED-4ABC-956B-4ACF29938F26\", \"token\": \"680bff9eb1ba0a8d48badd598be95c5642ad2939\" }";
         private static readonly string API_URL = "https://armuseum.ml/api/";
+        private static readonly string GET_MUSEUM_URL = "https://armuseum.ml/api";
         private static readonly string EXHIBITS_URL = API_URL + "exhibit";
         private static readonly string EXHIBITS_RELS_URL = API_URL + "exh/rels";
         private static readonly string AUTHORS_URL = API_URL + "author";
@@ -17,11 +19,14 @@ namespace Assets.Scripts.AR_TEAM.HttpRequests {
         private static readonly string MUSEUMS_URL = API_URL + "museum";
         private static readonly string MUSEUMS_RELS_URL = API_URL + "mus/rels";
         private static readonly string EXPOSITIONS_RELS_URL = API_URL + "expo/rels";
+        private static readonly string UPDATE_URL = API_URL + "update";
+        public static readonly string SITE_URL = "https://armuseum.ml/";
 
         public delegate void OnComplete<T>(T x);
         public delegate IEnumerator OnCompleteYield<T>(T x);
 
-        private OnComplete<MuseumDto> OnCompleteFunction { get; set; }
+        private OnCompleteYield<MuseumDto> OnCompleteMuseumFunction { get; set; }
+        private OnCompleteYield<MuseumInfo> OnCompleteMuseumInfoFunction { get; set; }
         private MuseumDto Museum { get; set; }
 
         private static void SetHeaders(UnityWebRequest request) {
@@ -78,9 +83,62 @@ namespace Assets.Scripts.AR_TEAM.HttpRequests {
             }
         }
 
-        public IEnumerator GetMuseumData(OnComplete<MuseumDto> onComplete, int id) {
-            OnCompleteFunction = onComplete;
+        private IEnumerator DoPostRequest(string url, string json, OnCompleteYield<string> callback) {
+            var body = Encoding.UTF8.GetBytes(json);
+            var request = new UnityWebRequest(url, "POST") {
+                uploadHandler = new UploadHandlerRaw(body),
+                downloadHandler = new DownloadHandlerBuffer(),
+                certificateHandler = new CustomCertificateHandler()
+            };
+            SetHeaders(request);
+
+            yield return request.SendWebRequest();
+
+            if (request.isNetworkError) {
+                Debug.Log("Error While Sending: " + request.error);
+            } else {
+                Debug.Log("Received: " + request.downloadHandler.text);
+                yield return callback(request.downloadHandler.text);
+            }
+        }
+
+        public IEnumerator DownloadData(string url, string pathOnDisk) {
+            var request = new UnityWebRequest(url, "GET");
+            request.downloadHandler = new DownloadHandlerFile(pathOnDisk);
+            request.certificateHandler = new CustomCertificateHandler();
+
+            yield return request.SendWebRequest();
+        }
+
+        public IEnumerator GetMuseumData(OnCompleteYield<MuseumDto> onComplete, int id) {
+            OnCompleteMuseumFunction = onComplete;
             yield return DoGetRequest($"{MUSEUMS_RELS_URL}/{id}", OnMuseumCompleted);
+        }
+
+        public IEnumerator GetMuseumInfo(OnCompleteYield<MuseumInfo> onComplete, GeoCoordinate coordinate) {
+            OnCompleteMuseumInfoFunction = onComplete;
+            var json = new JSONObject();
+            json.Add("latitude", coordinate.Latitude);
+            json.Add("longitude", coordinate.Longitude);
+            yield return DoPostRequest(GET_MUSEUM_URL, json.ToString(), OnMuseumInfoCompleted);
+        }
+
+        private IEnumerator OnMuseumInfoCompleted(string json) {
+            var node = JSON.Parse(json);
+            var info = Deserializers.DeserializeMuseumInfo(node);
+
+            var updateJson = new JSONObject();
+            updateJson.Add("version", info.VuforiaDatabaseVersion);
+            yield return DoPostRequest(UPDATE_URL, updateJson.ToString(), j => OnMuseumInfoWithVuforiaFilesCompleted(info, j));
+        }
+
+        private IEnumerator OnMuseumInfoWithVuforiaFilesCompleted(MuseumInfo info, string json) {
+            var node = JSON.Parse(json);
+            info.VuforiaFiles = Deserializers
+                .DeserializeStringArray(node["files"])
+                .Where(x => x != null)
+                .ToList();
+            yield return OnCompleteMuseumInfoFunction(info);
         }
 
         private IEnumerator OnMuseumCompleted(string json) {
@@ -101,12 +159,13 @@ namespace Assets.Scripts.AR_TEAM.HttpRequests {
                 yield return DoGetRequest($"{EXHIBITS_RELS_URL}/{exh.ExhibitId}", j => OnExhibitComplete(j, exh));
             }
 
-            OnCompleteFunction(Museum);
+            yield return OnCompleteMuseumFunction(Museum);
         }
 
-        private void OnExhibitComplete(string json, Exhibit exposition) {
+        private void OnExhibitComplete(string json, Exhibit exh) {
             var node = JSON.Parse(json);
-            exposition.Author = Deserializers.DeserializeAuthor(node["authors"]);
+            exh.Author = Deserializers.DeserializeAuthor(node["authors"]);
+            exh.AudioUrl = node["audio_path"];
         }
 
         private void OnAuthorComplete(string json, Exhibit exhibit) {

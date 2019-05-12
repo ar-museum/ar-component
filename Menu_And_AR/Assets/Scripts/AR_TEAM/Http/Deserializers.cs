@@ -36,6 +36,7 @@ namespace Assets.Scripts.AR_TEAM.Http {
             string updatedAt = node["updated_at"];
             exhibit.UpdatedAt = Convert.ToDateTime(updatedAt);
             exhibit.PhotoUrl = node["photo_path"];
+            exhibit.AudioUrl = node["audio_path"];
             if (node["authors"] != null) {
                 exhibit.Author = DeserializeAuthor(node["authors"]);
             }
@@ -98,6 +99,33 @@ namespace Assets.Scripts.AR_TEAM.Http {
             museum.Expositions = DeserializeExpositionsList(node["expositions"]);
 
             return museum;
+        }
+
+        public static GeoCoordinate DeserializeGeoCoordinate(JSONNode node) {
+            double latitude = node["latitude"];
+            double longitude = node["longitude"];
+
+            return new GeoCoordinate(latitude, longitude);
+        }
+
+        public static MuseumInfo DeserializeMuseumInfo(JSONNode node) {
+            return new MuseumInfo {
+                Name = node["name"],
+                MuseumId = node["museum_id"],
+                VuforiaDatabaseVersion = node["version"],
+                Coordinate = DeserializeGeoCoordinate(node)
+            };
+        }
+
+        public static List<string> DeserializeStringArray(JSONNode node) {
+            var result = new List<string>();
+
+            foreach (var i in node.AsArray) {
+                string str = i.Value;
+                result.Add(str);
+            }
+
+            return result;
         }
     }
 }
