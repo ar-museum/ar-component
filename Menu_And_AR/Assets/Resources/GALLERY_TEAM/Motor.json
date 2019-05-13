@@ -1,0 +1,16 @@
+{
+    "exhibit_id" : "28",
+	"title": "Motor cu ardere interna",
+	"short_description": "Istoria motorului cu ardere interna.",
+	"description": "Otto a fost inventatorul primului motor cu combustie internă care ardea în mod eficient combustibilul direct într-o cameră cilindrică cu piston mobil, mișcarea efectuându-se de-a lungul generatoarei cilindrului. Deși fuseseră inventate și alte motoare cu combustie internă, acestea nu s-au bazat pe patru timpi separați, acest concept fiind pus in practica de Nikolaus.",
+	"start_year" : "-",
+	"end_year":"1854",
+	"author_id" : "64",
+	"size" : "-",
+	"exposition_id" : "1",
+	"location" : "-",
+	"staff_id" : "3",
+	"photo_id" : "48",
+	"video_id" : "-",
+	"audio_id" : "-"
+}

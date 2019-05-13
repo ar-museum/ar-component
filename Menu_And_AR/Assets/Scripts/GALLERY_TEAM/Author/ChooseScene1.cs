@@ -7,7 +7,6 @@ public class ChooseScene1 : MonoBehaviour
     public void changeIt1(int i)
     {
         SceneManager.LoadScene(i);
-        //Globals.exhibit = "op3";
-        PlayerPrefs.SetString("exhibit", "op3");
+        Globals.exhibit = "op3";
     }
 }

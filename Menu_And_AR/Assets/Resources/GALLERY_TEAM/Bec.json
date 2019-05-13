@@ -1,0 +1,16 @@
+{
+    "exhibit_id" : "25",
+	"title": "Becul cu incandescenta",
+	"short_description": "Istoria becului.",
+	"description": "Becul cu incandescenta a fost creat initial de Joseph Swan, insa din cauza problemelor acestuia cu vidarea bulbului din sticla, inventia sa a necesitat retusare. Cel care a reusit scoaterea completa a oxigenului din bulbul de sticla a fost Thomas Edison, care dupa diverse experimente, a reusit sa creeze un bulb care a luminat 1500 de ore.",
+	"start_year" : "-",
+	"end_year":"1879",
+	"author_id" : "61",
+	"size" : "-",
+	"exposition_id" : "9",
+	"location" : "-",
+	"staff_id" : "2",
+	"photo_id" : "45",
+	"video_id" : "-",
+	"audio_id" : "-"
+}
