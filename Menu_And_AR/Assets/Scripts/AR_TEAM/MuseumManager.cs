@@ -34,23 +34,37 @@ public sealed class MuseumManager
         museum.PopulateExhibits();
         museum.ResolvePaths();
         CurrentMuseum = museum;
-        yield return GetAllAudios(museum.Exhibits);
+        yield return null;
     }
 
-    public IEnumerator GetAllAudios(List<Exhibit> exhibits) {
-        var pathOnDisk = Application.persistentDataPath + "/Songs/";
-        Directory.CreateDirectory(pathOnDisk);
-        foreach (var exh in exhibits) {
-            exh.AudioPathOnDisk = pathOnDisk + new FileInfo(exh.AudioUrl).Name;
-            Debug.Log("Downloading + " + exh.AudioPathOnDisk);
-            yield return new HttpRequests().DownloadData(exh.AudioUrl, exh.AudioPathOnDisk);
+    public IEnumerator GetAllAudios() {
+        if (CurrentMuseum != null)
+        {
+            List<Exhibit> exhibits = CurrentMuseum.Exhibits;
+            var pathOnDisk = Application.persistentDataPath + "/Songs/";
+            Directory.CreateDirectory(pathOnDisk);
+            foreach (var exh in exhibits)
+            {
+                exh.AudioPathOnDisk = pathOnDisk + new FileInfo(exh.AudioUrl).Name;
+                if (!File.Exists(exh.AudioPathOnDisk))
+                {
+                    Debug.Log("Downloading + " + exh.AudioPathOnDisk);
+                    yield return new HttpRequests().DownloadData(exh.AudioUrl, exh.AudioPathOnDisk);
+                }
+            }
         }
     }
 
     private IEnumerator OnMuseumInfoLoaded(MuseumInfo info) {
         MuseumInfo = info;
-
-        yield return RequestMuseumByID(info.MuseumId);
+        if (info == null)
+        {
+            CurrentMuseum = null;
+        }
+        else
+        {
+            yield return RequestMuseumByID(info.MuseumId);
+        }
     }
 
     public IEnumerator RequestMuseumInfo(GeoCoordinate coordinate) {

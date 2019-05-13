@@ -109,12 +109,18 @@ namespace Assets.Scripts.AR_TEAM.Http {
         }
 
         public static MuseumInfo DeserializeMuseumInfo(JSONNode node) {
-            return new MuseumInfo {
-                Name = node["name"],
-                MuseumId = node["museum_id"],
-                VuforiaDatabaseVersion = node["version"],
-                Coordinate = DeserializeGeoCoordinate(node)
-            };
+
+            if (node["message"] != "Nu exista niciun muzeu in apropiere.")
+            {
+                return new MuseumInfo
+                {
+                    Name = node["name"],
+                    MuseumId = node["museum_id"],
+                    VuforiaDatabaseVersion = node["version"],
+                    Coordinate = DeserializeGeoCoordinate(node)
+                };
+            }
+            return null;
         }
 
         public static List<string> DeserializeStringArray(JSONNode node) {

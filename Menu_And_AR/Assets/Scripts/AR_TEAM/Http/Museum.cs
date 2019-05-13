@@ -26,13 +26,13 @@ namespace Assets.Scripts.AR_TEAM.Http {
                 .ForEach(x => x.AudioUrl = HttpRequests.HttpRequests.SITE_URL + x.AudioUrl);
         }
 
-        public (string /*title*/, string /*author*/, int /*author_id*/) FindArSceneInfoByExhibitId(int id) {
+        public (string /*title*/,int /*exhibit_id*/, string /*author*/, int /*author_id*/) FindArSceneInfoByExhibitId(int id) {
             var exhibit = Exhibits
                 .First(x => x.ExhibitId == id);
             if (exhibit == null) {
-                return ("not found", "not found", 0);
+                return ("not found", 0, "not found", 0);
             }
-            return (exhibit.Title, exhibit.Author.FullName, exhibit.Author.AuthorId);
+            return (exhibit.Title, exhibit.ExhibitId, exhibit.Author.FullName, exhibit.Author.AuthorId);
         }
 
         public string GetSongForExhibitId(int id)

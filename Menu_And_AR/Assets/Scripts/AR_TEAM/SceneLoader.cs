@@ -82,13 +82,6 @@ public class SceneLoader : MonoBehaviour
     {
         if (Application.CanStreamedLevelBeLoaded(sceneCamera))
         {
-            if (string.Compare(currentScene.name, "ARScene") == 0)
-            {
-                PlayerPrefs.SetString("author", "Mircea_Ispir");
-                PlayerPrefs.SetString("exhibit", "Mirtil_si_Chloe");
-
-            }
-
             sceneStack.Add(currentScene.buildIndex);
             SceneManager.LoadScene(sceneCamera);    
         }

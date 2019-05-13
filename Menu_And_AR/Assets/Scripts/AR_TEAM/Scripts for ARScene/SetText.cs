@@ -34,12 +34,12 @@ public class SetText : MonoBehaviour
     public static void SetInfoForTextComponents(SetText[] texts, string targetID)
     {
         string title, author;
-        int id;
+        int authorID, exhibitID;
         if(MuseumManager.Instance.CurrentMuseum != null)
-            (title, author, id) = MuseumManager.Instance.CurrentMuseum.FindArSceneInfoByExhibitId(Convert.ToInt32(targetID));
+            (title, exhibitID, author, authorID) = MuseumManager.Instance.CurrentMuseum.FindArSceneInfoByExhibitId(Convert.ToInt32(targetID));
         else
         {
-            (title, author, id) = ("Missing Museum", "Missing Museum", 0);
+            (title, exhibitID, author, authorID) = ("Missing Title", 0, "Missing Author", 0);
         }
 
         foreach (var textComponent in texts)
@@ -48,12 +48,13 @@ public class SetText : MonoBehaviour
             {
                 // Title
                 textComponent.SetMyText(title);
+                PlayerPrefs.SetString("exhibit", title.Replace(" ", "_"));
             }
             else if (textComponent.GetTextType() == SetText.TextType.BottomText)
             {
                 // Author
-                // TODO: get the author from the database based on the name of the target
                 textComponent.SetMyText(author);
+                PlayerPrefs.SetString("author", author.Replace(" ", "_"));
             }
         }
     }

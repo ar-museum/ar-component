@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.SceneManagement;
-using Assets.Scripts.AR_TEAM.HttpRequests;
 using Assets.Scripts.AR_TEAM.Http;
 
 public class LoadFindData : MonoBehaviour
@@ -26,7 +25,8 @@ public class LoadFindData : MonoBehaviour
 #if UNITY_EDITOR
         if (latitudine == 0 && longitudine == 0)
         {
-            latitudine = 47.179035; 
+            // Testing in editor va fi facut pe muzeul Mihai Eminescu
+            latitudine =  47.179035;
             longitudine = 27.567063;
         }
 #elif UNITY_ANDROID
@@ -35,14 +35,16 @@ public class LoadFindData : MonoBehaviour
             yield return StartCoroutine(LocationService());
         }
 #endif
-        // TODO: id-ul trebuie obtinut pe baza locatiei
-        if (!isUnitTest)
+        
+        yield return MuseumManager.Instance.RequestMuseumInfo(new GeoCoordinate(latitudine, longitudine));
+
+        if(MuseumManager.Instance.CurrentMuseum != null)
         {
-            yield return MuseumManager.Instance.RequestMuseumInfo(new GeoCoordinate(latitudine, longitudine));
+            yield return MuseumManager.Instance.GetAllAudios();
+
+            // TODO : Aici mai vine si:
+            //yield return MuseumManager.Instance.GetVuforiaDatabase();
         }
-
-        this.LoadMuseumJson();
-
         SceneManager.LoadScene("MenuScene");
         yield return null;
     }
@@ -88,13 +90,5 @@ public class LoadFindData : MonoBehaviour
         }
 
         Input.location.Stop();
-    }
-
-    void LoadMuseumJson()
-    {
-        string dataPath = "AR_TEAM/MuseumsData";
-        TextAsset json = Resources.Load<TextAsset>(dataPath);
-
-        museumData = JsonUtility.FromJson<MuseumArray>(json.text);
     }
 }

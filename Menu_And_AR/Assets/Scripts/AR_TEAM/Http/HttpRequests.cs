@@ -128,8 +128,11 @@ namespace Assets.Scripts.AR_TEAM.HttpRequests {
             var info = Deserializers.DeserializeMuseumInfo(node);
 
             var updateJson = new JSONObject();
-            updateJson.Add("version", info.VuforiaDatabaseVersion);
-            yield return DoPostRequest(UPDATE_URL, updateJson.ToString(), j => OnMuseumInfoWithVuforiaFilesCompleted(info, j));
+            if (info != null)
+            {
+                updateJson.Add("version", info.VuforiaDatabaseVersion);
+                yield return DoPostRequest(UPDATE_URL, updateJson.ToString(), j => OnMuseumInfoWithVuforiaFilesCompleted(info, j));
+            }
         }
 
         private IEnumerator OnMuseumInfoWithVuforiaFilesCompleted(MuseumInfo info, string json) {

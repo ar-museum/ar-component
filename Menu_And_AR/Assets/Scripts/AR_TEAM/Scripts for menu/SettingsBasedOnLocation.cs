@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Android;
+using Assets.Scripts.AR_TEAM.Http;
 
 public class SettingsBasedOnLocation : MonoBehaviour
 {
@@ -17,9 +14,9 @@ public class SettingsBasedOnLocation : MonoBehaviour
     string textWelcome_eng = "Welcome to\n";
     string textNoMuseum_ro = "Nu va aflati in\n incinta unui muzeu";
     string textNoMuseum_eng = "You are not\n inside a museum";
-    const double pi = 3.141592653589793;
-    const double radius = 6371;
-    const double distanceMuseum = 0.1; //0.1 km
+    //const double pi = 3.141592653589793;
+    //const double radius = 6371;
+    //const double distanceMuseum = 0.1; //0.1 km
 
     void Awake()
     {
@@ -49,37 +46,33 @@ public class SettingsBasedOnLocation : MonoBehaviour
                 textBoxErrorObject.SetActive(true);
                 GameObject textErrorObject = GameObject.Find("TextBoxError/Text");
                 Text textError = textErrorObject.GetComponent<Text>();
-                textError.text = textActivateLocation_eng;
+                textError.text = textActivateLocation_ro; // _eng nu avem in engleza in baza de date
             }
             else
             {
-                bool gasit = false;
-
-
-                for (int i = 0; i < LoadFindData.museumData.museums.Count; ++i)
+                MuseumDto museum = MuseumManager.Instance.CurrentMuseum;
+                if (museum != null)
                 {
-                    if (verifyLocation(LoadFindData.museumData.museums[i].latitude, LoadFindData.museumData.museums[i].longitude))
+                    Sprite image = Resources.Load<Sprite>(imagePath + museum.Name.Replace(" ", "_"));
+                    if (image == null)
                     {
-                        gasit = true;
-                        Sprite image = Resources.Load<Sprite>(imagePath + LoadFindData.museumData.museums[i].name.Replace(" ", "_"));
-                        if (image == null)
-                        {
-                            image = Resources.Load<Sprite>(imagePath + "No_Museum");
-                        }
-                        GameObject background = GameObject.Find("BackgroundImage");
-                        background.GetComponent<Image>().sprite = image;
-
-                        textBoxMuseumObject.SetActive(true);
-                        GameObject textMuseumObject = GameObject.Find("TextBoxMuseum/Text");
-                        Text textMuseum = textMuseumObject.GetComponent<Text>();
-                        textMuseum.text = textWelcome_eng + LoadFindData.museumData.museums[i].name_eng;
-
-                        buttonARObject.SetActive(true);
-                        buttonGalleryObject.SetActive(true);
-                        buttonGamesObject.SetActive(true);
+                        image = Resources.Load<Sprite>(imagePath + "No_Museum");
                     }
+                    GameObject background = GameObject.Find("BackgroundImage");
+                    background.GetComponent<Image>().sprite = image;
+
+                    textBoxMuseumObject.SetActive(true);
+                    GameObject textMuseumObject = GameObject.Find("TextBoxMuseum/Text");
+                    Text textMuseum = textMuseumObject.GetComponent<Text>();
+                    // nu avem nume in engleza in baza de date
+                    // textMuseum.text = textWelcome_eng + LoadFindData.museumData.museums[i].name_eng;
+                    textMuseum.text = textWelcome_ro + museum.Name;
+
+                    buttonARObject.SetActive(true);
+                    buttonGalleryObject.SetActive(true);
+                    buttonGamesObject.SetActive(true);
                 }
-                if (!gasit) // alta locatie
+                else // alta locatie
                 {
                     Sprite image = Resources.Load<Sprite>(imagePath + "No_Museum");
                     GameObject background = GameObject.Find("BackgroundImage");
@@ -88,7 +81,7 @@ public class SettingsBasedOnLocation : MonoBehaviour
                     textBoxMuseumObject.SetActive(true);
                     GameObject textMuseumObject = GameObject.Find("TextBoxMuseum/Text");
                     Text textMuseum = textMuseumObject.GetComponent<Text>();
-                    textMuseum.text = textNoMuseum_eng;
+                    textMuseum.text = textNoMuseum_ro;// _eng nu avem in engleza in baza de date 
 
                     buttonGalleryObject.SetActive(true);
                     buttonGamesObject.SetActive(true);
@@ -104,27 +97,27 @@ public class SettingsBasedOnLocation : MonoBehaviour
             textBoxErrorObject.SetActive(true);
             GameObject textErrorObject = GameObject.Find("TextBoxError/Text");
             Text textError = textErrorObject.GetComponent<Text>();
-            textError.text = textAllowLocation_eng;
+            textError.text = textAllowLocation_ro; // _eng nu avem in engleza in baza de date
         }
     }
 
-    public bool verifyLocation(double latitude, double longitude)
-    {
-        double latitudeUserRad = degreesToRadians(LoadFindData.latitudine);
-        double latitudeLocationRad = degreesToRadians(latitude);
+    //public bool verifyLocation(double latitude, double longitude)
+    //{
+    //    double latitudeUserRad = degreesToRadians(LoadFindData.latitudine);
+    //    double latitudeLocationRad = degreesToRadians(latitude);
 
-        double distanceLatitudeRad = degreesToRadians(LoadFindData.latitudine - latitude);
-        double distanceLongitudeRad = degreesToRadians(LoadFindData.longitudine - longitude);
+    //    double distanceLatitudeRad = degreesToRadians(LoadFindData.latitudine - latitude);
+    //    double distanceLongitudeRad = degreesToRadians(LoadFindData.longitudine - longitude);
 
-        double value = Math.Sin(distanceLatitudeRad / 2) * Math.Sin(distanceLatitudeRad / 2) + Math.Cos(latitudeUserRad) * Math.Cos(latitudeLocationRad) * Math.Sin(distanceLongitudeRad / 2) * Math.Sin(distanceLongitudeRad / 2);
-        double result = 2 * radius * Math.Atan2(Math.Sqrt(value), Math.Sqrt(1 - value));
+    //    double value = Math.Sin(distanceLatitudeRad / 2) * Math.Sin(distanceLatitudeRad / 2) + Math.Cos(latitudeUserRad) * Math.Cos(latitudeLocationRad) * Math.Sin(distanceLongitudeRad / 2) * Math.Sin(distanceLongitudeRad / 2);
+    //    double result = 2 * radius * Math.Atan2(Math.Sqrt(value), Math.Sqrt(1 - value));
 
-        if (result <= distanceMuseum) return true;
-        else return false;
-    }
+    //    if (result <= distanceMuseum) return true;
+    //    else return false;
+    //}
 
-    public double degreesToRadians(double value)
-    {
-        return value * pi / 180.0;
-    }
+    //public double degreesToRadians(double value)
+    //{
+    //    return value * pi / 180.0;
+    //}
 }
