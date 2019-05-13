@@ -7,7 +7,7 @@ using System.Text;
 using System.Linq;
 
 namespace Assets.Scripts.AR_TEAM.HttpRequests {
-    class HttpRequests {
+    public class HttpRequests {
         private static readonly string JSON_TOKEN_INPUT =
             "{ \"deviceId\": \"2535C5EB-D6ED-4ABC-956B-4ACF29938F26\", \"token\": \"680bff9eb1ba0a8d48badd598be95c5642ad2939\" }";
         private static readonly string API_URL = "https://armuseum.ml/api/";
