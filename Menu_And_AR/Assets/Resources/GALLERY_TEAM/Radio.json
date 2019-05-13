@@ -1,0 +1,16 @@
+{
+    "exhibit_id" : "27",
+	"title": "Radio",
+	"short_description": "Istoria radioului.",
+	"description": "Existenta undelor radio a fost facuta cunoscuta publicului larg în special de către Guglielmo Marconi. Fizicianul Nikola Tesla a contribuit în mod esential la crearea primului aparat radio. El a construit un sistem care putea transmite si primi semnale radio de la o distanta de aproape 3 km. În 1895 a trimis un semnal radio pentru prima data; în 1907 el a receptionat prima data un semnal radio din Canada, si anume semnul "x" din Codul Morse.",
+	"start_year" : "-",
+	"end_year":"1890",
+	"author_id" : "63",
+	"size" : "-",
+	"exposition_id" : "1",
+	"location" : "-",
+	"staff_id" : "3",
+	"photo_id" : "47",
+	"video_id" : "-",
+	"audio_id" : "-"
+}

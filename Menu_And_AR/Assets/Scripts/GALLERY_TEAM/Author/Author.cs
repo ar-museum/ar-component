@@ -7,10 +7,11 @@ namespace Scripts
     [System.Serializable]
     public class AuthorData
     {
-        public string titlu;
-        public string descriere;
-        public string denumire;
-        public string autor;
+        public string full_name;
+        public string born_year;
+        public string died_year;
+        public string location;
+        public string photo_id;
     }
 
     public class Author : MonoBehaviour
@@ -32,88 +33,56 @@ namespace Scripts
 
         void loadContent()
         {
-            Globals.author = PlayerPrefs.GetString("author", "author");
+            Globals.author = PlayerPrefs.GetString("author", "Anonim");
             JsonToObject jo = new JsonToObject();
             AuthorData author = jo.loadJson<AuthorData>("GALLERY_TEAM/" + Globals.author);
-            txtDescription.text = author.descriere;
-            txtTitle.text = author.titlu + '\n';
             if (imgOpera != null)
             {
-                imgOpera.sprite = Resources.Load<Sprite>("GALLERY_TEAM/Sprites/" + author.denumire);
+                imgOpera.sprite = Resources.Load<Sprite>("GALLERY_TEAM/Sprites/" + author.photo_id);
             }
+            txtTitle.text = author.full_name;
+            txtDescription.text = "Born : " + author.born_year + "\n";
+            txtDescription.text += "Died : " + author.died_year + "\n";
+            txtDescription.text += "Location : " + author.location;
         }
 
         void setContentDimension()
         {
-            RectTransform thisRectTransform = GetComponent<RectTransform>();
-            RectTransform imgRectTransform = imgOpera.GetComponent<RectTransform>();
+        //    RectTransform thisRectTransform = GetComponent<RectTransform>();
+        //    RectTransform imgRectTransform = imgOpera.GetComponent<RectTransform>();
 
-            //image height before the resize
-            float firstHeight = imgRectTransform.rect.height;
+        //    //image height before the resize
+        //    float firstHeight = imgRectTransform.rect.height;
 
-            Transform lastChild = null;
-            foreach (Transform child in transform)
-            {
-                lastChild = child;
-            }
-            //resize
-            thisRectTransform.sizeDelta = new Vector2(thisRectTransform.sizeDelta.x, (txtDescription.text + txtTitle.text).Length * 5 + 1250);
+        //    Transform lastChild = null;
+        //    foreach (Transform child in transform)
+        //    {
+        //        lastChild = child;
+        //    }
+        //    //resize
+        //    thisRectTransform.sizeDelta = new Vector2(thisRectTransform.sizeDelta.x, (txtDescription.text + txtTitle.text).Length * 5 + 1250);
 
-            //resize offset
-            offset = PlayerPrefs.GetFloat("author" + Globals.author + "offset");
+        //    //resize offset
+        //    offset = PlayerPrefs.GetFloat("author" + Globals.author + "offset");
 
-            if (offset == 0)
-            {
-                offset = imgRectTransform.rect.height - firstHeight;
-                PlayerPrefs.SetFloat("author" + Globals.author + "offset", offset);
-            }
-            else
-            {
-                offset = PlayerPrefs.GetFloat("author" + Globals.author + "offset");
-            }
-            imgRectTransform.offsetMin = new Vector2(imgRectTransform.offsetMin.x, offset);
-            RectTransform lastChildRectTransform = lastChild.GetComponent<RectTransform>();
-            lastChildRectTransform.offsetMax = new Vector2(lastChildRectTransform.offsetMax.x, offset);
+        //    if (offset == 0)
+        //    {
+        //        offset = imgRectTransform.rect.height - firstHeight;
+        //        PlayerPrefs.SetFloat("author" + Globals.author + "offset", offset);
+        //    }
+        //    else
+        //    {
+        //        offset = PlayerPrefs.GetFloat("author" + Globals.author + "offset");
+        //    }
+        //    imgRectTransform.offsetMin = new Vector2(imgRectTransform.offsetMin.x, offset);
+        //    RectTransform lastChildRectTransform = lastChild.GetComponent<RectTransform>();
+        //    lastChildRectTransform.offsetMax = new Vector2(lastChildRectTransform.offsetMax.x, offset);
         }
 
         void OnApplicationQuit()
         {
             PlayerPrefs.DeleteAll();
         }
-
-        /*
-        public string GetHtmlFromUri(string resource)
-        {
-            string html = string.Empty;
-            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(resource);
-            try
-            {
-                using (HttpWebResponse resp = (HttpWebResponse)req.GetResponse())
-                {
-                    bool isSuccess = (int)resp.StatusCode < 299 && (int)resp.StatusCode >= 200;
-                    if (isSuccess)
-                    {
-                        using (StreamReader reader = new StreamReader(resp.GetResponseStream()))
-                        {
-                            //We are limiting the array to 80 so we don't have
-                            //to parse the entire html document feel free to 
-                            //adjust (probably stay under 300)
-                            char[] cs = new char[80];
-                            reader.Read(cs, 0, cs.Length);
-                            foreach (char ch in cs)
-                            {
-                                html += ch;
-                            }
-                        }
-                    }
-                }
-            }
-            catch
-            {
-                return "";
-            }
-            return html;
-        }
-        */
+        
     }
 }
