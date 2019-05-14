@@ -5,13 +5,14 @@ using System.Linq;
 
 public class TargetManager : MonoBehaviour
 {
-    [SerializeField] private string CurrentVuforiaDatabase;
+    private string CurrentVuforiaDatabase;
     [SerializeField] private GameObject ImageTargetChildPrefab;
 
     private List<TrackableBehaviour> Targets = new List<TrackableBehaviour>();
 
     private void Awake()
     {
+        CurrentVuforiaDatabase = MuseumManager.Instance.CurrentMuseum.GetVuforiaXMLPath();
         // After all from Vuforia is loaded, call my function
         VuforiaARController.Instance.RegisterVuforiaStartedCallback(DoAfterVuforiaStarted);
     }
@@ -25,10 +26,6 @@ public class TargetManager : MonoBehaviour
     // TargetManagerTests test 3
     private void DoAfterVuforiaStarted()
     {
-        if (Application.isMobilePlatform)
-        {
-            string path = Application.persistentDataPath + "/" + CurrentVuforiaDatabase + ".xml";
-        }
         // Load database
         LoadDatabase(CurrentVuforiaDatabase);
 
@@ -45,9 +42,7 @@ public class TargetManager : MonoBehaviour
         ObjectTracker objectTracker = TrackerManager.Instance.GetTracker<ObjectTracker>();
 
         objectTracker.Stop();
-        string path = Application.persistentDataPath + "/Vuforia/" + databaseName + ".xml";
-        if (DataSet.Exists(databaseName) || 
-            (Application.isMobilePlatform && DataSet.Exists(path, VuforiaUnity.StorageType.STORAGE_ABSOLUTE)))
+        if (DataSet.Exists(databaseName, VuforiaUnity.StorageType.STORAGE_ABSOLUTE))
         {
             // Delete the previous vuforia databases and all their active targerts from tracking
             DeleteTargets(objectTracker);
@@ -55,14 +50,8 @@ public class TargetManager : MonoBehaviour
             DataSet dataSet = objectTracker.CreateDataSet();
 
             // Load the given Vuforia Database
-            if (Application.isMobilePlatform)
-            {
-                dataSet.Load(path, VuforiaUnity.StorageType.STORAGE_ABSOLUTE);
-            }
-            else
-            {
-                dataSet.Load(databaseName);
-            }
+            dataSet.Load(databaseName, VuforiaUnity.StorageType.STORAGE_ABSOLUTE);
+            
             objectTracker.ActivateDataSet(dataSet);
         }
         else

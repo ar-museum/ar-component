@@ -41,9 +41,8 @@ public class LoadFindData : MonoBehaviour
         if(MuseumManager.Instance.CurrentMuseum != null)
         {
             yield return MuseumManager.Instance.GetAllAudios();
-
-            // TODO : Aici mai vine si:
-            //yield return MuseumManager.Instance.GetVuforiaDatabase();
+            
+            yield return MuseumManager.Instance.GetVuforiaFiles();
         }
         SceneManager.LoadScene("MenuScene");
         yield return null;

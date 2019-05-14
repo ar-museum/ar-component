@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Assets.Scripts.AR_TEAM.Http {
@@ -11,6 +12,7 @@ namespace Assets.Scripts.AR_TEAM.Http {
         public string PhotoPath { get; set; }
         public List<Exposition> Expositions { get; set; }
         public List<Exhibit> Exhibits { get; set; }
+        public List<string> VuforiaFilesOnDisk { get; set; }
 
         public void PopulateExhibits() {
             Exhibits = Expositions
@@ -40,6 +42,13 @@ namespace Assets.Scripts.AR_TEAM.Http {
             return Exhibits
                 .Where(x => x.ExhibitId == id)
                 .Select(x => x.AudioPathOnDisk)
+                .First();
+        }
+
+        public string GetVuforiaXMLPath()
+        {
+            return VuforiaFilesOnDisk
+                .Where(x => new FileInfo(x).Extension == ".xml")
                 .First();
         }
     }
