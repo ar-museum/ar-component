@@ -56,7 +56,7 @@ public class SettingsBasedOnLocation : MonoBehaviour
                     Sprite image = Resources.Load<Sprite>(museum.PhotoPath);
                     if (image == null)
                     {
-                        image = Resources.Load<Sprite>(museum.PhotoPath);
+                        image = Resources.Load<Sprite>(imagePath + "No_Museum");
                     }
                     GameObject background = GameObject.Find("BackgroundImage");
                     background.GetComponent<Image>().sprite = image;
