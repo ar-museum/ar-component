@@ -139,6 +139,7 @@ namespace Assets.Scripts.AR_TEAM.HttpRequests {
             var node = JSON.Parse(json);
             info.VuforiaFiles = Deserializers
                 .DeserializeStringArray(node["files"])
+                .Select(x => SITE_URL + x)
                 .Where(x => x != null)
                 .ToList();
             yield return OnCompleteMuseumInfoFunction(info);
