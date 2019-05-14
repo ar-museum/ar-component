@@ -61,23 +61,28 @@ public sealed class MuseumManager
     {
         if (CurrentMuseum != null)
         {
-            if (NewerVuforiaVersion(MuseumInfo.VuforiaDatabaseVersion))
-            {
-                CurrentMuseum.VuforiaFilesOnDisk = new List<string>();
+            bool updateNeeded = NewerVuforiaVersion(MuseumInfo.VuforiaDatabaseVersion);
+            
+            CurrentMuseum.VuforiaFilesOnDisk = new List<string>();
 
-                List<string> vuforiaUrls = MuseumInfo.VuforiaFiles;
-                var pathOnDisk = GetVuforiaFilesPath();
-                Directory.CreateDirectory(pathOnDisk);
-                foreach (var vuforiaFileUrl in vuforiaUrls)
+            List<string> vuforiaUrls = MuseumInfo.VuforiaFiles;
+            var pathOnDisk = GetVuforiaFilesPath();
+            Directory.CreateDirectory(pathOnDisk);
+            foreach (var vuforiaFileUrl in vuforiaUrls)
+            {
+                string vuforiaFileOnDisk = pathOnDisk + CurrentMuseum.Name.Replace(" ", "_") + new FileInfo(vuforiaFileUrl).Extension;
+                CurrentMuseum.VuforiaFilesOnDisk.Add(vuforiaFileOnDisk);
+                if (updateNeeded)
                 {
-                    string vuforiaFileOnDisk = pathOnDisk + CurrentMuseum.Name.Replace(" ", "_") + new FileInfo(vuforiaFileUrl).Extension;
-                    CurrentMuseum.VuforiaFilesOnDisk.Add(vuforiaFileOnDisk);
                     Debug.Log("Downloading + " + vuforiaFileOnDisk);
                     yield return new HttpRequests().DownloadData(vuforiaFileUrl, vuforiaFileOnDisk);
                 }
-
+            }
+            if (updateNeeded)
+            {
                 UpdateVuforiaVersion(MuseumInfo.VuforiaDatabaseVersion);
             }
+            
         }
     }
 
