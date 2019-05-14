@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Android;
 using UnityEngine.SceneManagement;
 using Assets.Scripts.AR_TEAM.Http;
@@ -9,8 +10,9 @@ public class LoadFindData : MonoBehaviour
     public static double latitudine = 0;
     public static double longitudine = 0;
     public static bool isUnitTest = false;
-    public static MuseumArray museumData;
-    
+    public static string messageToShow;
+    Text textDownloads;
+
 
     void Awake()
     {
@@ -22,11 +24,14 @@ public class LoadFindData : MonoBehaviour
 
     IEnumerator Start()
     {
+        GameObject textDownloadsObject = GameObject.Find("TextDownloads");
+        textDownloads = textDownloadsObject.GetComponent<Text>();
+
 #if UNITY_EDITOR
         if (latitudine == 0 && longitudine == 0)
         {
             // Testing in editor va fi facut pe muzeul Mihai Eminescu
-            latitudine =  47.179035;
+            latitudine = 47.179035;
             longitudine = 27.567063;
         }
 #elif UNITY_ANDROID
@@ -46,6 +51,11 @@ public class LoadFindData : MonoBehaviour
         }
         SceneManager.LoadScene("MenuScene");
         yield return null;
+    }
+
+    void Update()
+    {
+        textDownloads.text = messageToShow;
     }
 
     IEnumerator LocationService()

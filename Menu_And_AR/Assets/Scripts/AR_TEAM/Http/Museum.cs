@@ -51,5 +51,10 @@ namespace Assets.Scripts.AR_TEAM.Http {
                 .Where(x => new FileInfo(x).Extension == ".xml")
                 .First();
         }
+
+        public void SetPhotoPath()
+        {
+            PhotoPath = "AR_TEAM/images/Museums/" + Name.Replace(" ", "_");
+        }
     }
 }

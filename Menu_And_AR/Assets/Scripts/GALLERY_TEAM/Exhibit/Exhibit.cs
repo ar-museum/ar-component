@@ -33,7 +33,7 @@ namespace Scripts
 
         void loadContent()
         {
-            Globals.exhibit = PlayerPrefs.GetString("exhibit", "op2");
+            Globals.exhibit = PlayerPrefs.GetString("Gallery_Exhibit", "op2");
             JsonToObject jo = new JsonToObject();
             ExhibitData exhibit = jo.loadJson<ExhibitData>("GALLERY_TEAM/" + Globals.exhibit);
             txtDescription.text = exhibit.descriere;

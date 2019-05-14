@@ -53,10 +53,10 @@ public class SettingsBasedOnLocation : MonoBehaviour
                 MuseumDto museum = MuseumManager.Instance.CurrentMuseum;
                 if (museum != null)
                 {
-                    Sprite image = Resources.Load<Sprite>(imagePath + museum.Name.Replace(" ", "_"));
+                    Sprite image = Resources.Load<Sprite>(museum.PhotoPath);
                     if (image == null)
                     {
-                        image = Resources.Load<Sprite>(imagePath + "No_Museum");
+                        image = Resources.Load<Sprite>(museum.PhotoPath);
                     }
                     GameObject background = GameObject.Find("BackgroundImage");
                     background.GetComponent<Image>().sprite = image;
@@ -68,8 +68,11 @@ public class SettingsBasedOnLocation : MonoBehaviour
                     // textMuseum.text = textWelcome_eng + LoadFindData.museumData.museums[i].name_eng;
                     textMuseum.text = textWelcome_ro + museum.Name;
 
-                    buttonARObject.SetActive(true);
-                    buttonGalleryObject.SetActive(true);
+                    if (museum.Expositions.Count > 0)
+                    {
+                        buttonARObject.SetActive(true);
+                        buttonGalleryObject.SetActive(true);
+                    }
                     buttonGamesObject.SetActive(true);
                 }
                 else // alta locatie
@@ -78,13 +81,11 @@ public class SettingsBasedOnLocation : MonoBehaviour
                     GameObject background = GameObject.Find("BackgroundImage");
                     background.GetComponent<Image>().sprite = image;
 
-                    textBoxMuseumObject.SetActive(true);
-                    GameObject textMuseumObject = GameObject.Find("TextBoxMuseum/Text");
+                    textBoxErrorObject.SetActive(true);
+                    GameObject textMuseumObject = GameObject.Find("TextBoxError/Text");
                     Text textMuseum = textMuseumObject.GetComponent<Text>();
                     textMuseum.text = textNoMuseum_ro;// _eng nu avem in engleza in baza de date 
 
-                    buttonGalleryObject.SetActive(true);
-                    buttonGamesObject.SetActive(true);
                 }
             }
         }

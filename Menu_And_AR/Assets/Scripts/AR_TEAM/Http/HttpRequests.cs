@@ -43,7 +43,9 @@ namespace Assets.Scripts.AR_TEAM.HttpRequests {
 
             yield return request.SendWebRequest();
 
+            LoadFindData.messageToShow = "Get " + url;
             if (request.isNetworkError) {
+                LoadFindData.messageToShow = "Error While Sending: " + request.error;
                 Debug.Log("Error While Sending: " + request.error);
             } else {
                 Debug.Log("Received: " + request.downloadHandler.text);
@@ -59,7 +61,9 @@ namespace Assets.Scripts.AR_TEAM.HttpRequests {
 
             yield return request.SendWebRequest();
 
+            LoadFindData.messageToShow = "Get " + url;
             if (request.isNetworkError) {
+                LoadFindData.messageToShow = "Error While Sending: " + request.error;
                 Debug.Log("Error While Sending: " + request.error);
             } else {
                 Debug.Log("Received: " + request.downloadHandler.text);
@@ -75,7 +79,9 @@ namespace Assets.Scripts.AR_TEAM.HttpRequests {
 
             yield return request.SendWebRequest();
 
+            LoadFindData.messageToShow = "Post " + url;
             if (request.isNetworkError) {
+                LoadFindData.messageToShow = "Error While Sending: " + request.error;
                 Debug.Log("Error While Sending: " + request.error);
             } else {
                 Debug.Log("Received: " + request.downloadHandler.text);
@@ -94,7 +100,9 @@ namespace Assets.Scripts.AR_TEAM.HttpRequests {
 
             yield return request.SendWebRequest();
 
+            LoadFindData.messageToShow = "Post " + url;
             if (request.isNetworkError) {
+                LoadFindData.messageToShow = "Error While Sending: " + request.error;
                 Debug.Log("Error While Sending: " + request.error);
             } else {
                 Debug.Log("Received: " + request.downloadHandler.text);
@@ -150,8 +158,13 @@ namespace Assets.Scripts.AR_TEAM.HttpRequests {
             var museum = Deserializers.DeserializeMuseum(node);
             Museum = museum;
 
-            foreach (var expo in museum.Expositions) {
-                yield return DoGetRequest($"{EXPOSITIONS_RELS_URL}/{expo.ExpositionId}", j => OnExpositionComplete(j, expo));
+            if (museum.Expositions.Count > 0) {
+                foreach (var expo in museum.Expositions) {
+                    yield return DoGetRequest($"{EXPOSITIONS_RELS_URL}/{expo.ExpositionId}", j => OnExpositionComplete(j, expo));
+                }
+            }
+            else {
+                yield return OnCompleteMuseumFunction(Museum);
             }
         }
 

@@ -35,6 +35,7 @@ public sealed class MuseumManager
     {
         museum.PopulateExhibits();
         museum.ResolvePaths();
+        museum.SetPhotoPath();
         CurrentMuseum = museum;
         yield return null;
     }
@@ -50,6 +51,7 @@ public sealed class MuseumManager
                 exh.AudioPathOnDisk = pathOnDisk + new FileInfo(exh.AudioUrl).Name;
                 if (!File.Exists(exh.AudioPathOnDisk))
                 {
+                    LoadFindData.messageToShow = "Downloading + " + exh.AudioPathOnDisk;
                     Debug.Log("Downloading + " + exh.AudioPathOnDisk);
                     yield return new HttpRequests().DownloadData(exh.AudioUrl, exh.AudioPathOnDisk);
                 }
@@ -74,6 +76,7 @@ public sealed class MuseumManager
                 CurrentMuseum.VuforiaFilesOnDisk.Add(vuforiaFileOnDisk);
                 if (updateNeeded)
                 {
+                    LoadFindData.messageToShow = "Downloading + " + vuforiaFileOnDisk;
                     Debug.Log("Downloading + " + vuforiaFileOnDisk);
                     yield return new HttpRequests().DownloadData(vuforiaFileUrl, vuforiaFileOnDisk);
                 }
@@ -115,6 +118,7 @@ public sealed class MuseumManager
         string versionsFilePath = GetVersionsFile();
         if (!File.Exists(versionsFilePath))
         {
+            LoadFindData.messageToShow = "Versions file didn't exist";
             Debug.Log("Versions file didn't exist");
             return true;
         }
@@ -122,9 +126,11 @@ public sealed class MuseumManager
         string readVersion = readJson[CurrentMuseum.Name.Replace(" ", "_")];
         if(CompareVersions(readVersion, version) < 0)
         {
+            LoadFindData.messageToShow = "Prepering to download the newer version " + version;
             Debug.Log("Prepering to download the newer version " + version);
             return true;
         }
+        LoadFindData.messageToShow = "Version " + version + " is up to date";
         Debug.Log("Version " + version + " is up to date");
         return false;
     }

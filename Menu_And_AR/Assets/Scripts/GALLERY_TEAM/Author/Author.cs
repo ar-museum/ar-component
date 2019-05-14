@@ -33,7 +33,7 @@ namespace Scripts
 
         void loadContent()
         {
-            Globals.author = PlayerPrefs.GetString("author", "Anonim");
+            Globals.author = PlayerPrefs.GetString("Gallery_Author", "Anonim");
             JsonToObject jo = new JsonToObject();
             AuthorData author = jo.loadJson<AuthorData>("GALLERY_TEAM/" + Globals.author);
             if (imgOpera != null)
