@@ -16,6 +16,7 @@ namespace Assets.Scripts.AR_TEAM.Http {
 
         public void PopulateExhibits() {
             Exhibits = Expositions
+                .Where(x => x.Exhibits != null)
                 .SelectMany(x => x.Exhibits)
                 .Distinct()
                 .ToList();
@@ -23,18 +24,22 @@ namespace Assets.Scripts.AR_TEAM.Http {
         
         public void ResolvePaths() {
             Expositions
+                .Where(x => x.Exhibits != null)
                 .SelectMany(x => x.Exhibits)
                 .ToList()
                 .ForEach(x => x.AudioUrl = HttpRequests.HttpRequests.SITE_URL + x.AudioUrl);
+
         }
 
-        public (string /*title*/,int /*exhibit_id*/, string /*author*/, int /*author_id*/) FindArSceneInfoByExhibitId(int id) {
-            var exhibit = Exhibits
-                .First(x => x.ExhibitId == id);
-            if (exhibit == null) {
-                return ("not found", 0, "not found", 0);
+        public (string /*title*/, string /*author*/, int /*author_id*/) FindArSceneInfoByExhibitId(int id) {
+            foreach(var exhibit in Exhibits)
+            {
+                if(exhibit.ExhibitId == id)
+                {
+                    return (exhibit.Title, exhibit.Author.FullName, exhibit.Author.AuthorId);
+                }
             }
-            return (exhibit.Title, exhibit.ExhibitId, exhibit.Author.FullName, exhibit.Author.AuthorId);
+            return ("not found", "not found", 0);
         }
 
         public string GetSongForExhibitId(int id)

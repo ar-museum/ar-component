@@ -77,12 +77,12 @@ public class MyImageTargetTrackableEventHandler : DefaultTrackableEventHandler
     private void SetPrefsForGallery()
     {
         string title, author;
-        int authorID, exhibitID;
-        if (MuseumManager.Instance.CurrentMuseum != null)
-            (title, exhibitID, author, authorID) = MuseumManager.Instance.CurrentMuseum.FindArSceneInfoByExhibitId(Convert.ToInt32(GetTrackableID()));
+        int authorID = 0, exhibitID = 0;
+        if (MuseumManager.Instance.CurrentMuseum != null && int.TryParse(GetTrackableID(), out exhibitID))
+            (title, author, authorID) = MuseumManager.Instance.CurrentMuseum.FindArSceneInfoByExhibitId(exhibitID);
         else
         {
-            (title, exhibitID, author, authorID) = ("Missing Exhibit", 0, "Missing Author", 0);
+            (title, author, authorID) = ("Missing Title", "Missing Author", 0);
         }
         PlayerPrefs.SetString("Gallery_Author", author.Replace(" ", "_"));
         PlayerPrefs.SetInt("Gallery_AuthorID", authorID);

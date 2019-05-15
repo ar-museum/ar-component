@@ -139,6 +139,7 @@ namespace Assets.Scripts.AR_TEAM.HttpRequests {
             if (info != null)
             {
                 updateJson.Add("version", info.VuforiaDatabaseVersion);
+                updateJson.Add("museum_id", info.MuseumId);
                 yield return DoPostRequest(UPDATE_URL, updateJson.ToString(), j => OnMuseumInfoWithVuforiaFilesCompleted(info, j));
             }
         }
@@ -163,9 +164,7 @@ namespace Assets.Scripts.AR_TEAM.HttpRequests {
                     yield return DoGetRequest($"{EXPOSITIONS_RELS_URL}/{expo.ExpositionId}", j => OnExpositionComplete(j, expo));
                 }
             }
-            else {
-                yield return OnCompleteMuseumFunction(Museum);
-            }
+            yield return OnCompleteMuseumFunction(Museum);
         }
 
         private IEnumerator OnExpositionComplete(string json, Exposition exposition) {
@@ -175,8 +174,6 @@ namespace Assets.Scripts.AR_TEAM.HttpRequests {
             foreach (var exh in exposition.Exhibits) {
                 yield return DoGetRequest($"{EXHIBITS_RELS_URL}/{exh.ExhibitId}", j => OnExhibitComplete(j, exh));
             }
-
-            yield return OnCompleteMuseumFunction(Museum);
         }
 
         private void OnExhibitComplete(string json, Exhibit exh) {
