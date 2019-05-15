@@ -31,8 +31,8 @@ public class LoadFindData : MonoBehaviour
         if (latitudine == 0 && longitudine == 0)
         {
             // Testing in editor va fi facut pe muzeul Mihai Eminescu
-            latitudine = 47.179035;
-            longitudine = 27.567063;
+            latitudine =  47.173975638;// 47.179035;// 47.16686875;
+            longitudine = 27.574884630;// 27.567063;// 27.5841265;
         }
 #elif UNITY_ANDROID
         if (Permission.HasUserAuthorizedPermission(Permission.FineLocation))

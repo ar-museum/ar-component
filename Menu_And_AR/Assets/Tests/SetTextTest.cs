@@ -21,7 +21,7 @@ namespace Tests
             SceneManager.LoadScene("ARScene");
             yield return new WaitForSeconds(1);
             var screeenAttachedObjects = GameObject.FindGameObjectsWithTag("ScreenAttached");
-            var (title, exhibitId, author, authorId) = MuseumManager.Instance.CurrentMuseum.FindArSceneInfoByExhibitId(Convert.ToInt32(1));
+            var (title, author, authorId) = MuseumManager.Instance.CurrentMuseum.FindArSceneInfoByExhibitId(1); // un id valid
 
             //Act
             foreach (var screenAttachedObject in screeenAttachedObjects)
