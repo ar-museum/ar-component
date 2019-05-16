@@ -180,6 +180,7 @@ namespace Assets.Scripts.AR_TEAM.HttpRequests {
             var node = JSON.Parse(json);
             exh.Author = Deserializers.DeserializeAuthor(node["authors"]);
             exh.AudioUrl = node["audio_path"];
+            exh.PhotoUrl = node["photo_path"];
         }
 
         private void OnAuthorComplete(string json, Exhibit exhibit) {

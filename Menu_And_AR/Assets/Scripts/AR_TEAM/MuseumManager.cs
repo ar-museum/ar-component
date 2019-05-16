@@ -33,7 +33,7 @@ public sealed class MuseumManager
 
     private IEnumerator OnMuseumLoaded(MuseumDto museum)
     {
-        museum.PopulateExhibits();
+        museum.PopulateFields();
         museum.ResolvePaths();
         museum.SetPhotoPath();
         CurrentMuseum = museum;

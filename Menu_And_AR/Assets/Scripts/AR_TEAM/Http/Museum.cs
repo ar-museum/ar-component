@@ -15,10 +15,15 @@ namespace Assets.Scripts.AR_TEAM.Http {
         public List<Author> Authors { get; set; }
         public List<string> VuforiaFilesOnDisk { get; set; }
 
-        public void PopulateExhibits() {
+        public void PopulateFields() {
             Exhibits = Expositions
                 .Where(x => x.Exhibits != null)
                 .SelectMany(x => x.Exhibits)
+                .Distinct()
+                .ToList();
+
+            Authors = Exhibits
+                .Select(x => x.Author)
                 .Distinct()
                 .ToList();
         }
