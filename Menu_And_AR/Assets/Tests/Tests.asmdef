@@ -3,7 +3,8 @@
     "references": [
         "ArTeamAsmdef",
         "VuforiaScripts",
-        "VuforiaEditorScripts"
+        "VuforiaEditorScripts",
+        "Scripts"
     ],
     "optionalUnityReferences": [
         "TestAssemblies"

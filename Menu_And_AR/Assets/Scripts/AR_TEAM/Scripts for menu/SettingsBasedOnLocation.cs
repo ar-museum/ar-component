@@ -53,6 +53,9 @@ public class SettingsBasedOnLocation : MonoBehaviour
                 MuseumDto museum = MuseumManager.Instance.CurrentMuseum;
                 if (museum != null)
                 {
+                    //sent museum id to games part
+                    PlayerPrefs.SetInt("Games_Museum", museum.MuseumId);
+                    
                     Sprite image = Resources.Load<Sprite>(museum.PhotoPath);
                     if (image == null)
                     {
