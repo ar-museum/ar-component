@@ -23,7 +23,7 @@ public sealed class MuseumManager
     {
         get
         {
-            if ( instance == null)
+            if (instance == null)
             {
                 instance = new MuseumManager();
             }
@@ -39,8 +39,10 @@ public sealed class MuseumManager
         CurrentMuseum = museum;
         yield return null;
     }
+    
 
-    public IEnumerator GetAllAudios() {
+    public IEnumerator GetAllAudios()
+    {
         if (CurrentMuseum != null)
         {
             List<Exhibit> exhibits = CurrentMuseum.Exhibits;
@@ -64,7 +66,7 @@ public sealed class MuseumManager
         if (CurrentMuseum != null)
         {
             bool updateNeeded = NewerVuforiaVersion(MuseumInfo.VuforiaDatabaseVersion);
-            
+
             CurrentMuseum.VuforiaFilesOnDisk = new List<string>();
 
             List<string> vuforiaUrls = MuseumInfo.VuforiaFiles;
@@ -85,7 +87,7 @@ public sealed class MuseumManager
             {
                 UpdateVuforiaVersion(MuseumInfo.VuforiaDatabaseVersion);
             }
-            
+
         }
     }
 
@@ -98,7 +100,7 @@ public sealed class MuseumManager
         }
         var updateJson = JSON.Parse(File.ReadAllText(versionsFilePath)).AsObject;
         string museum_name = CurrentMuseum.Name.Replace(" ", "_");
-        if(updateJson == null)
+        if (updateJson == null)
         {
             updateJson = new JSONObject();
         }
@@ -124,7 +126,7 @@ public sealed class MuseumManager
         }
         var readJson = JSON.Parse(File.ReadAllText(versionsFilePath));
         string readVersion = readJson[CurrentMuseum.Name.Replace(" ", "_")];
-        if(CompareVersions(readVersion, version) < 0)
+        if (CompareVersions(readVersion, version) < 0)
         {
             LoadFindData.messageToShow = "Prepering to download the newer version " + version;
             Debug.Log("Prepering to download the newer version " + version);
@@ -137,17 +139,17 @@ public sealed class MuseumManager
 
     private int CompareVersions(string version1, string version2)
     {
-        if(version1 == null)
+        if (version1 == null)
         {
             return -1;
         }
-        if(version2 == null)
+        if (version2 == null)
         {
             return 1;
         }
         string[] version1Numbers = version1.Split('.');
         string[] version2Numbers = version2.Split('.');
-        int n = (version1Numbers.Length < version2.Length)? version1Numbers.Length : version2Numbers.Length;
+        int n = (version1Numbers.Length < version2.Length) ? version1Numbers.Length : version2Numbers.Length;
         for (int i = 0; i < n; ++i)
         {
             if (Convert.ToInt32(version1Numbers[i]) < Convert.ToInt32(version2Numbers[i]))
@@ -159,7 +161,7 @@ public sealed class MuseumManager
                 return 1;
             }
         }
-        if( version1Numbers.Length < n)
+        if (version1Numbers.Length < n)
         {
             return -1;
         }
@@ -170,7 +172,8 @@ public sealed class MuseumManager
         return 0;
     }
 
-    private IEnumerator OnMuseumInfoLoaded(MuseumInfo info) {
+    private IEnumerator OnMuseumInfoLoaded(MuseumInfo info)
+    {
         MuseumInfo = info;
         if (info == null)
         {
@@ -182,7 +185,8 @@ public sealed class MuseumManager
         }
     }
 
-    public IEnumerator RequestMuseumInfo(GeoCoordinate coordinate) {
+    public IEnumerator RequestMuseumInfo(GeoCoordinate coordinate)
+    {
         yield return new HttpRequests().GetMuseumInfo(OnMuseumInfoLoaded, coordinate);
     }
 

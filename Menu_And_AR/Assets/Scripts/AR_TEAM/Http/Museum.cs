@@ -12,6 +12,7 @@ namespace Assets.Scripts.AR_TEAM.Http {
         public string PhotoPath { get; set; }
         public List<Exposition> Expositions { get; set; }
         public List<Exhibit> Exhibits { get; set; }
+        public List<Author> Authors { get; set; }
         public List<string> VuforiaFilesOnDisk { get; set; }
 
         public void PopulateExhibits() {
@@ -41,6 +42,19 @@ namespace Assets.Scripts.AR_TEAM.Http {
             }
             return ("not found", "not found", 0);
         }
+
+        public (string /*title*/, string /*author*/, string /*description*/, string /*photoUrl*/) GetExhibitDataById(int id)
+        {
+            foreach (var exhibit in Exhibits)
+            {
+                if (exhibit.ExhibitId == id)
+                {
+                    return (exhibit.Title, exhibit.Author.FullName, exhibit.ShortDescription, exhibit.PhotoUrl);
+                }
+            }
+            return ("not found", "not found", "not found","not found");
+        }
+ 
 
         public string GetSongForExhibitId(int id)
         {

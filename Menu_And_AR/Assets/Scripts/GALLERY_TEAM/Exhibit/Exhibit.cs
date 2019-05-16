@@ -17,8 +17,10 @@ namespace Scripts
     {
         // Start is called before the first frame update
         [SerializeField] private UnityEngine.UI.Image imgOpera = null;
-        [SerializeField] private Text txtTitle;
-        [SerializeField] private Text txtDescription;
+        [SerializeField] private Text txtTitle = null;
+        [SerializeField] private Text txtDescription = null;
+        string auth = " ";
+        string url = " ";
         private float offset;
         private float contentHeight;
 
@@ -33,14 +35,20 @@ namespace Scripts
 
         void loadContent()
         {
-            Globals.exhibit = PlayerPrefs.GetString("Gallery_Exhibit", "op2");
-            JsonToObject jo = new JsonToObject();
-            ExhibitData exhibit = jo.loadJson<ExhibitData>("GALLERY_TEAM/" + Globals.exhibit);
-            txtDescription.text = exhibit.descriere;
-            txtTitle.text = exhibit.titlu + '\n';
+            //Globals.exhibit = PlayerPrefs.GetString("Gallery_Exhibit", "op2");
+            //JsonToObject jo = new JsonToObject();
+            //ExhibitData exhibit = jo.loadJson<ExhibitData>("GALLERY_TEAM/" + Globals.exhibit);
+
+            (txtTitle.text,auth,txtDescription.text, url) = MuseumManager.Instance.CurrentMuseum.GetExhibitDataById(33);
+            foreach (var exhibit in MuseumManager.Instance.CurrentMuseum.Exhibits)
+            {
+                Debug.Log(url);
+            }
+                Debug.Log("url hbvfcdcfvgbh ; "+ url);
+            txtTitle.text = txtTitle.text + '\n';
             if (imgOpera != null)
             {
-                imgOpera.sprite = Resources.Load<Sprite>("GALLERY_TEAM/Sprites/" + exhibit.denumire);
+                imgOpera.sprite = Resources.Load<Sprite>("GALLERY_TEAM/Sprites/74");
             }
         }
 

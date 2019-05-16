@@ -31,8 +31,8 @@ public class LoadFindData : MonoBehaviour
         if (latitudine == 0 && longitudine == 0)
         {
             // Testing in editor va fi facut pe muzeul Mihai Eminescu
-            latitudine =  47.173975638;// 47.179035;// 47.16686875;
-            longitudine = 27.574884630;// 27.567063;// 27.5841265;
+            latitudine =  47.17910387;//47.173975638;// 47.16686875;
+            longitudine = 27.56697617; // 27.574884630;// 27.5841265;
         }
 #elif UNITY_ANDROID
         if (Permission.HasUserAuthorizedPermission(Permission.FineLocation))
@@ -40,13 +40,13 @@ public class LoadFindData : MonoBehaviour
             yield return StartCoroutine(LocationService());
         }
 #endif
-        
+
         yield return MuseumManager.Instance.RequestMuseumInfo(new GeoCoordinate(latitudine, longitudine));
 
-        if(MuseumManager.Instance.CurrentMuseum != null)
+        if (MuseumManager.Instance.CurrentMuseum != null)
         {
             yield return MuseumManager.Instance.GetAllAudios();
-            
+
             yield return MuseumManager.Instance.GetVuforiaFiles();
         }
         SceneManager.LoadScene("MenuScene");
