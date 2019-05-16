@@ -149,7 +149,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90d8871ba381da54fa161be55c23ec3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentVuforiaDatabase: ARMuseum
   ImageTargetChildPrefab: {fileID: 1155915216206479586, guid: d33cce2ee1d9a374e85e8804e9dd3cf5,
     type: 3}
 --- !u!4 &264757907
@@ -528,7 +527,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 624156972}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6074f62c652a2534f929dea426736e42, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d7f4e38f7fd9c44fbfa6c7625fa441a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   textType: 1
@@ -1115,7 +1114,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1170698659}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6074f62c652a2534f929dea426736e42, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d7f4e38f7fd9c44fbfa6c7625fa441a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   textType: 0
