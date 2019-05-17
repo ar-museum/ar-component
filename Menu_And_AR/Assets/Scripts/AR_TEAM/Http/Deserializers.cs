@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 
 namespace Assets.Scripts.AR_TEAM.Http {
-    class Deserializers {
+    public class Deserializers {
+        public delegate T DeserializeThing<T>(JSONNode node);
+        
         private delegate T DeserializeSomething<T>(JSONNode node);
 
         private static List<T> DeserializeList<T>(JSONNode node, DeserializeSomething<T> deserialize) {

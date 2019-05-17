@@ -1,10 +1,10 @@
 ﻿using Assets.Scripts.AR_TEAM.Http;
-using Assets.Scripts.AR_TEAM.HttpRequests;
 using SimpleJSON;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public sealed class MuseumManager
@@ -31,17 +31,16 @@ public sealed class MuseumManager
         }
     }
 
-    private IEnumerator OnMuseumLoaded(MuseumDto museum)
+    private void OnMuseumLoaded(MuseumDto museum)
     {
         museum.PopulateFields();
         museum.ResolvePaths();
         museum.SetPhotoPath();
         CurrentMuseum = museum;
-        yield return null;
     }
     
 
-    public IEnumerator GetAllAudios()
+    public async Task DownloadAllAudios()
     {
         if (CurrentMuseum != null)
         {
@@ -55,13 +54,13 @@ public sealed class MuseumManager
                 {
                     LoadFindData.messageToShow = "Downloading + " + exh.AudioPathOnDisk;
                     Debug.Log("Downloading + " + exh.AudioPathOnDisk);
-                    yield return new HttpRequests().DownloadData(exh.AudioUrl, exh.AudioPathOnDisk);
+                    await MuseumRequests.DownloadFile(exh.AudioUrl, exh.AudioPathOnDisk);
                 }
             }
         }
     }
 
-    public IEnumerator GetVuforiaFiles()
+    public async Task DownloadVuforiaFiles()
     {
         if (CurrentMuseum != null)
         {
@@ -80,7 +79,7 @@ public sealed class MuseumManager
                 {
                     LoadFindData.messageToShow = "Downloading + " + vuforiaFileOnDisk;
                     Debug.Log("Downloading + " + vuforiaFileOnDisk);
-                    yield return new HttpRequests().DownloadData(vuforiaFileUrl, vuforiaFileOnDisk);
+                    await MuseumRequests.DownloadFile(vuforiaFileUrl, vuforiaFileOnDisk);
                 }
             }
             if (updateNeeded)
@@ -172,7 +171,7 @@ public sealed class MuseumManager
         return 0;
     }
 
-    private IEnumerator OnMuseumInfoLoaded(MuseumInfo info)
+    private async Task OnMuseumInfoLoaded(MuseumInfo info)
     {
         MuseumInfo = info;
         if (info == null)
@@ -181,18 +180,17 @@ public sealed class MuseumManager
         }
         else
         {
-            yield return RequestMuseumByID(info.MuseumId);
+            await RequestMuseumByID(info.MuseumId);
         }
     }
 
-    public IEnumerator RequestMuseumInfo(GeoCoordinate coordinate)
-    {
-        yield return new HttpRequests().GetMuseumInfo(OnMuseumInfoLoaded, coordinate);
+    public async Task RequestMuseumInfo(GeoCoordinate coordinate) {
+        await OnMuseumInfoLoaded(await MuseumRequests.DownloadMuseumInfo(coordinate));
     }
 
-    public IEnumerator RequestMuseumByID(int id)
+    public async Task RequestMuseumByID(int id)
     {
-        yield return new HttpRequests().GetMuseumData(OnMuseumLoaded, id);
+        OnMuseumLoaded(await MuseumRequests.DownloadMuseum(id));
     }
 
     public string GetVuforiaFilesPath()

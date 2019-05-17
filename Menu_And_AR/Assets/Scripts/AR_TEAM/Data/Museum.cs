@@ -33,8 +33,7 @@ namespace Assets.Scripts.AR_TEAM.Http {
                 .Where(x => x.Exhibits != null)
                 .SelectMany(x => x.Exhibits)
                 .ToList()
-                .ForEach(x => x.AudioUrl = HttpRequests.HttpRequests.SITE_URL + x.AudioUrl);
-
+                .ForEach(x => x.AudioUrl = Endpoints.SITE_URL + x.AudioUrl);
         }
 
         public (string /*title*/, string /*author*/, int /*author_id*/) FindArSceneInfoByExhibitId(int id) {

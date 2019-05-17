@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using Assets.Scripts.AR_TEAM.HttpRequests;
 using Assets.Scripts.AR_TEAM.Http;
 
 public class SceneLoader : MonoBehaviour

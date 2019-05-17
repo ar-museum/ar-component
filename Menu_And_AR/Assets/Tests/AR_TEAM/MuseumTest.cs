@@ -1,12 +1,7 @@
-
 using Assets.Scripts.AR_TEAM.Http;
-using Assets.Scripts.AR_TEAM.HttpRequests;
 using NUnit.Framework;
-using SimpleJSON;
-using System.Collections;
 
-namespace Tests
-{
+namespace Tests {
     public class MuseumTest
     {
 
