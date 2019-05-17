@@ -19,7 +19,7 @@ namespace Assets.Scripts.AR_TEAM.Http {
             request.certificateHandler = new CustomCertificateHandler();
             SetHeaders(request);
 
-            LoadFindData.messageToShow = "Get " + url;
+            LoadFindData.messageToShow = "Get await" + url;
             await request.SendWebRequest();
 
             if (request.isNetworkError) {
@@ -50,7 +50,7 @@ namespace Assets.Scripts.AR_TEAM.Http {
 
             await request.SendWebRequest();
 
-            LoadFindData.messageToShow = "Post " + url;
+            LoadFindData.messageToShow = "Post await" + url;
             if (request.isNetworkError) {
                 var message = "Error While Sending: " + request.error;
                 LoadFindData.messageToShow = message;
