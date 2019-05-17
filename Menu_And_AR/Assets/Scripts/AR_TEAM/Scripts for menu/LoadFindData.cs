@@ -5,6 +5,7 @@ using UnityEngine.Android;
 using UnityEngine.SceneManagement;
 using Assets.Scripts.AR_TEAM.Http;
 using System.Threading.Tasks;
+using System;
 
 public class LoadFindData : MonoBehaviour
 {
@@ -23,7 +24,11 @@ public class LoadFindData : MonoBehaviour
         }
     }
 
-    async Task Start()
+    IEnumerator Start() {
+        yield return DoStart().AsIEnumerator();
+    }
+
+    async Task DoStart()
     {
         GameObject textDownloadsObject = GameObject.Find("TextDownloads");
         textDownloads = textDownloadsObject.GetComponent<Text>();
@@ -38,7 +43,7 @@ public class LoadFindData : MonoBehaviour
 #elif UNITY_ANDROID
         if (Permission.HasUserAuthorizedPermission(Permission.FineLocation))
         {
-            yield return StartCoroutine(LocationService());
+            await LocationService();
         }
 #endif
         await MuseumManager.Instance.RequestMuseumInfo(new GeoCoordinate(latitudine, longitudine));
@@ -56,14 +61,14 @@ public class LoadFindData : MonoBehaviour
         textDownloads.text = messageToShow;
     }
 
-    IEnumerator LocationService()
+    async Task LocationService()
     {
         if (!Input.location.isEnabledByUser)
         {
             print("Utlizatorul nu a activat GPS-ul.");
             latitudine = -1;
             longitudine = -1;
-            yield break;
+            return;
         }
 
         Input.location.Start();
@@ -71,7 +76,7 @@ public class LoadFindData : MonoBehaviour
         int maxWait = 20;
         while (Input.location.status == LocationServiceStatus.Initializing && maxWait > 0)
         {
-            yield return new WaitForSeconds(1);
+            await Task.Delay(TimeSpan.FromSeconds(1));
             maxWait--;
         }
 
@@ -80,7 +85,7 @@ public class LoadFindData : MonoBehaviour
             print("Timpul a expirat.");
             latitudine = -1;
             longitudine = -1;
-            yield break;
+            return;
         }
 
         if (Input.location.status == LocationServiceStatus.Failed)
@@ -88,7 +93,7 @@ public class LoadFindData : MonoBehaviour
             print("Nu s-a putut determina locatia device-ului.");
             latitudine = -1;
             longitudine = -1;
-            yield break;
+            return;
         }
         else
         {
