@@ -2,21 +2,18 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class CreateAuthors : MonoBehaviour
+public class CreateExhibits : MonoBehaviour
 {
     public GameObject buttonPrefab;
     public GameObject panelToAttachButtonsTo;
     void Start()//Creates a button and sets it up
     {
         int count = 0;
-        foreach (var author in MuseumManager.Instance.CurrentMuseum.Authors)
+        foreach (var exhibit in MuseumManager.Instance.CurrentMuseum.Exhibits)
+        { createButton(exhibit.ExhibitId, count); ++count; }
+        if(count>5)
         {
-            createButton(author.AuthorId, count);
-            ++count;
-        }
-        if (count > 5)
-        {
-            panelToAttachButtonsTo.GetComponent<RectTransform>().sizeDelta = new Vector2(panelToAttachButtonsTo.GetComponent<RectTransform>().sizeDelta.x, 1680 + (count - 5) * 250);
+            panelToAttachButtonsTo.GetComponent<RectTransform>().sizeDelta = new Vector2(panelToAttachButtonsTo.GetComponent<RectTransform>().sizeDelta.x, 1680 + (count-5) * 250);
         }
     }
 
@@ -28,17 +25,16 @@ public class CreateAuthors : MonoBehaviour
         button.GetComponent<RectTransform>().localScale = new Vector2(1, 1);
         button.GetComponent<Button>().onClick.AddListener(delegate { OnClick(index); });
 
-        string das, das2;
-        int born, died;
-
-        (button.transform.GetChild(0).GetComponent<Text>().text, born, died, das2, das) = MuseumManager.Instance.CurrentMuseum.GetAuthorDataById(index);
+        string das;
+        string das2, das3;
+        (button.transform.GetChild(0).GetComponent<Text>().text, das,das2,das3) = MuseumManager.Instance.CurrentMuseum.GetExhibitDataById(index);
     }
 
     void OnClick(int index)
     {
         Debug.Log("Clicked button " + index);
-        PlayerPrefs.SetInt("Author_Id", index);
-        SceneManager.LoadScene("AuthorScene");
+        PlayerPrefs.SetInt("Exhibit_Id", index);
+        SceneManager.LoadScene("ExhibitScene");
     }
 
 }

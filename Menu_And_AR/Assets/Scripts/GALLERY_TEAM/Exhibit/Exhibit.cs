@@ -38,8 +38,8 @@ namespace Scripts
             //Globals.exhibit = PlayerPrefs.GetString("Gallery_Exhibit", "op2");
             //JsonToObject jo = new JsonToObject();
             //ExhibitData exhibit = jo.loadJson<ExhibitData>("GALLERY_TEAM/" + Globals.exhibit);
-
-            (txtTitle.text,auth,txtDescription.text, url) = MuseumManager.Instance.CurrentMuseum.GetExhibitDataById(33);
+            int exhibitId = PlayerPrefs.GetInt("Exhibit_Id");
+            (txtTitle.text,auth,txtDescription.text, url) = MuseumManager.Instance.CurrentMuseum.GetExhibitDataById(exhibitId);
             foreach (var exhibit in MuseumManager.Instance.CurrentMuseum.Exhibits)
             {
                 Debug.Log(url);

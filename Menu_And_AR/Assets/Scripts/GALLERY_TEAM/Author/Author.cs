@@ -1,6 +1,7 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
 using Scripts;
+using UnityEngine.SceneManagement;
 
 namespace Scripts
 {
@@ -19,6 +20,8 @@ namespace Scripts
         [SerializeField] private UnityEngine.UI.Image imgOpera = null;
         [SerializeField] private Text txtTitle;
         [SerializeField] private Text txtDescription;
+        public GameObject buttonPrefab;
+        public GameObject panelToAttachButtonsTo;
         private float offset;
         private float contentHeight;
 
@@ -29,21 +32,54 @@ namespace Scripts
             if (!PlayerPrefs.HasKey("author" + Globals.author + "offset"))
                 PlayerPrefs.SetFloat("author" + Globals.author + "offset", 0);
             Invoke("setContentDimension", 0.01f);
+            int count = 0;
+            foreach (var exhibit in MuseumManager.Instance.CurrentMuseum.Exhibits)
+            {
+                if (count > 2)
+                    break;
+                if (PlayerPrefs.GetInt("Author_Id") == exhibit.Author.AuthorId)
+                {
+                    createButton(exhibit.ExhibitId);
+                    ++count;
+                }
+            }
+        
+        }
+
+        void createButton(int index)
+        {
+            GameObject button = (GameObject)Instantiate(buttonPrefab);
+            button.transform.SetParent(panelToAttachButtonsTo.transform);
+            button.GetComponent<RectTransform>().localScale = new Vector2(1, 1);
+            button.GetComponent<Button>().onClick.AddListener(delegate { OnClick(index); });
+
+            string das, das2, title;
+            int born, died;
+
+            (title, born, died, das2, das) = MuseumManager.Instance.CurrentMuseum.GetAuthorDataById(index);
+        }
+
+        void OnClick(int index)
+        {
+            Debug.Log("Clicked button " + index);
+            PlayerPrefs.SetInt("Exhibit_Id", index);
+            SceneManager.LoadScene("ExhibitScene");
         }
 
         void loadContent()
         {
-            Globals.author = PlayerPrefs.GetString("Gallery_Author", "Anonim");
-            JsonToObject jo = new JsonToObject();
-            AuthorData author = jo.loadJson<AuthorData>("GALLERY_TEAM/" + Globals.author);
+            Debug.Log(PlayerPrefs.GetInt("Author_Id"));
+            int authorId = PlayerPrefs.GetInt("Author_Id");
             if (imgOpera != null)
             {
-                imgOpera.sprite = Resources.Load<Sprite>("GALLERY_TEAM/Sprites/" + author.photo_id);
+                imgOpera.sprite = Resources.Load<Sprite>("GALLERY_TEAM/Sprites/74");
             }
-            txtTitle.text = author.full_name;
-            txtDescription.text = "Born : " + author.born_year + "\n";
-            txtDescription.text += "Died : " + author.died_year + "\n";
-            txtDescription.text += "Location : " + author.location;
+            int born, died;
+            string location, photo_path;
+            (txtTitle.text, born, died, location, photo_path) = MuseumManager.Instance.CurrentMuseum.GetAuthorDataById(authorId);
+            txtDescription.text = "Born : " + born + "\n";
+            txtDescription.text += "Died : " + died + "\n";
+            txtDescription.text += "Location : " + location;
         }
 
         void setContentDimension()

@@ -21,10 +21,10 @@ namespace Assets.Scripts.AR_TEAM.Http {
                 .SelectMany(x => x.Exhibits)
                 .Distinct()
                 .ToList();
-
             Authors = Exhibits
                 .Select(x => x.Author)
-                .Distinct()
+                .GroupBy(x => x.AuthorId)
+                .Select(x => x.First())
                 .ToList();
         }
         
@@ -58,7 +58,18 @@ namespace Assets.Scripts.AR_TEAM.Http {
             }
             return ("not found", "not found", "not found","not found");
         }
- 
+
+        public (string /*FullName*/,int /*bornYear*/,int /*diedYear*/,string /*Location*/, string /*photoUrl*/) GetAuthorDataById(int id)
+        {
+            foreach (var author in Authors)
+            {
+                if (author.AuthorId == id)
+                {
+                    return (author.FullName,author.BornYear, author.DiedYear, author.Location, author.PhotoPath);
+                }
+            }
+            return ("not found", 0, 0, "Westeros", "not found");
+        }
 
         public string GetSongForExhibitId(int id)
         {
