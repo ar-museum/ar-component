@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.Android;
 using UnityEngine.SceneManagement;
 using Assets.Scripts.AR_TEAM.Http;
+using System.Threading.Tasks;
 
 public class LoadFindData : MonoBehaviour
 {
@@ -22,7 +23,7 @@ public class LoadFindData : MonoBehaviour
         }
     }
 
-    IEnumerator Start()
+    async Task Start()
     {
         GameObject textDownloadsObject = GameObject.Find("TextDownloads");
         textDownloads = textDownloadsObject.GetComponent<Text>();
@@ -40,17 +41,14 @@ public class LoadFindData : MonoBehaviour
             yield return StartCoroutine(LocationService());
         }
 #endif
+        await MuseumManager.Instance.RequestMuseumInfo(new GeoCoordinate(latitudine, longitudine));
 
-        yield return MuseumManager.Instance.RequestMuseumInfo(new GeoCoordinate(latitudine, longitudine));
+        if (MuseumManager.Instance.CurrentMuseum != null) {
+            await MuseumManager.Instance.DownloadAllAudios();
 
-        if (MuseumManager.Instance.CurrentMuseum != null)
-        {
-            yield return MuseumManager.Instance.GetAllAudios();
-
-            yield return MuseumManager.Instance.GetVuforiaFiles();
+            await MuseumManager.Instance.DownloadVuforiaFiles();
         }
         SceneManager.LoadScene("MenuScene");
-        yield return null;
     }
 
     void Update()
