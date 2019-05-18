@@ -32,7 +32,6 @@ public class MyImageTargetTrackableEventHandler : DefaultTrackableEventHandler
         ShowARUIFrame();
         ARDisplayTypeSwitcher.CleanScreenAttachedInfo();
         ARDisplayTypeSwitcher.HideScreenAttachedComponents(ARDisplayTypeSwitcher.getScreenAttachedObjects());
-        RemovePrefsForGallery();
         StopAudio();
     }
 
@@ -88,13 +87,5 @@ public class MyImageTargetTrackableEventHandler : DefaultTrackableEventHandler
         PlayerPrefs.SetInt("Gallery_AuthorID", authorID);
         PlayerPrefs.SetString("Gallery_Exhibit", title.Replace(" ", "_"));
         PlayerPrefs.SetInt("Gallery_ExhibitID", exhibitID);
-    }
-
-    private void RemovePrefsForGallery()
-    {
-        PlayerPrefs.DeleteKey("Gallery_Author");
-        PlayerPrefs.DeleteKey("Gallery_AuthorID");
-        PlayerPrefs.DeleteKey("Gallery_Exhibit");
-        PlayerPrefs.DeleteKey("Gallery_ExhibitID");
     }
 }
