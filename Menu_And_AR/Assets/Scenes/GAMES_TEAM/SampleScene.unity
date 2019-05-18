@@ -1684,8 +1684,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1011933265}
-        m_MethodName: QuitGame
+      - m_Target: {fileID: 1614412127}
+        m_MethodName: LoadBackScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

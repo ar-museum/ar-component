@@ -5,7 +5,7 @@ using Assets.Scripts.AR_TEAM.Http;
 
 public class SettingsBasedOnLocation : MonoBehaviour
 {
-    const string imagePath = "AR_TEAM/images/Museums/";
+    const string imagePath = "AR_TEAM/images/Museums/No_Museum";
     string textAllowLocation_ro = "Permiteti aplicatiei sa aiba acces la locatia dumneavoastra astfel incat sa puteti fi localizat.";
     string textAllowLocation_eng = "Allow the application to access your location so you can be located.";
     string textActivateLocation_ro = "Activati locatia pentru a putea permite aplicatiei sa acceseze coordonatele actuale ale pozitiei dumneavoastra.";
@@ -14,9 +14,6 @@ public class SettingsBasedOnLocation : MonoBehaviour
     string textWelcome_eng = "Welcome to\n";
     string textNoMuseum_ro = "Nu va aflati in\n incinta unui muzeu";
     string textNoMuseum_eng = "You are not\n inside a museum";
-    //const double pi = 3.141592653589793;
-    //const double radius = 6371;
-    //const double distanceMuseum = 0.1; //0.1 km
 
     void Awake()
     {
@@ -39,7 +36,7 @@ public class SettingsBasedOnLocation : MonoBehaviour
         {
             if (LoadFindData.latitudine == -1 && LoadFindData.longitudine == -1) // locatia nu este activata
             {
-                Sprite image = Resources.Load<Sprite>(imagePath + "No_Museum");
+                Sprite image = Resources.Load<Sprite>(imagePath);
                 GameObject background = GameObject.Find("BackgroundImage");
                 background.GetComponent<Image>().sprite = image;
 
@@ -59,7 +56,7 @@ public class SettingsBasedOnLocation : MonoBehaviour
                     Sprite image = Resources.Load<Sprite>(museum.PhotoPath);
                     if (image == null)
                     {
-                        image = Resources.Load<Sprite>(imagePath + "No_Museum");
+                        image = Resources.Load<Sprite>(imagePath);
                     }
                     GameObject background = GameObject.Find("BackgroundImage");
                     background.GetComponent<Image>().sprite = image;
@@ -80,7 +77,7 @@ public class SettingsBasedOnLocation : MonoBehaviour
                 }
                 else // alta locatie
                 {
-                    Sprite image = Resources.Load<Sprite>(imagePath + "No_Museum");
+                    Sprite image = Resources.Load<Sprite>(imagePath);
                     GameObject background = GameObject.Find("BackgroundImage");
                     background.GetComponent<Image>().sprite = image;
 
@@ -94,7 +91,7 @@ public class SettingsBasedOnLocation : MonoBehaviour
         }
         else // nu este permis accesul la locatie
         {
-            Sprite image = Resources.Load<Sprite>(imagePath + "No_Museum");
+            Sprite image = Resources.Load<Sprite>(imagePath);
             GameObject background = GameObject.Find("BackgroundImage");
             background.GetComponent<Image>().sprite = image;
 
@@ -104,24 +101,4 @@ public class SettingsBasedOnLocation : MonoBehaviour
             textError.text = textAllowLocation_ro; // _eng nu avem in engleza in baza de date
         }
     }
-
-    //public bool verifyLocation(double latitude, double longitude)
-    //{
-    //    double latitudeUserRad = degreesToRadians(LoadFindData.latitudine);
-    //    double latitudeLocationRad = degreesToRadians(latitude);
-
-    //    double distanceLatitudeRad = degreesToRadians(LoadFindData.latitudine - latitude);
-    //    double distanceLongitudeRad = degreesToRadians(LoadFindData.longitudine - longitude);
-
-    //    double value = Math.Sin(distanceLatitudeRad / 2) * Math.Sin(distanceLatitudeRad / 2) + Math.Cos(latitudeUserRad) * Math.Cos(latitudeLocationRad) * Math.Sin(distanceLongitudeRad / 2) * Math.Sin(distanceLongitudeRad / 2);
-    //    double result = 2 * radius * Math.Atan2(Math.Sqrt(value), Math.Sqrt(1 - value));
-
-    //    if (result <= distanceMuseum) return true;
-    //    else return false;
-    //}
-
-    //public double degreesToRadians(double value)
-    //{
-    //    return value * pi / 180.0;
-    //}
 }

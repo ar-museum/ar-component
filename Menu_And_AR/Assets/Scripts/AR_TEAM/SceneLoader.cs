@@ -1,14 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using Assets.Scripts.AR_TEAM.Http;
 
 public class SceneLoader : MonoBehaviour
 {
     Scene currentScene;
+
     float pausedTime;
+    double oldLatitude, oldLongitude;
+    const double pi = 3.141592653589793;
+    const double radius = 6371;
+    const double distanceMuseum = 0.05; //50 m
 
     static ArrayList sceneStack = new ArrayList();
 
@@ -30,6 +33,12 @@ public class SceneLoader : MonoBehaviour
                 }
                 else
                 {
+                    if (string.Compare(currentScene.name, "Menu") == 0)
+                    {
+                        GameObject music = GameObject.FindGameObjectWithTag("music");
+                        Destroy(music);
+                    }
+
                     int backSceneIndex = (int)sceneStack[sceneStack.Count - 1];
                     sceneStack.RemoveAt(sceneStack.Count - 1);
                     SceneManager.LoadScene(backSceneIndex);
@@ -38,27 +47,27 @@ public class SceneLoader : MonoBehaviour
         }
     }
 
-    void OnApplicationPause(bool pauseStatus)
+    IEnumerator OnApplicationPause(bool pauseStatus)
     {
         if (pauseStatus)
         {
             pausedTime = Time.realtimeSinceStartup;
+            oldLatitude = LoadFindData.latitudine;
+            oldLongitude = LoadFindData.longitudine;
         }
         else
         {
-            float waitingTime;
-            string sceneName = currentScene.name;
-            if (string.Compare(sceneName, "MenuScene") != 0)
+            yield return LoadFindData.LocationService();
+            if (!verifyLocation(oldLatitude, oldLongitude))
             {
-                waitingTime = 30f;
+                SceneManager.LoadScene("PreloadScene");
             }
             else
             {
-                waitingTime = 10f;
-            }
-            if (Time.realtimeSinceStartup - pausedTime > waitingTime)
-            {
-                SceneManager.LoadScene("PreloadScene");
+                if ((Time.realtimeSinceStartup - pausedTime > 30f) && (string.Compare(currentScene.name, "MenuScene") != 0))
+                {
+                    SceneManager.LoadScene("MenuScene");
+                }
             }
         }
     }
@@ -67,6 +76,12 @@ public class SceneLoader : MonoBehaviour
     {
         if (sceneStack.Count > 0)
         {
+            if (string.Compare(currentScene.name, "Menu") == 0)
+            {
+                GameObject music = GameObject.FindGameObjectWithTag("music");
+                Destroy(music);
+            }
+
             int backSceneIndex = (int)sceneStack[sceneStack.Count - 1];
             sceneStack.RemoveAt(sceneStack.Count - 1);
             SceneManager.LoadScene(backSceneIndex);
@@ -82,11 +97,31 @@ public class SceneLoader : MonoBehaviour
         if (Application.CanStreamedLevelBeLoaded(sceneCamera))
         {
             sceneStack.Add(currentScene.buildIndex);
-            SceneManager.LoadScene(sceneCamera);    
+            SceneManager.LoadScene(sceneCamera);
         }
         else
         {
             throw new System.ArgumentException("Invalid argument.", "sceneCamera");
         }
+    }
+
+    public bool verifyLocation(double latitude, double longitude)
+    {
+        double latitudeUserRad = degreesToRadians(LoadFindData.latitudine);
+        double latitudeLocationRad = degreesToRadians(latitude);
+
+        double distanceLatitudeRad = degreesToRadians(LoadFindData.latitudine - latitude);
+        double distanceLongitudeRad = degreesToRadians(LoadFindData.longitudine - longitude);
+
+        double value = Math.Sin(distanceLatitudeRad / 2) * Math.Sin(distanceLatitudeRad / 2) + Math.Cos(latitudeUserRad) * Math.Cos(latitudeLocationRad) * Math.Sin(distanceLongitudeRad / 2) * Math.Sin(distanceLongitudeRad / 2);
+        double result = 2 * radius * Math.Atan2(Math.Sqrt(value), Math.Sqrt(1 - value));
+
+        if (result <= distanceMuseum) return true;
+        else return false;
+    }
+
+    public double degreesToRadians(double value)
+    {
+        return value * pi / 180.0;
     }
 }

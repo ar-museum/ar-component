@@ -14,6 +14,8 @@ public class LoadFindData : MonoBehaviour
     public static bool isUnitTest = false;
     public static string messageToShow;
     Text textDownloads;
+    Image loadingImage;
+    Sprite[] frames;
 
 
     void Awake()
@@ -32,6 +34,10 @@ public class LoadFindData : MonoBehaviour
     {
         GameObject textDownloadsObject = GameObject.Find("TextDownloads");
         textDownloads = textDownloadsObject.GetComponent<Text>();
+
+        GameObject loadingImageObject = GameObject.Find("LoadingImage");
+        loadingImage = loadingImageObject.GetComponent<Image>();
+        frames = Resources.LoadAll<Sprite>("AR_TEAM/images/LoadingFrames");
 
 #if UNITY_EDITOR
         if (latitudine == 0 && longitudine == 0)
@@ -58,10 +64,13 @@ public class LoadFindData : MonoBehaviour
 
     void Update()
     {
+        double index = Time.time * 10.0;
+        int aux = (int)index % frames.Length;
+        loadingImage.sprite = frames[aux];
         textDownloads.text = messageToShow;
     }
 
-    async Task LocationService()
+    public static async Task LocationService()
     {
         if (!Input.location.isEnabledByUser)
         {
