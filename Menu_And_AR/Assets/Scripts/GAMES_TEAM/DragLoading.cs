@@ -44,8 +44,8 @@ public class DragLoading : MonoBehaviour
         List<string> photos = new List<string>();
         for (int i = 0; i < Apelare.Ph.Count-1; i++)
         {
-            Debug.Log(Apelare.Ph[i].Path);
-            photos.Add("armuseum.ml/" + Apelare.Ph[i].Path);
+            //Debug.Log(Apelare.Ph[i].Path);
+            photos.Add("https://armuseum.ml/" + Apelare.Ph[i].Path);
         }
 
 
@@ -58,8 +58,9 @@ public class DragLoading : MonoBehaviour
             else text.GetComponentInChildren<TextMeshProUGUI>().text = text.GetComponentInChildren<TextMeshProUGUI>().text + ".";
             var baseName = $"{photo}";j++;
             Manager.names.Add($"{photo}"); ;
-            Debug.Log($"{photo}");
-            var diskPath = $"{Application.persistentDataPath}/{baseName}";
+            //Debug.Log($"{photo}");
+            String[] path = baseName.Split('/');
+            var diskPath = $"{Application.persistentDataPath}/{path[path.Length-1]}";
             DiskPaths.Add(diskPath);
             yield return DownloadData($"{baseName}", diskPath); 
             
