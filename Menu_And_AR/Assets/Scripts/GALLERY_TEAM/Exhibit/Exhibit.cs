@@ -1,6 +1,6 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
-
+using System.IO;
 
 namespace Scripts
 {
@@ -20,7 +20,6 @@ namespace Scripts
         [SerializeField] private Text txtTitle = null;
         [SerializeField] private Text txtDescription = null;
         string auth = " ";
-        string url = " ";
         private float offset;
         private float contentHeight;
 
@@ -28,28 +27,23 @@ namespace Scripts
         void Start()
         {
             loadContent();
-            if (!PlayerPrefs.HasKey("exhibit" + Globals.exhibit + "offset"))
-                PlayerPrefs.SetFloat("exhibit" + Globals.exhibit + "offset", 0);
+            //if (!PlayerPrefs.HasKey("exhibit" + Globals.exhibit + "offset"))
+            //    PlayerPrefs.SetFloat("exhibit" + Globals.exhibit + "offset", 0);
             Invoke("setContentDimension", 0.1f);
         }
 
         void loadContent()
         {
-            //Globals.exhibit = PlayerPrefs.GetString("Gallery_Exhibit", "op2");
-            //JsonToObject jo = new JsonToObject();
-            //ExhibitData exhibit = jo.loadJson<ExhibitData>("GALLERY_TEAM/" + Globals.exhibit);
-            int exhibitId = PlayerPrefs.GetInt("Exhibit_Id");
-            (txtTitle.text,auth,txtDescription.text, url) = MuseumManager.Instance.CurrentMuseum.GetExhibitDataById(exhibitId);
-            foreach (var exhibit in MuseumManager.Instance.CurrentMuseum.Exhibits)
-            {
-                Debug.Log(url);
-            }
-                Debug.Log("url hbvfcdcfvgbh ; "+ url);
+            string imagePath;
+            int exhibitId = PlayerPrefs.GetInt("Gallery_ExhibitID");
+            (txtTitle.text,auth,txtDescription.text, imagePath) = MuseumManager.Instance.CurrentMuseum.GetExhibitDataById(exhibitId);
             txtTitle.text = txtTitle.text + '\n';
-            if (imgOpera != null)
-            {
-                imgOpera.sprite = Resources.Load<Sprite>("GALLERY_TEAM/Sprites/74");
-            }
+
+            byte[] byteArray = File.ReadAllBytes(imagePath);
+            Texture2D texture = new Texture2D(8, 8);
+            texture.LoadImage(byteArray);
+            Sprite s = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero, 1f);
+            imgOpera.sprite = s;
         }
 
         void setContentDimension()
@@ -69,7 +63,8 @@ namespace Scripts
             thisRectTransform.sizeDelta = new Vector2(thisRectTransform.sizeDelta.x, (txtDescription.text + txtTitle.text).Length * 5 + 1000);
 
             //resize offset
-            offset = PlayerPrefs.GetFloat("exhibit" + Globals.exhibit + "offset");
+            //offset = PlayerPrefs.GetFloat("exhibit" + Globals.exhibit + "offset");
+            offset = 0;
 
             if (offset == 0)
             {

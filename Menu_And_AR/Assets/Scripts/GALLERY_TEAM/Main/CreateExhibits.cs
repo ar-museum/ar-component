@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.IO;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -26,14 +27,20 @@ public class CreateExhibits : MonoBehaviour
         button.GetComponent<Button>().onClick.AddListener(delegate { OnClick(index); });
 
         string das;
-        string das2, das3;
-        (button.transform.GetChild(0).GetComponent<Text>().text, das,das2,das3) = MuseumManager.Instance.CurrentMuseum.GetExhibitDataById(index);
+        string das2, imagePath;
+        (button.transform.GetChild(0).GetComponent<Text>().text, das,das2,imagePath) = MuseumManager.Instance.CurrentMuseum.GetExhibitDataById(index);
+
+        byte[] byteArray = File.ReadAllBytes(imagePath);
+        Texture2D texture = new Texture2D(8, 8);
+        texture.LoadImage(byteArray);
+        Sprite s = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero, 1f);
+        button.transform.GetChild(1).GetComponent<Image>().sprite = s;
     }
 
     void OnClick(int index)
     {
         Debug.Log("Clicked button " + index);
-        PlayerPrefs.SetInt("Exhibit_Id", index);
+        PlayerPrefs.SetInt("Gallery_ExhibitID", index);
         SceneManager.LoadScene("ExhibitScene");
     }
 

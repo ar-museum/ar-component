@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.IO;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -28,16 +29,21 @@ public class CreateAuthors : MonoBehaviour
         button.GetComponent<RectTransform>().localScale = new Vector2(1, 1);
         button.GetComponent<Button>().onClick.AddListener(delegate { OnClick(index); });
 
-        string das, das2;
+        string das, imagePath;
         int born, died;
 
-        (button.transform.GetChild(0).GetComponent<Text>().text, born, died, das2, das) = MuseumManager.Instance.CurrentMuseum.GetAuthorDataById(index);
+        (button.transform.GetChild(0).GetComponent<Text>().text, born, died, das, imagePath) = MuseumManager.Instance.CurrentMuseum.GetAuthorDataById(index);
+        byte[] byteArray = File.ReadAllBytes(imagePath);
+        Texture2D texture = new Texture2D(8, 8);
+        texture.LoadImage(byteArray);
+        Sprite s = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero, 1f);
+        button.transform.GetChild(1).GetComponent<Image>().sprite = s;
     }
 
     void OnClick(int index)
     {
         Debug.Log("Clicked button " + index);
-        PlayerPrefs.SetInt("Author_Id", index);
+        PlayerPrefs.SetInt("Gallery_AuthorID", index);
         SceneManager.LoadScene("AuthorScene");
     }
 

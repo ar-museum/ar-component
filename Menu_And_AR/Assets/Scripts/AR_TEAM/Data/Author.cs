@@ -12,5 +12,6 @@ namespace Assets.Scripts.AR_TEAM.Http {
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public string PhotoPath { get; set; }
+        public string PhotoPathOnDisk { get; set; }
     }
 }

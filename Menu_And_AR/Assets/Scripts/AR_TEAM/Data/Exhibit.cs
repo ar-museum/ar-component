@@ -15,6 +15,7 @@ namespace Assets.Scripts.AR_TEAM.Http {
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public string PhotoUrl { get; set; }
+        public string PhotoPathOnDisk { get; set; }
         public Author Author { get; set; }
         public string AudioUrl { get; set; }
         public string AudioPathOnDisk { get; set; }

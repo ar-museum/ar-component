@@ -47,25 +47,25 @@ namespace Assets.Scripts.AR_TEAM.Http {
             return ("not found", "not found", 0);
         }
 
-        public (string /*title*/, string /*author*/, string /*description*/, string /*photoUrl*/) GetExhibitDataById(int id)
+        public (string /*title*/, string /*author*/, string /*description*/, string /*PhotoPathOnDisk*/) GetExhibitDataById(int id)
         {
             foreach (var exhibit in Exhibits)
             {
                 if (exhibit.ExhibitId == id)
                 {
-                    return (exhibit.Title, exhibit.Author.FullName, exhibit.ShortDescription, exhibit.PhotoUrl);
+                    return (exhibit.Title, exhibit.Author.FullName, exhibit.ShortDescription, exhibit.PhotoPathOnDisk);
                 }
             }
             return ("not found", "not found", "not found","not found");
         }
 
-        public (string /*FullName*/,int /*bornYear*/,int /*diedYear*/,string /*Location*/, string /*photoUrl*/) GetAuthorDataById(int id)
+        public (string /*FullName*/,int /*bornYear*/,int /*diedYear*/,string /*Location*/, string /*PhotoPathOnDisk*/) GetAuthorDataById(int id)
         {
             foreach (var author in Authors)
             {
                 if (author.AuthorId == id)
                 {
-                    return (author.FullName,author.BornYear, author.DiedYear, author.Location, author.PhotoPath);
+                    return (author.FullName,author.BornYear, author.DiedYear, author.Location, author.PhotoPathOnDisk);
                 }
             }
             return ("not found", 0, 0, "Westeros", "not found");

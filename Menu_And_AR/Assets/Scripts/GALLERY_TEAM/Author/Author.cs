@@ -2,6 +2,7 @@
 using UnityEngine;
 using Scripts;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 namespace Scripts
 {
@@ -29,15 +30,15 @@ namespace Scripts
         void Start()
         {
             loadContent();
-            if (!PlayerPrefs.HasKey("author" + Globals.author + "offset"))
-                PlayerPrefs.SetFloat("author" + Globals.author + "offset", 0);
+            //if (!PlayerPrefs.HasKey("author" + Globals.author + "offset"))
+            //    PlayerPrefs.SetFloat("author" + Globals.author + "offset", 0);
             Invoke("setContentDimension", 0.01f);
             int count = 0;
             foreach (var exhibit in MuseumManager.Instance.CurrentMuseum.Exhibits)
             {
                 if (count > 2)
                     break;
-                if (PlayerPrefs.GetInt("Author_Id") == exhibit.Author.AuthorId)
+                if (PlayerPrefs.GetInt("Gallery_AuthorID") == exhibit.Author.AuthorId)
                 {
                     createButton(exhibit.ExhibitId);
                     ++count;
@@ -53,33 +54,40 @@ namespace Scripts
             button.GetComponent<RectTransform>().localScale = new Vector2(1, 1);
             button.GetComponent<Button>().onClick.AddListener(delegate { OnClick(index); });
 
-            string das, das2, title;
-            int born, died;
+            string das,das3;
+            string das2, imagePath;
+            (das3, das, das2, imagePath) = MuseumManager.Instance.CurrentMuseum.GetExhibitDataById(index);
 
-            (title, born, died, das2, das) = MuseumManager.Instance.CurrentMuseum.GetAuthorDataById(index);
+            byte[] byteArray = File.ReadAllBytes(imagePath);
+            Texture2D texture = new Texture2D(8, 8);
+            texture.LoadImage(byteArray);
+            Sprite s = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero, 1f);
+            button.transform.GetComponent<Image>().sprite = s;
+
         }
 
         void OnClick(int index)
         {
             Debug.Log("Clicked button " + index);
-            PlayerPrefs.SetInt("Exhibit_Id", index);
+            PlayerPrefs.SetInt("Gallery_ExhibitID", index);
             SceneManager.LoadScene("ExhibitScene");
         }
 
         void loadContent()
         {
-            Debug.Log(PlayerPrefs.GetInt("Author_Id"));
-            int authorId = PlayerPrefs.GetInt("Author_Id");
-            if (imgOpera != null)
-            {
-                imgOpera.sprite = Resources.Load<Sprite>("GALLERY_TEAM/Sprites/74");
-            }
+            int authorId = PlayerPrefs.GetInt("Gallery_AuthorID");
             int born, died;
-            string location, photo_path;
-            (txtTitle.text, born, died, location, photo_path) = MuseumManager.Instance.CurrentMuseum.GetAuthorDataById(authorId);
+            string location, imagePath;
+            (txtTitle.text, born, died, location, imagePath) = MuseumManager.Instance.CurrentMuseum.GetAuthorDataById(authorId);
             txtDescription.text = "Born : " + born + "\n";
             txtDescription.text += "Died : " + died + "\n";
             txtDescription.text += "Location : " + location;
+
+            byte[] byteArray = File.ReadAllBytes(imagePath);
+            Texture2D texture = new Texture2D(8, 8);
+            texture.LoadImage(byteArray);
+            Sprite s = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero, 1f);
+            imgOpera.sprite = s;
         }
 
         void setContentDimension()
