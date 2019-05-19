@@ -73,6 +73,9 @@ public class Manager : MonoBehaviour
     void Images()
     {
         images = images.OrderBy(x => Random.value).ToList();
+        for (int i = 0; i < images.Count; i++)
+            Debug.Log(images[i].getMyLink());
+        
         setImage(firstPhoto, images[0].getMyTexture()); firstName.GetComponentInChildren<Text>().text = images[0].getMyLink();
         setImage(secondPhoto, images[1].getMyTexture()); secondName.GetComponentInChildren<Text>().text = images[1].getMyLink();
         setImage(thirdPhoto, images[2].getMyTexture()); thirdName.GetComponentInChildren<Text>().text = images[2].getMyLink();
@@ -81,6 +84,7 @@ public class Manager : MonoBehaviour
     }
     void Start()
     {
+        
         Images();
         getInitialPositions();
         //Debug.Log(firstPhoto.name + " " + secondPhoto.name + " " + thirdPhoto.name + " " + fourthPhoto.name + " " + fifthPhoto.name + " ");
@@ -403,12 +407,15 @@ public class Manager : MonoBehaviour
 
     public void QuitGame()
     {
+        images.Clear();
         Drag.DragLoading.deleteFolder();
         SceneManager.LoadScene("Menu");
     }
 
     public void Refresh()
     {
+        images.Clear();
+        Drag.DragLoading.deleteFolder();
         SceneManager.LoadScene("DragLoading");
     }
 }

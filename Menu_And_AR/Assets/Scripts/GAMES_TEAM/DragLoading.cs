@@ -44,7 +44,7 @@ namespace Drag
         {
             String[] stringBase = new String[10];
             List<string> photos = new List<string>();
-            for (int i = 0; i < Apelare.Ph.Count - 1; i++)
+            for (int i = 0; i < Apelare.Ph.Count ; i++)
             {
                 //Debug.Log(Apelare.Ph[i].Path);
                 photos.Add("https://armuseum.ml/" + Apelare.Ph[i].Path);

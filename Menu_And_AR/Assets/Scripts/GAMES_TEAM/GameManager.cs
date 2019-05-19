@@ -36,7 +36,7 @@ namespace Trivia
         [SerializeField]
         private TextMeshProUGUI Score;
         [SerializeField]
-        private Text toBeDisplayed;
+        private TextMeshProUGUI toBeDisplayed;
         [SerializeField]
         public Button b1, b2, b3;
         [SerializeField]
@@ -125,9 +125,9 @@ namespace Trivia
             if (questions != null)
             {
                 //Debug.Log(b1.GetComponentInChildren<TextMeshPro>().text);
-                b1.GetComponentInChildren<Text>().text = currentQuestion.getAllAnswers()[0];
-                b2.GetComponentInChildren<Text>().text = currentQuestion.getAllAnswers()[1];
-                b3.GetComponentInChildren<Text>().text = currentQuestion.getAllAnswers()[2];
+                b1.GetComponentInChildren<TextMeshProUGUI>().text = currentQuestion.getAllAnswers()[0];
+                b2.GetComponentInChildren<TextMeshProUGUI>().text = currentQuestion.getAllAnswers()[1];
+                b3.GetComponentInChildren<TextMeshProUGUI>().text = currentQuestion.getAllAnswers()[2];
             }
         }
         public Button getB1()
@@ -153,10 +153,10 @@ namespace Trivia
                 fixedTime = startTime;
                 timer.text = fixedTime.ToString("F");
                 wasClicked = true;
-                if (b.GetComponentInChildren<Text>().text == currentQuestion.getRightAnswer())
+                if (b.GetComponentInChildren<TextMeshProUGUI>().text == currentQuestion.getRightAnswer())
                 {
-                    b.GetComponentInChildren<Text>().color = Color.green;
-                    b.GetComponentInChildren<Text>().text = "Correct!";
+                    b.GetComponentInChildren<TextMeshProUGUI>().color = Color.green;
+                    b.GetComponentInChildren<TextMeshProUGUI>().text = "Correct!";
                     if ((difficulty == "Hard" && startTime > (5.04f / 2)) || (difficulty == "Medium" && startTime > (7.54f / 2)) || (difficulty == "Easy" && startTime > (7.54f / 2)))
                         score++;
 
@@ -167,11 +167,12 @@ namespace Trivia
                 }
                 else
                 {
-                    b.GetComponentInChildren<Text>().text = "Wrong!";
+                    b.GetComponentInChildren<TextMeshProUGUI>().text = "Wrong!";
                     timer.color = Color.red;
-                    b.GetComponentInChildren<Text>().color = Color.red;
-                    getRightOption().GetComponentInChildren<Text>().color = Color.green;
-                    Debug.Log(getRightOption().GetComponentInChildren<Text>().text);
+                    b.GetComponentInChildren<TextMeshProUGUI>().enableVertexGradient = true;
+                    b.GetComponentInChildren<TextMeshProUGUI>().colorGradient = new VertexGradient(Color.red, Color.green, Color.blue, Color.yellow);
+                    getRightOption().GetComponentInChildren<TextMeshProUGUI>().color = Color.green;
+                    Debug.Log(getRightOption().GetComponentInChildren<TextMeshProUGUI>().text);
                 }
 
                 StartCoroutine(nextQuestion());
@@ -180,15 +181,15 @@ namespace Trivia
         private Button getRightOption()
         {
             Debug.Log(currentQuestion.getRightAnswer());
-            if (b1.GetComponentInChildren<Text>().text == currentQuestion.getRightAnswer())
+            if (b1.GetComponentInChildren<TextMeshProUGUI>().text == currentQuestion.getRightAnswer())
             {
                 return b1;
             }
-            else if (b2.GetComponentInChildren<Text>().text == currentQuestion.getRightAnswer())
+            else if (b2.GetComponentInChildren<TextMeshProUGUI>().text == currentQuestion.getRightAnswer())
             {
                 return b2;
             }
-            else if (b3.GetComponentInChildren<Text>().text == currentQuestion.getRightAnswer())
+            else if (b3.GetComponentInChildren<TextMeshProUGUI>().text == currentQuestion.getRightAnswer())
             {
                 return b3;
             }
