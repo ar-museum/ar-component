@@ -9,9 +9,9 @@ namespace GameRequest
     class HTTPRequest
     {
         private static readonly string API_URL = "https://armuseum.ml/api/";
-        private static readonly string DRAGNDROP_URL = API_URL + "update/drag/";
-        private static readonly string TRIVIA_URL = API_URL + "update/";
-        private static readonly string FINAL_URL = DRAGNDROP_URL + PlayerPrefs.GetInt("Games_Museum");
+        private static readonly string DRAGNDROP_URL = API_URL + "update/drag/1";
+        private static readonly string TRIVIA_URL = API_URL + "update/trivia/";
+        private static readonly string FINAL_URL = DRAGNDROP_URL; //PlayerPrefs.GetInt("Games_Museum");
         
         public delegate void OnComplete<T>(T x);
         public delegate IEnumerator OnCompleteYield<T>(T x);

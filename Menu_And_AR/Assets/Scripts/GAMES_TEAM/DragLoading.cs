@@ -9,19 +9,21 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using Assets.Scripts.AR_TEAM.Http;
+using GameRequest;
 
 namespace Assets.Scripts.AR_TEAM.Http
 {
-    public class CustomCertificateHandler : CertificateHandler
+   /* public class CustomCertificateHandler : CertificateHandler
     {
         protected override bool ValidateCertificate(byte[] certificateData)
         {
             return true;
         }
-    }
+    }*/
 }
 public class DragLoading : MonoBehaviour
 {
+    Apelare requests = new Apelare();
     [SerializeField]
     TextMeshProUGUI text;
     List<string> DiskPaths { get; set; }
@@ -43,51 +45,35 @@ public class DragLoading : MonoBehaviour
 
     IEnumerator DownloadAllPhotos()
     {
-        var stringBase = "https://armuseum.ml/uploads/photo/dragndrop/MuzeuldeStiinta/";
-        WebRequest request = WebRequest.Create(stringBase);
-        WebResponse response = request.GetResponse();
-        Regex regex = new Regex("<a href=\".*\">(?<name>.*.jpg)</a>");
+        String[] stringBase = new String[10];
         List<string> photos = new List<string>();
-        using (var reader = new StreamReader(response.GetResponseStream()))
+        for (int i = 0; i < Apelare.Ph.Count; i++)
         {
-
-            string result = reader.ReadToEnd();
-
-            MatchCollection matches = regex.Matches(result);
-            if (matches.Count == 0)
-            {
-                Debug.Log("parse failed.");
-
-            }
-
-            foreach (Match match in matches)
-            {
-                if (!match.Success) { continue; }
-                
-                photos.Add((match.Groups["name"]).ToString());
-                Debug.Log(photos[photos.Count-1]);
-            }
+            Debug.Log(Apelare.Ph[i].Path);
+            photos.Add("armuseum.ml/" + Apelare.Ph[i].Path);
         }
 
 
         DiskPaths = new List<string>();
         int j = 0;
-        foreach (var i in photos)
+        foreach (var photo in photos)
         {
             if (j % 4 == 0)
                 text.GetComponentInChildren<TextMeshProUGUI>().text = "Loading";
             else text.GetComponentInChildren<TextMeshProUGUI>().text = text.GetComponentInChildren<TextMeshProUGUI>().text + ".";
-            var baseName = $"{i}";j++;
-            Manager.names.Add($"{i}"); ;
-            Debug.Log($"{i}");
+            var baseName = $"{photo}";j++;
+            Manager.names.Add($"{photo}"); ;
+            Debug.Log($"{photo}");
             var diskPath = $"{Application.persistentDataPath}/{baseName}";
             DiskPaths.Add(diskPath);
-            yield return DownloadData($"{stringBase}/{baseName}", diskPath);
+            yield return DownloadData($"{baseName}", diskPath);
         }
     }
 
-    IEnumerator GetTexture()
+    IEnumerator GetPhotos()
     {
+        
+        yield return requests.Start();
         yield return DownloadAllPhotos();
 
         text.GetComponentInChildren<TextMeshProUGUI>().text = "Loading";
@@ -114,7 +100,7 @@ public class DragLoading : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(GetTexture());
+        StartCoroutine(GetPhotos());
     }
 
 }

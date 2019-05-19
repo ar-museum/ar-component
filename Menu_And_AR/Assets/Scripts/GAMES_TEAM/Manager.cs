@@ -27,13 +27,13 @@ public class Images
     }
     public string getMyLink()
     {
-
-        StringBuilder str = new StringBuilder(link);
+        var thing = link.Split('/');
+        StringBuilder str = new StringBuilder(thing[thing.Length-1]);
         str[0] = char.ToUpper(str[0]);
         link = str.ToString();
-        var thing = link.Split('/');
+        
 
-        return thing[thing.Length - 1].Substring(0, thing[thing.Length-1].Length-4);
+        return link.Substring(0, link.Length-4);
     }
     public void setTexture(Texture2D texture)
     {

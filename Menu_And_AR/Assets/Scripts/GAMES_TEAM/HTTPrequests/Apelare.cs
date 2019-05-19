@@ -7,8 +7,8 @@ namespace GameRequest
 {
     public class Apelare : MonoBehaviour
     {
-        List<Photo> Ph = new List<Photo>();
-        List<JsonFile> JsonFiles = new List<JsonFile>();
+        public static List<Photo> Ph = new List<Photo>();
+        static List<JsonFile> JsonFiles = new List<JsonFile>();
 
         public IEnumerator Start()
         {
@@ -18,12 +18,12 @@ namespace GameRequest
 
         void OnPhotosComplete(List<Photo> list)
         {
-            Debug.Log(list);
+            Ph = list;
         }
 
         void OnJsonsComplete(List<JsonFile> list)
         {
-            Debug.Log(list);
+            JsonFiles = list;
         }
     }
 }

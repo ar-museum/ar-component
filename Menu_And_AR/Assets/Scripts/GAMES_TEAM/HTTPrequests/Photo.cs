@@ -1,6 +1,6 @@
 ﻿namespace GameRequest
 {
-    class Photo
+    public class Photo
     {
         public string Path { get; set; }
     }
