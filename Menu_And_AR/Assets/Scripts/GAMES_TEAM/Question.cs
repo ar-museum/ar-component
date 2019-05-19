@@ -14,7 +14,7 @@ namespace manageQuestions
     {
         public Question()
         {
-
+            
         }
         public string difficult;
         public string question;
@@ -70,15 +70,27 @@ namespace manageQuestions
     public class JsonToObject
     {
 
-
         public QuestionArray loadJson()
         {
             Debug.Log(Apelare.paths);
             Debug.Log(MenuManager.getDifficulty());
+            
             string language = MenuManager.getLanguage();
+            Debug.Log(PlayerPrefs.GetInt("Games_Museum"));
+            String museum=null;
+            if(PlayerPrefs.GetInt("Games_Museum")==1)
+            {
+                //Eminescu
+                museum = "Eminescu";
+            }
+            else if(PlayerPrefs.GetInt("Games_Museum") == 4)
+            {
+                //Stiinta
+                museum = "Stiinta";
+            }
             if (language == "Romanian")
             {
-                TextAsset r = (TextAsset)Resources.Load("GAMES_TEAM/Stiinta/romana", typeof(TextAsset));
+                TextAsset r = (TextAsset)Resources.Load("GAMES_TEAM/"+museum+"/"+museum+"Romana", typeof(TextAsset));
                
                 string json = r.text;
                     //Debug.Log(json);
@@ -101,7 +113,7 @@ namespace manageQuestions
             }
             else if (language == "English")
             {
-                TextAsset r = (TextAsset)Resources.Load("GAMES_TEAM/Stiinta/engleza", typeof(TextAsset));
+                TextAsset r = (TextAsset)Resources.Load("GAMES_TEAM/"+museum+"/"+museum+"Engleza", typeof(TextAsset));
 
                 string json = r.text;
                
@@ -123,9 +135,9 @@ namespace manageQuestions
                     return deserialized;
                 
             }
-            else
+            else if(language == "French")
             {
-                TextAsset r = (TextAsset)Resources.Load("GAMES_TEAM/Stiinta/franceza", typeof(TextAsset));
+                TextAsset r = (TextAsset)Resources.Load("GAMES_TEAM/"+museum+"/"+museum+"Franceza", typeof(TextAsset));
 
                 string json = r.text;
                 //Debug.Log(json);
@@ -146,6 +158,7 @@ namespace manageQuestions
                     return deserialized;
                 
             }
+            return null;
         }
     }
 }

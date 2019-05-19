@@ -71,8 +71,8 @@ public class DragLoading : MonoBehaviour
 
     IEnumerator GetPhotos()
     {
-        
-        yield return requests.Start();
+
+        yield return requests.StartTakingPhotosPaths();
         yield return DownloadAllPhotos();
 
         text.GetComponentInChildren<TextMeshProUGUI>().text = "Loading";

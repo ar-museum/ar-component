@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using meniu;
 using UnityEngine.SceneManagement;
-
+using GameRequest;
 using TMPro;
 
 namespace Trivia
@@ -20,6 +20,7 @@ namespace Trivia
         public static float scoreDifficulty;
         private string music;
         //static string language;//s-ar putea sa nu avem nevoie de el
+        public static List<JsonFile> jsonFiles;
 
         bool wasClicked = false;
         public static float score;
@@ -43,10 +44,17 @@ namespace Trivia
         [SerializeField]
         public Button quit;
 
+        public void sendJSFiles()
+        {
+            Apelare apel = new Apelare();
+            StartCoroutine(apel.StartTakingJsonNames());
+            jsonFiles = Apelare.JsonFiles;
+
+        }
 
         public void Start()
         {
-
+            sendJSFiles();
             wasClicked = false;
             language = MenuManager.getLanguage();
             Debug.Log(language);
@@ -113,6 +121,7 @@ namespace Trivia
         }
         public void setCurrentButtons()
         {
+              
             if (questions != null)
             {
                 //Debug.Log(b1.GetComponentInChildren<TextMeshPro>().text);
@@ -213,6 +222,7 @@ namespace Trivia
         }
         public void quits()
         {
+            questions = null;
             SceneManager.LoadScene("Menu");
         }
     }
