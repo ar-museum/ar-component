@@ -33,13 +33,15 @@ namespace Trivia
 
         private Question currentQuestion;
         [SerializeField]
-        private Text Score;
+        private TextMeshProUGUI Score;
         [SerializeField]
         private Text toBeDisplayed;
         [SerializeField]
         public Button b1, b2, b3;
         [SerializeField]
         private float timeBetweenQ = 1f;
+        [SerializeField]
+        public Button quit;
 
 
         public void Start()
@@ -209,6 +211,11 @@ namespace Trivia
         {
             return mainTimer;
         }
+        public void quits()
+        {
+            SceneManager.LoadScene("Menu");
+        }
     }
+   
     
 }
