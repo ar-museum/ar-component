@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class CreateExhibits : MonoBehaviour
 {
+    public GameObject mainCanvas;
+    public GameObject thisCanvas;
     public GameObject buttonPrefab;
     public GameObject panelToAttachButtonsTo;
     void Start()//Creates a button and sets it up
@@ -42,6 +44,15 @@ public class CreateExhibits : MonoBehaviour
         Debug.Log("Clicked button " + index);
         PlayerPrefs.SetInt("Gallery_ExhibitID", index);
         SceneManager.LoadScene("ExhibitScene");
+    }
+
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            mainCanvas.SetActive(true);
+            thisCanvas.SetActive(false);
+        }
     }
 
 }
