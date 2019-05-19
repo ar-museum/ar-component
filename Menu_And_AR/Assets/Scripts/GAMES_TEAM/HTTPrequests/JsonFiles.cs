@@ -1,7 +1,7 @@
 ﻿namespace GameRequest 
 {
-    class JsonFile
+    public class JsonFile
     {
-        public string Path { get; set; }
+        public string Name { get; set; }
     }
 }

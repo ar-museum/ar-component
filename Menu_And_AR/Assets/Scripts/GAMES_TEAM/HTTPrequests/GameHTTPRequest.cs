@@ -10,7 +10,7 @@ namespace GameRequest
     {
         private static readonly string API_URL = "https://armuseum.ml/api/";
         private static readonly string DRAGNDROP_URL = API_URL + "update/drag/1";
-        private static readonly string TRIVIA_URL = API_URL + "update/trivia/";
+        private static readonly string TRIVIA_URL = API_URL + "update/trivia/1";
         private static readonly string FINAL_URL = DRAGNDROP_URL; //PlayerPrefs.GetInt("Games_Museum");
         
         public delegate void OnComplete<T>(T x);
@@ -79,15 +79,18 @@ namespace GameRequest
         {
             var node = JSON.Parse(json);
 
-            jsonFiles = GameDeserializer.DeserializeJsonList(node["jsons"]);
+            jsonFiles = GameDeserializer.DeserializeJsonList(node["files"]);
             onComplete(jsonFiles);
-
-
         }
 
         public IEnumerator ReturnJson(OnComplete<List<Photo>> onComplete)
         {
-            yield return DoGetRequest(FINAL_URL, j => OnPhotoComplete(j, onComplete));
+            yield return DoGetRequest(DRAGNDROP_URL, j => OnPhotoComplete(j, onComplete));
+        }
+
+        public IEnumerator ReturnNames(OnComplete<List<JsonFile>> onComplete)
+        {
+            yield return DoGetRequest(TRIVIA_URL, j => OnJsonComplete(j, onComplete));
         }
     }
 }

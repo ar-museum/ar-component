@@ -8,24 +8,19 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
-using Assets.Scripts.AR_TEAM.Http;
+using UnityEngine.UI;
 using GameRequest;
 
-namespace Assets.Scripts.AR_TEAM.Http
-{
-   /* public class CustomCertificateHandler : CertificateHandler
-    {
-        protected override bool ValidateCertificate(byte[] certificateData)
-        {
-            return true;
-        }
-    }*/
-}
+
 public class DragLoading : MonoBehaviour
 {
     Apelare requests = new Apelare();
     [SerializeField]
     TextMeshProUGUI text;
+    [SerializeField]
+    Slider slider;
+    [SerializeField]
+    TextMeshProUGUI tmp;
     List<string> DiskPaths { get; set; }
 
     public IEnumerator DownloadData(string url, string pathOnDisk)
@@ -47,7 +42,7 @@ public class DragLoading : MonoBehaviour
     {
         String[] stringBase = new String[10];
         List<string> photos = new List<string>();
-        for (int i = 0; i < Apelare.Ph.Count; i++)
+        for (int i = 0; i < Apelare.Ph.Count-1; i++)
         {
             Debug.Log(Apelare.Ph[i].Path);
             photos.Add("armuseum.ml/" + Apelare.Ph[i].Path);
@@ -66,8 +61,12 @@ public class DragLoading : MonoBehaviour
             Debug.Log($"{photo}");
             var diskPath = $"{Application.persistentDataPath}/{baseName}";
             DiskPaths.Add(diskPath);
-            yield return DownloadData($"{baseName}", diskPath);
+            yield return DownloadData($"{baseName}", diskPath); 
+            
+            slider.value += (float)1/photos.Count;
+            tmp.text = (int)((slider.value )* 100) + "%";
         }
+        slider.value += (float)1 / photos.Count;
     }
 
     IEnumerator GetPhotos()
@@ -95,7 +94,7 @@ public class DragLoading : MonoBehaviour
             Manager.images.Add(image);
 
         }
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("DragAndDrop");
     }
 
     void Start()

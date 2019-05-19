@@ -37,7 +37,7 @@ namespace GameRequest
         {
             var json = new JsonFile();
 
-            json.Path = node["path"];
+            json.Name = node["json_name"];
 
             return json;
         }
