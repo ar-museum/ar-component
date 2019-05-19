@@ -404,4 +404,9 @@ public class Manager : MonoBehaviour
     {
         SceneManager.LoadScene("Menu");
     }
+
+    public void Refresh()
+    {
+        SceneManager.LoadScene("DragLoading");
+    }
 }

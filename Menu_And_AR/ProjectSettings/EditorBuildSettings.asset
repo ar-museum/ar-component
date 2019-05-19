@@ -30,7 +30,7 @@ EditorBuildSettings:
     path: Assets/Scenes/GAMES_TEAM/DragLoading.unity
     guid: d3fe0811b39d973418cc6bf0b6eb7e19
   - enabled: 1
-    path: Assets/Scenes/GAMES_TEAM/SampleScene.unity
+    path: Assets/Scenes/GAMES_TEAM/DragAndDrop.unity
     guid: 51d951106999a974db407dd6ed84da8e
   - enabled: 1
     path: Assets/Scenes/GAMES_TEAM/LaunchingTrivia.unity
