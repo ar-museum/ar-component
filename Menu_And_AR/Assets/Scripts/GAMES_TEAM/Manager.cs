@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Drag;
 
 public class Images
 {
@@ -402,6 +403,7 @@ public class Manager : MonoBehaviour
 
     public void QuitGame()
     {
+        Drag.DragLoading.deleteFolder();
         SceneManager.LoadScene("Menu");
     }
 
