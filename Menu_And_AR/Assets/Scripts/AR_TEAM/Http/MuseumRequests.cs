@@ -43,6 +43,11 @@ namespace Assets.Scripts.AR_TEAM.Http {
 
             var info = await HttpRequests.DoPostRequestNew(Endpoints.GET_MUSEUM_URL, json.ToString(), Deserializers.DeserializeMuseumInfo);
 
+            if (info == null)
+            {
+                return info;
+            }
+
             json = new JSONObject();
             json.Add("version", info.VuforiaDatabaseVersion);
             json.Add("museum_id", info.MuseumId);
