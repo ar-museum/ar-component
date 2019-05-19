@@ -4,6 +4,8 @@ using manageQuestions;
 using UnityEngine;
 using meniu;
 using System.Collections.Generic;
+using GameRequest;
+using System.Collections;
 
 namespace manageQuestions
 {
@@ -67,8 +69,11 @@ namespace manageQuestions
     [Serializable]
     public class JsonToObject
     {
+
+
         public QuestionArray loadJson()
         {
+            Debug.Log(Apelare.paths);
             Debug.Log(MenuManager.getDifficulty());
             string language = MenuManager.getLanguage();
             if (language == "Romanian")
