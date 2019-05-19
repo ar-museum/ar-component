@@ -1,6 +1,7 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 namespace Scripts
 {
@@ -85,6 +86,18 @@ namespace Scripts
             PlayerPrefs.DeleteAll();
         }
 
+        void Update()
+        {
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                if (string.Compare(PlayerPrefs.GetString("CameFromAuthor"), "true") == 0)
+                {
+                    SceneManager.LoadScene("AuthorScene");
+                    PlayerPrefs.SetString("CameFromAuthor", "false");
+                }
+                else SceneManager.LoadScene("GalleryScene");
+            }
+        }
     }
 
 }

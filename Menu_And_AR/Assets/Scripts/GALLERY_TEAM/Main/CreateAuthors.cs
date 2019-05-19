@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class CreateAuthors : MonoBehaviour
 {
+    public GameObject mainCanvas;
+    public GameObject thisCanvas;
     public GameObject buttonPrefab;
     public GameObject panelToAttachButtonsTo;
     void Start()//Creates a button and sets it up
@@ -45,6 +47,15 @@ public class CreateAuthors : MonoBehaviour
         Debug.Log("Clicked button " + index);
         PlayerPrefs.SetInt("Gallery_AuthorID", index);
         SceneManager.LoadScene("AuthorScene");
+    }
+
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            mainCanvas.SetActive(true);
+            thisCanvas.SetActive(false);
+        }
     }
 
 }

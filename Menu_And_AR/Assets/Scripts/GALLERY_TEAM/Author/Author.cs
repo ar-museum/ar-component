@@ -44,7 +44,7 @@ namespace Scripts
                     ++count;
                 }
             }
-        
+            PlayerPrefs.SetString("CameFromAuthor", "false");
         }
 
         void createButton(int index)
@@ -68,7 +68,7 @@ namespace Scripts
 
         void OnClick(int index)
         {
-            Debug.Log("Clicked button " + index);
+            PlayerPrefs.SetString("CameFromAuthor", "true");
             PlayerPrefs.SetInt("Gallery_ExhibitID", index);
             SceneManager.LoadScene("ExhibitScene");
         }
@@ -127,6 +127,13 @@ namespace Scripts
         {
             PlayerPrefs.DeleteAll();
         }
-        
+
+        void Update()
+        {
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                SceneManager.LoadScene("GalleryScene");
+            }
+        }
     }
 }
