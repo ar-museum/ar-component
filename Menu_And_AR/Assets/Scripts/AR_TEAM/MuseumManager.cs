@@ -57,9 +57,15 @@ public sealed class MuseumManager
                     await MuseumRequests.DownloadFile(exh.AudioUrl, exh.AudioPathOnDisk);
                 }
             }
+        }
+    }
 
-
-            pathOnDisk = GetPhotoFilesPath();
+    public async Task DownloadAllPhotos()
+    {
+        if (CurrentMuseum != null)
+        {
+            List<Exhibit> exhibits = CurrentMuseum.Exhibits;
+            var pathOnDisk = GetPhotoFilesPath();
             Directory.CreateDirectory(pathOnDisk);
             foreach (var exh in exhibits)
             {
@@ -82,26 +88,6 @@ public sealed class MuseumManager
                     LoadFindData.messageToShow = "Downloading + " + auth.PhotoPathOnDisk;
                     Debug.Log("Downloading + " + "armuseum.ml/" + auth.PhotoPath);
                     await MuseumRequests.DownloadFile("armuseum.ml/" + auth.PhotoPath, auth.PhotoPathOnDisk);
-                }
-            }
-        }
-    }
-
-    public async Task DownloadAllPhotos()
-    {
-        if (CurrentMuseum != null)
-        {
-            List<Exhibit> exhibits = CurrentMuseum.Exhibits;
-            var pathOnDisk = GetPhotoFilesPath();
-            Directory.CreateDirectory(pathOnDisk);
-            foreach (var exh in exhibits)
-            {
-                exh.PhotoPathOnDisk = pathOnDisk + new FileInfo(exh.PhotoUrl).Name;
-                if (!File.Exists(exh.PhotoPathOnDisk))
-                {
-                    LoadFindData.messageToShow = "Downloading + " + exh.PhotoPathOnDisk;
-                    Debug.Log("Downloading + " + exh.PhotoPathOnDisk);
-                    await MuseumRequests.DownloadFile(exh.PhotoUrl, exh.PhotoPathOnDisk);
                 }
             }
         }

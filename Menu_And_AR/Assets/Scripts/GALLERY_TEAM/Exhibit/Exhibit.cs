@@ -31,14 +31,30 @@ namespace Scripts
             //if (!PlayerPrefs.HasKey("exhibit" + Globals.exhibit + "offset"))
             //    PlayerPrefs.SetFloat("exhibit" + Globals.exhibit + "offset", 0);
             Invoke("setContentDimension", 0.1f);
+
+            
         }
 
         void loadContent()
         {
-            string imagePath;
+            string imagePath,audioPath;
             int exhibitId = PlayerPrefs.GetInt("Gallery_ExhibitID");
-            (txtTitle.text,auth,txtDescription.text, imagePath) = MuseumManager.Instance.CurrentMuseum.GetExhibitDataById(exhibitId);
+            (txtTitle.text,auth,txtDescription.text, imagePath,audioPath) = MuseumManager.Instance.CurrentMuseum.GetExhibitDataById(exhibitId);
             txtTitle.text = txtTitle.text + '\n';
+
+            //music
+
+            WWW www = new WWW("file://" + audioPath);
+            AudioClip MusicClip = www.GetAudioClip();
+            this.gameObject.AddComponent<AudioSource>();
+            var MusicSource = this.GetComponent<AudioSource>();
+            MusicSource.clip = MusicClip;
+            MusicSource.Play();
+
+            Debug.Log("The played sound is at : " + www.text);
+
+            //end
+
 
             byte[] byteArray = File.ReadAllBytes(imagePath);
             Texture2D texture = new Texture2D(8, 8);

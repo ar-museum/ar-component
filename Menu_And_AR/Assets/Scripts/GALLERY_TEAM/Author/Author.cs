@@ -54,9 +54,8 @@ namespace Scripts
             button.GetComponent<RectTransform>().localScale = new Vector2(1, 1);
             button.GetComponent<Button>().onClick.AddListener(delegate { OnClick(index); });
 
-            string das,das3;
-            string das2, imagePath;
-            (das3, das, das2, imagePath) = MuseumManager.Instance.CurrentMuseum.GetExhibitDataById(index);
+            string das,das2, das3,das4, imagePath;
+            (das3, das, das2, imagePath,das4) = MuseumManager.Instance.CurrentMuseum.GetExhibitDataById(index);
 
             byte[] byteArray = File.ReadAllBytes(imagePath);
             Texture2D texture = new Texture2D(8, 8);

@@ -47,16 +47,16 @@ namespace Assets.Scripts.AR_TEAM.Http {
             return ("not found", "not found", 0);
         }
 
-        public (string /*title*/, string /*author*/, string /*description*/, string /*PhotoPathOnDisk*/) GetExhibitDataById(int id)
+        public (string /*title*/, string /*author*/, string /*description*/, string /*PhotoPathOnDisk*/,string /*AudioPath*/) GetExhibitDataById(int id)
         {
             foreach (var exhibit in Exhibits)
             {
                 if (exhibit.ExhibitId == id)
                 {
-                    return (exhibit.Title, exhibit.Author.FullName, exhibit.ShortDescription, exhibit.PhotoPathOnDisk);
+                    return (exhibit.Title, exhibit.Author.FullName, exhibit.Description, exhibit.PhotoPathOnDisk,exhibit.AudioPathOnDisk);
                 }
             }
-            return ("not found", "not found", "not found","not found");
+            return ("not found", "not found", "not found","not found","not found");
         }
 
         public (string /*FullName*/,int /*bornYear*/,int /*diedYear*/,string /*Location*/, string /*PhotoPathOnDisk*/) GetAuthorDataById(int id)

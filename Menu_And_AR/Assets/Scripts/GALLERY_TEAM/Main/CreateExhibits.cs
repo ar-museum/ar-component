@@ -28,9 +28,8 @@ public class CreateExhibits : MonoBehaviour
         button.GetComponent<RectTransform>().localScale = new Vector2(1, 1);
         button.GetComponent<Button>().onClick.AddListener(delegate { OnClick(index); });
 
-        string das;
-        string das2, imagePath;
-        (button.transform.GetChild(0).GetComponent<Text>().text, das,das2,imagePath) = MuseumManager.Instance.CurrentMuseum.GetExhibitDataById(index);
+        string das, das2,das3, imagePath;
+        (button.transform.GetChild(0).GetComponent<Text>().text, das,das2,imagePath,das3) = MuseumManager.Instance.CurrentMuseum.GetExhibitDataById(index);
 
         byte[] byteArray = File.ReadAllBytes(imagePath);
         Texture2D texture = new Texture2D(8, 8);

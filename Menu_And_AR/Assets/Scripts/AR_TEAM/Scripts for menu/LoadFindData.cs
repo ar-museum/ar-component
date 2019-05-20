@@ -57,6 +57,8 @@ public class LoadFindData : MonoBehaviour
         if (MuseumManager.Instance.CurrentMuseum != null) {
             await MuseumManager.Instance.DownloadAllAudios();
 
+            await MuseumManager.Instance.DownloadAllPhotos();
+
             await MuseumManager.Instance.DownloadVuforiaFiles();
         }
         SceneManager.LoadScene("MenuScene");
