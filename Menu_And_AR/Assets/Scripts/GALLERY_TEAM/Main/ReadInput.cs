@@ -14,6 +14,5 @@ public class ReadInput : MonoBehaviour
     {
         PlayerPrefs.SetString("searchInput",param);
         Debug.Log("You entered " + param);
-        input.text = "";
     }
 }
