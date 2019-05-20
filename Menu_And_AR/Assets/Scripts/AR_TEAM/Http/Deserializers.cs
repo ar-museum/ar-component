@@ -63,6 +63,7 @@ namespace Assets.Scripts.AR_TEAM.Http {
             string updatedAt = node["updated_at"];
             author.UpdatedAt = Convert.ToDateTime(updatedAt);
             author.PhotoPath = node["photo_path"];
+            author.Description = node["description"];
 
             return author;
         }
