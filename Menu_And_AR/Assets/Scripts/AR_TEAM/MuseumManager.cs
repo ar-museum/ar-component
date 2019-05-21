@@ -75,7 +75,7 @@ public sealed class MuseumManager
                 exh.PhotoPathOnDisk = pathOnDisk + new FileInfo(exh.PhotoUrl).Name;
                 if (!File.Exists(exh.PhotoPathOnDisk))
                 {
-                    toDownload.Add(("armuseum.ml/" + exh.PhotoUrl, exh.PhotoPathOnDisk));
+                    toDownload.Add((Endpoints.SITE_URL + exh.PhotoUrl, exh.PhotoPathOnDisk));
                 }
             }
 
@@ -86,7 +86,7 @@ public sealed class MuseumManager
                 auth.PhotoPathOnDisk = pathOnDisk + new FileInfo(auth.PhotoPath).Name;
                 if (!File.Exists(auth.PhotoPathOnDisk))
                 {
-                    toDownload.Add(("armuseum.ml/" + auth.PhotoPath, auth.PhotoPathOnDisk));
+                    toDownload.Add((Endpoints.SITE_URL + auth.PhotoPath, auth.PhotoPathOnDisk));
                 }
             }
         }
