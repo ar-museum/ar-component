@@ -42,6 +42,7 @@ public sealed class MuseumManager
 
     public async Task DownloadAllAudios()
     {
+        var toDownload = new List<(string, string)>();
         if (CurrentMuseum != null)
         {
             List<Exhibit> exhibits = CurrentMuseum.Exhibits;
@@ -52,16 +53,18 @@ public sealed class MuseumManager
                 exh.AudioPathOnDisk = pathOnDisk + new FileInfo(exh.AudioUrl).Name;
                 if (!File.Exists(exh.AudioPathOnDisk))
                 {
-                    LoadFindData.messageToShow = "Downloading + " + exh.AudioPathOnDisk;
-                    Debug.Log("Downloading + " + exh.AudioPathOnDisk);
-                    await MuseumRequests.DownloadFile(exh.AudioUrl, exh.AudioPathOnDisk);
+                    toDownload.Add((exh.AudioUrl, exh.AudioPathOnDisk));
                 }
             }
         }
+
+        await MuseumRequests.DownloadFiles(toDownload);
     }
 
     public async Task DownloadAllPhotos()
     {
+        var toDownload = new List<(string, string)>();
+
         if (CurrentMuseum != null)
         {
             List<Exhibit> exhibits = CurrentMuseum.Exhibits;
@@ -72,9 +75,7 @@ public sealed class MuseumManager
                 exh.PhotoPathOnDisk = pathOnDisk + new FileInfo(exh.PhotoUrl).Name;
                 if (!File.Exists(exh.PhotoPathOnDisk))
                 {
-                    LoadFindData.messageToShow = "Downloading + " + exh.PhotoPathOnDisk;
-                    Debug.Log("Downloading + " + "armuseum.ml/" + exh.PhotoUrl);
-                    await MuseumRequests.DownloadFile("armuseum.ml/" + exh.PhotoUrl, exh.PhotoPathOnDisk);
+                    toDownload.Add(("armuseum.ml/" + exh.PhotoUrl, exh.PhotoPathOnDisk));
                 }
             }
 
@@ -85,16 +86,16 @@ public sealed class MuseumManager
                 auth.PhotoPathOnDisk = pathOnDisk + new FileInfo(auth.PhotoPath).Name;
                 if (!File.Exists(auth.PhotoPathOnDisk))
                 {
-                    LoadFindData.messageToShow = "Downloading + " + auth.PhotoPathOnDisk;
-                    Debug.Log("Downloading + " + "armuseum.ml/" + auth.PhotoPath);
-                    await MuseumRequests.DownloadFile("armuseum.ml/" + auth.PhotoPath, auth.PhotoPathOnDisk);
+                    toDownload.Add(("armuseum.ml/" + auth.PhotoPath, auth.PhotoPathOnDisk));
                 }
             }
         }
+        await MuseumRequests.DownloadFiles(toDownload);
     }
 
     public async Task DownloadVuforiaFiles()
     {
+        var toDownload = new List<(string, string)>();
         if (CurrentMuseum != null)
         {
             bool updateNeeded = NewerVuforiaVersion(MuseumInfo.VuforiaDatabaseVersion);
@@ -110,17 +111,15 @@ public sealed class MuseumManager
                 CurrentMuseum.VuforiaFilesOnDisk.Add(vuforiaFileOnDisk);
                 if (updateNeeded)
                 {
-                    LoadFindData.messageToShow = "Downloading + " + vuforiaFileOnDisk;
-                    Debug.Log("Downloading + " + vuforiaFileOnDisk);
-                    await MuseumRequests.DownloadFile(vuforiaFileUrl, vuforiaFileOnDisk);
+                    toDownload.Add((vuforiaFileUrl, vuforiaFileOnDisk));
                 }
             }
             if (updateNeeded)
             {
                 UpdateVuforiaVersion(MuseumInfo.VuforiaDatabaseVersion);
             }
-
         }
+        await MuseumRequests.DownloadFiles(toDownload);
     }
 
     private void UpdateVuforiaVersion(string version)

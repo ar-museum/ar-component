@@ -14,9 +14,10 @@ namespace Assets.Scripts.AR_TEAM.Http {
         }
 
         public static async Task<string> DoGetRequestNew(string url) {
-            var request = new UnityWebRequest(url, "GET");
-            request.downloadHandler = new DownloadHandlerBuffer();
-            request.certificateHandler = new CustomCertificateHandler();
+            var request = new UnityWebRequest(url, "GET") {
+                downloadHandler = new DownloadHandlerBuffer(),
+                certificateHandler = new CustomCertificateHandler()
+            };
             SetHeaders(request);
 
             LoadFindData.messageToShow = "Get await" + url;

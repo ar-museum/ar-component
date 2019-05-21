@@ -1,6 +1,8 @@
 ﻿using SimpleJSON;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.Networking;
 
 namespace Assets.Scripts.AR_TEAM.Http {
@@ -18,9 +20,17 @@ namespace Assets.Scripts.AR_TEAM.Http {
 
         public static async Task<Exposition> DownloadExposition(int id) {
             var expo = await HttpRequests.DoGetRequestNew($"{Endpoints.EXPOSITIONS_RELS_URL}/{id}", Deserializers.DeserializeExposition);
+            var taskList = new List<Task<Exhibit>>();
+
+            foreach (Exhibit i in expo.Exhibits) {
+                var task = DownloadExhibit(i.ExhibitId);
+                taskList.Add(task);
+            }
+
+            await Task.WhenAll(taskList);
 
             for (int i = 0; i < expo.Exhibits.Count; ++i) {
-                expo.Exhibits[i] = await DownloadExhibit(expo.Exhibits[i].ExhibitId);
+                expo.Exhibits[i] = taskList[i].Result;
             }
 
             return expo;
@@ -28,9 +38,18 @@ namespace Assets.Scripts.AR_TEAM.Http {
 
         public static async Task<MuseumDto> DownloadMuseum(int id) {
             var museum = await HttpRequests.DoGetRequestNew($"{Endpoints.MUSEUMS_RELS_URL}/{id}", Deserializers.DeserializeMuseum);
+            var taskList = new List<Task<Exposition>>();
+
+            foreach (Exposition i in museum.Expositions) {
+                taskList.Add(DownloadExposition(i.ExpositionId));
+            }
+
+            await Task.WhenAll(taskList);
 
             for (int i = 0; i < museum.Expositions.Count; ++i) {
-                museum.Expositions[i] = await DownloadExposition(museum.Expositions[i].ExpositionId);
+                museum.Expositions = taskList
+                    .Select(x => x.Result)
+                    .ToList();
             }
 
             return museum;
@@ -64,11 +83,24 @@ namespace Assets.Scripts.AR_TEAM.Http {
         }
 
         public static async Task DownloadFile(string url, string pathOnDisk) {
-            var request = new UnityWebRequest(url, "GET");
-            request.downloadHandler = new DownloadHandlerFile(pathOnDisk);
-            request.certificateHandler = new CustomCertificateHandler();
+            var request = new UnityWebRequest(url, "GET") {
+                downloadHandler = new DownloadHandlerFile(pathOnDisk),
+                certificateHandler = new CustomCertificateHandler()
+            };
+
+            LoadFindData.messageToShow = "Downloading + " + pathOnDisk;
+            Debug.Log("Downloading + " + pathOnDisk);
 
             await request.SendWebRequest();
+        }
+
+        public static async Task DownloadFiles(List<(string, string)> files) {
+            var tasks = new List<Task>();
+            foreach (var (url, disk) in files) {
+                tasks.Add(DownloadFile(url, disk));
+            }
+
+            await Task.WhenAll(tasks);
         }
     }
 }
