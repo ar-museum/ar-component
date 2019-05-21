@@ -39,6 +39,9 @@ EditorBuildSettings:
     path: Assets/Scenes/GAMES_TEAM/MainLevel.unity
     guid: 098dffa5c4addbe45bd97262b5dbbfe7
   - enabled: 1
+    path: Assets/Scenes/GAMES_TEAM/SampleScene.unity
+    guid: 45b4cf9a0947a664bbb5c3bcea56d31e
+  - enabled: 1
     path: Assets/Scenes/GAMES_TEAM/GameOverScene.unity
     guid: 3bd31ee0651ea374185a48a0a42f0f71
   m_configObjects: {}
