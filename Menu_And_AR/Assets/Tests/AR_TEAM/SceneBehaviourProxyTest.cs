@@ -13,6 +13,12 @@ namespace Tests
         public IEnumerator MenuScene_ARButton_Press_Test()
         {
             //Arrange
+            SceneManager.LoadScene("PreloadScene");
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
+
             SceneManager.LoadScene("ARScene");
             yield return new WaitForSeconds(1);
 

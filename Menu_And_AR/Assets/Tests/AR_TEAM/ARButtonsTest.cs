@@ -22,6 +22,12 @@ namespace Tests
         public IEnumerator GivenARScenWhenToggleButtonIsPressedThenImageMustChange()
         {
             //Arrange
+            SceneManager.LoadScene("PreloadScene");
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
+
             SceneManager.LoadScene("ARScene");
             yield return new WaitForSeconds(1);
 
@@ -41,6 +47,12 @@ namespace Tests
         public IEnumerator GivenARScenWhenAudioButtonIsPressedThenImageMustChange()
         {
             //Arrange
+            SceneManager.LoadScene("PreloadScene");
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
+
             SceneManager.LoadScene("ARScene");
             yield return new WaitForSeconds(1);
 
