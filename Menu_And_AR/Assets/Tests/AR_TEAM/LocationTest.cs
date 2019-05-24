@@ -20,7 +20,6 @@ namespace Tests
             //Arrange
             LoadFindData.latitudine = -1;
             LoadFindData.longitudine = -1;
-            LoadFindData.isUnitTest = true;
             Sprite imageNeeded = Resources.Load<Sprite>(imagePath + "No_Museum");
             SceneManager.LoadScene(0);
             yield return new WaitForSeconds(1);
@@ -58,7 +57,6 @@ namespace Tests
             //Arrange
             LoadFindData.latitudine = 1;
             LoadFindData.longitudine = 1;
-            LoadFindData.isUnitTest = true;
             Sprite imageNeeded = Resources.Load<Sprite>(imagePath + "No_Museum");
             SceneManager.LoadScene(0);
             yield return new WaitForSeconds(1);
@@ -111,7 +109,6 @@ namespace Tests
                     LoadFindData.longitudine = museumData.museums[i].longitude;
                 }
             }
-            LoadFindData.isUnitTest = true;
             Sprite imageNeeded = Resources.Load<Sprite>(imagePath + "Muzeul_de_Literatura");
             SceneManager.LoadScene(0);
             yield return new WaitForSeconds(1);
@@ -156,7 +153,6 @@ namespace Tests
                     LoadFindData.longitudine = museumData.museums[i].longitude;
                 }
             }
-            LoadFindData.isUnitTest = true;
             Sprite imageNeeded = Resources.Load<Sprite>(imagePath + "Muzeul_Unirii");
             SceneManager.LoadScene(0);
             yield return new WaitForSeconds(1);
@@ -201,7 +197,6 @@ namespace Tests
                     LoadFindData.longitudine = museumData.museums[i].longitude;
                 }
             }
-            LoadFindData.isUnitTest = true;
             Sprite imageNeeded = Resources.Load<Sprite>(imagePath + "Muzeul_Mihai_Eminescu");
             SceneManager.LoadScene(0);
             yield return new WaitForSeconds(1);
@@ -246,7 +241,6 @@ namespace Tests
                     LoadFindData.longitudine = museumData.museums[i].longitude;
                 }
             }
-            LoadFindData.isUnitTest = true;
             Sprite imageNeeded = Resources.Load<Sprite>(imagePath + "Muzeul_de_Istorie_Naturala");
             SceneManager.LoadScene(0);
             yield return new WaitForSeconds(1);

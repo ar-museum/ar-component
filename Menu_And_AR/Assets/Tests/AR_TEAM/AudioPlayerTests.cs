@@ -11,12 +11,17 @@ namespace Tests
     public class AudioPlayerTests
     {
         private string songPath  = Application.dataPath + "/StreamingAssets/Sound/test.wav"; // or other existing .wav from StreamingAssets/Sound
-
         // test 1 Lipan Matei
         [UnityTest]
         public IEnumerator AudioPlayer_PlayMusic()
         {
             //Arrange
+            SceneManager.LoadScene("PreloadScene");
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
+
             SceneManager.LoadScene("ARScene");
             yield return new WaitForSeconds(1);
             
@@ -37,6 +42,12 @@ namespace Tests
         public IEnumerator AudioPlayer_PauseMusic()
         {
             //Arrange
+            SceneManager.LoadScene("PreloadScene");
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
+
             SceneManager.LoadScene("ARScene");
             yield return new WaitForSeconds(1);
             
@@ -58,6 +69,12 @@ namespace Tests
         public IEnumerator AudioPlayer_ResumeMusic()
         {
             //Arrange
+            SceneManager.LoadScene("PreloadScene");
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
+
             SceneManager.LoadScene("ARScene");
             yield return new WaitForSeconds(1);
 
@@ -82,6 +99,11 @@ namespace Tests
         public IEnumerator AudioPlayer_ReplayMusic()
         {
             //Arrange
+            SceneManager.LoadScene("PreloadScene");
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
 
             SceneManager.LoadScene("ARScene");
             yield return new WaitForSeconds(1);
@@ -110,6 +132,12 @@ namespace Tests
         public IEnumerator AudioPlayer_StopMusic()
         {
             //Arrange
+            SceneManager.LoadScene("PreloadScene");
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
+
             SceneManager.LoadScene("ARScene");
             yield return new WaitForSeconds(1);
 

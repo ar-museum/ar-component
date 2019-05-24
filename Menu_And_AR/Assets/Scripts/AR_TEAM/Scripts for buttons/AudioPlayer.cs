@@ -86,6 +86,7 @@ public class AudioPlayer : MonoBehaviour
     {
         source.Stop();
         source.time = 0;
+        playTime = 0;
         songPath = "";
         ChangePlayButton();
         StopCoroutine(ienum);

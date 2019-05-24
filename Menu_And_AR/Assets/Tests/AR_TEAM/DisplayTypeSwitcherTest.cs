@@ -25,6 +25,12 @@ namespace Tests
         public IEnumerator GivenDisplayTypeTargetWhenToggleButtonIsPressedThenChangeDisplayType()
         {
             //Arrange
+            SceneManager.LoadScene("PreloadScene");
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
+
             SceneManager.LoadScene("ARScene");
             yield return new WaitForSeconds(1);
             var expected_result = DisplayType.ScreenAttached;
@@ -59,6 +65,12 @@ namespace Tests
         public IEnumerator GivenGetTargetAttachedObjectsWhenToggleButtonIsPressedThenTargetAttachedObjectsNotBeNull()
         {
             //Arrange
+            SceneManager.LoadScene("PreloadScene");
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
+
             SceneManager.LoadScene("ARScene");
             yield return new WaitForSeconds(1);
             int result = 0; int expected_result = 1;
@@ -89,6 +101,12 @@ namespace Tests
         public IEnumerator GivenGetScreenAttachedObjectsWhenToggleButtonIsPressedThenTargetAttachedObjectsNotBeNull()
         {
             //Arrange
+            SceneManager.LoadScene("PreloadScene");
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
+
             SceneManager.LoadScene("ARScene");
             yield return new WaitForSeconds(1);
             int result = 0; int expected_result = 1;
@@ -117,6 +135,12 @@ namespace Tests
         public IEnumerator DisplayTypeSwitcher_ARDisplayTypeTargetAttached_SetRightResultat()
         {
             //Arrange
+            SceneManager.LoadScene("PreloadScene");
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
+
             SceneManager.LoadScene("ARScene");
             yield return new WaitForSeconds(1);
             //Act
@@ -152,6 +176,12 @@ namespace Tests
         public IEnumerator DisplayTypeSwitcher_ARDisplayTypeScreenAttached_SetRightResultat()
         {
             //Arrange
+            SceneManager.LoadScene("PreloadScene");
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
+
             SceneManager.LoadScene("ARScene");
             yield return new WaitForSeconds(1);
             //Act
@@ -187,6 +217,12 @@ namespace Tests
         public IEnumerator DisplayTypeSwitcher_UpdateScreenAttachedInfo_Test()
         {
             //Arrange
+            SceneManager.LoadScene("PreloadScene");
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
+
             SceneManager.LoadScene("ARScene");
             yield return new WaitForSeconds(1);
 
@@ -210,6 +246,12 @@ namespace Tests
         public IEnumerator DisplayTypeSwitcher_CleanScreenAttachedInfo_Test()
         {
             //Arrange
+            SceneManager.LoadScene("PreloadScene");
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
+
             SceneManager.LoadScene("ARScene");
             yield return new WaitForSeconds(1);
 
@@ -234,6 +276,12 @@ namespace Tests
         public IEnumerator DisplayTypeSwitcher_HideElement_Test()
         {
             //Arrange
+            SceneManager.LoadScene("PreloadScene");
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
+
             SceneManager.LoadScene("ARScene");
             yield return new WaitForSeconds(1);
             var gameObject = GameObject.FindGameObjectWithTag("ARUIFrame");
@@ -248,6 +296,12 @@ namespace Tests
         public IEnumerator DisplayTypeSwitcher_ShowElement_Test()
         {
             //Arrange
+            SceneManager.LoadScene("PreloadScene");
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
+
             SceneManager.LoadScene("ARScene");
             yield return new WaitForSeconds(1);
             var gameObject = GameObject.FindGameObjectWithTag("ARUIFrame");

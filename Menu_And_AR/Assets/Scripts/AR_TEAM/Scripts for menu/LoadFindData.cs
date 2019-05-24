@@ -11,7 +11,6 @@ public class LoadFindData : MonoBehaviour
 {
     public static double latitudine = 0;
     public static double longitudine = 0;
-    public static bool isUnitTest = false;
     public static string messageToShow;
     Text textDownloads;
     Image loadingImage;

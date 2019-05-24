@@ -15,20 +15,24 @@ namespace Tests
         public IEnumerator SetText_SetInfoForTextComponents_Test()
         {
             //Arrange
-            LoadFindData.isUnitTest = false;
             SceneManager.LoadScene("PreloadScene");
-            yield return new WaitForSeconds(10);
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
+
             SceneManager.LoadScene("ARScene");
             yield return new WaitForSeconds(1);
             var screeenAttachedObjects = GameObject.FindGameObjectsWithTag("ScreenAttached");
-            var (title, author, authorId) = MuseumManager.Instance.CurrentMuseum.FindArSceneInfoByExhibitId(1); // un id valid
+            var id = MuseumManager.Instance.CurrentMuseum.Exhibits[0].ExhibitId;
+            var (title, author, authorId) = MuseumManager.Instance.CurrentMuseum.FindArSceneInfoByExhibitId(id);
 
             //Act
             foreach (var screenAttachedObject in screeenAttachedObjects)
             {
                 var screenAttachedTexts = screenAttachedObject.GetComponentsInChildren<SetText>();
                 // update text
-                SetText.SetInfoForTextComponents(screenAttachedTexts, "1");
+                SetText.SetInfoForTextComponents(screenAttachedTexts, id.ToString());
             }
 
             //Assert

@@ -15,6 +15,12 @@ namespace Tests
         public IEnumerator TargetManager_LoadDatabase_WrongDatabase_Test()
         {
             //Arange
+            SceneManager.LoadScene("PreloadScene");
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
+
             SceneManager.LoadScene("ARScene");
                 
             yield return new WaitForSeconds(1);
@@ -37,13 +43,19 @@ namespace Tests
         public IEnumerator TargetManager_LoadDatabase_RightDatabase_Test()
         {
             //Arange
+            SceneManager.LoadScene("PreloadScene");
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
+
             SceneManager.LoadScene("ARScene");
 
             yield return new WaitForSeconds(1);
 
             var targetManagerObject = GameObject.FindGameObjectWithTag("TargetManager");
             var targetManager = targetManagerObject.gameObject.GetComponent(typeof(TargetManager)) as TargetManager;
-            string databaseName = "ARMuseum"; // or something correct
+            string databaseName = MuseumManager.Instance.CurrentMuseum.GetVuforiaXMLPath();
 
             //Act
 
@@ -62,6 +74,12 @@ namespace Tests
         {
 
             // Arrange
+            SceneManager.LoadScene("PreloadScene");
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
+
             SceneManager.LoadScene("ARScene");
 
             yield return new WaitForSeconds(1);
@@ -84,6 +102,12 @@ namespace Tests
         public IEnumerator TargetManager_DeleteTargets_DeletesAll_Test()
         {
             // Arrange
+            SceneManager.LoadScene("PreloadScene");
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
+
             SceneManager.LoadScene("ARScene");
 
             yield return new WaitForSeconds(1);
@@ -119,6 +143,12 @@ namespace Tests
         public IEnumerator TargetManager_DeleteTargets_ActiveObjectTracker_Test()
         {
             // Arrange
+            SceneManager.LoadScene("PreloadScene");
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
+
             SceneManager.LoadScene("ARScene");
 
             yield return new WaitForSeconds(1);

@@ -17,7 +17,6 @@ namespace Tests
         public IEnumerator MenuScene_ARButton_Press_Test()
         {
             //Arrange
-            LoadFindData.isUnitTest = true;
             SceneManager.LoadScene("PreloadScene");
             yield return new WaitForSeconds(1);
 
@@ -47,7 +46,6 @@ namespace Tests
         public IEnumerator MenuScene_GalleryButton_Press_Test()
         {
             //Arrange
-            LoadFindData.isUnitTest = true;
             SceneManager.LoadScene("PreloadScene");
             yield return new WaitForSeconds(1);
 
@@ -75,7 +73,6 @@ namespace Tests
         public IEnumerator MenuScene_GamesButton_Press_Test()
         {
             //Arrange
-            LoadFindData.isUnitTest = true;
             SceneManager.LoadScene("PreloadScene");
             yield return new WaitForSeconds(1);
 
@@ -192,7 +189,6 @@ namespace Tests
         public IEnumerator LoadScene_WrongScene_Test()
         {
             //Arrange
-            LoadFindData.isUnitTest = true;
             SceneManager.LoadScene("PreloadScene");
             yield return new WaitForSeconds(1);
 
@@ -210,7 +206,6 @@ namespace Tests
         public IEnumerator LoadScene_RightScene_Test()
         {
             //Arrange
-            LoadFindData.isUnitTest = true;
             SceneManager.LoadScene("PreloadScene");
             yield return new WaitForSeconds(1);
 
