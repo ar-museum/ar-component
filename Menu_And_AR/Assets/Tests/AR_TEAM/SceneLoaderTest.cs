@@ -18,7 +18,15 @@ namespace Tests
         {
             //Arrange
             SceneManager.LoadScene("PreloadScene");
-            yield return new WaitForSeconds(1);
+            //yield return new WaitForSeconds(1);
+            while (SceneManager.GetSceneByName("PreloadScene").isLoaded == false)
+            {
+                yield return new WaitForSeconds(1);
+            }
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
 
             var buttonARObject = GameObject.Find("ButtonAR");
             var buttonAR = buttonARObject.GetComponent<Button>();
@@ -47,7 +55,15 @@ namespace Tests
         {
             //Arrange
             SceneManager.LoadScene("PreloadScene");
-            yield return new WaitForSeconds(1);
+            //yield return new WaitForSeconds(1);
+            while (SceneManager.GetSceneByName("PreloadScene").isLoaded == false)
+            {
+                yield return new WaitForSeconds(1);
+            }
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
 
             var buttonGalleryObject = GameObject.Find("ButtonGallery");
             var buttonGallery = buttonGalleryObject.GetComponent<Button>();
@@ -74,7 +90,15 @@ namespace Tests
         {
             //Arrange
             SceneManager.LoadScene("PreloadScene");
-            yield return new WaitForSeconds(1);
+            //yield return new WaitForSeconds(1);
+            while (SceneManager.GetSceneByName("PreloadScene").isLoaded == false)
+            {
+                yield return new WaitForSeconds(1);
+            }
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
 
             var buttonGamesObject = GameObject.Find("ButtonGames");
             var buttonGames = buttonGamesObject.GetComponent<Button>();
@@ -85,7 +109,7 @@ namespace Tests
             isButtonClicked = false;
 
             //Act
-            buttonGames.onClick.AddListener(() => { ClickButton("GamesScene"); });
+            buttonGames.onClick.AddListener(() => { ClickButton("Menu"); });
             buttonGames.onClick.Invoke();
 
             //Assert
@@ -100,8 +124,15 @@ namespace Tests
         public IEnumerator ARScene_BackButton_Press_Test()
         {
             //Arrange
-            //SceneManager.LoadScene("PreloadScene");
-            //yield return new WaitForSeconds(10);
+            SceneManager.LoadScene("PreloadScene");
+            while (SceneManager.GetSceneByName("PreloadScene").isLoaded == false)
+            {
+                yield return new WaitForSeconds(1);
+            }
+            //while (SceneManager.GetActiveScene().name != "MenuScene")
+            //{
+                yield return new WaitForSeconds(1);
+            //}
             SceneManager.LoadScene("ARScene");
             yield return new WaitForSeconds(1);
 
@@ -125,7 +156,8 @@ namespace Tests
             }
         }
 
-        [UnityTest]
+        // Galeria nu are buton de back
+        /*[UnityTest]
         public IEnumerator GalleryScene_BackButton_Press_Test()
         {
             //Arrange
@@ -150,16 +182,26 @@ namespace Tests
             {
                 Assert.DoesNotThrow(() => { controlScript.LoadBackScene(); });
             }
-        }
+        }*/
 
         [UnityTest]
         public IEnumerator GamesScene_BackButton_Press_Test()
         {
             //Arrange
-            SceneManager.LoadScene("GamesScene");
+            SceneManager.LoadScene("PreloadScene");
+            while (SceneManager.GetSceneByName("PreloadScene").isLoaded == false)
+            {
+                yield return new WaitForSeconds(1);
+            }
+            //while (SceneManager.GetActiveScene().name != "MenuScene")
+           // {
+                yield return new WaitForSeconds(1);
+           //}
+            SceneManager.LoadScene("Menu");
             yield return new WaitForSeconds(1);
+            
 
-            var buttonBackObject = GameObject.Find("ButtonBack");
+            var buttonBackObject = GameObject.Find("BackButton");
             var buttonBack = buttonBackObject.GetComponent<Button>();
 
             var controlScriptObject = GameObject.FindGameObjectWithTag("SceneControl");
@@ -190,7 +232,15 @@ namespace Tests
         {
             //Arrange
             SceneManager.LoadScene("PreloadScene");
-            yield return new WaitForSeconds(1);
+            //yield return new WaitForSeconds(1);
+            while (SceneManager.GetSceneByName("PreloadScene").isLoaded == false)
+            {
+                yield return new WaitForSeconds(1);
+            }
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
 
             var menuControlObject = GameObject.FindGameObjectWithTag("SceneControl");
             var menuControl = menuControlObject.gameObject.GetComponent(typeof(SceneLoader)) as SceneLoader;
@@ -207,7 +257,15 @@ namespace Tests
         {
             //Arrange
             SceneManager.LoadScene("PreloadScene");
-            yield return new WaitForSeconds(1);
+            //yield return new WaitForSeconds(1);
+            while (SceneManager.GetSceneByName("PreloadScene").isLoaded == false)
+            {
+                yield return new WaitForSeconds(1);
+            }
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
 
             var menuControlObject = GameObject.FindGameObjectWithTag("SceneControl");
             var menuControl = menuControlObject.gameObject.GetComponent(typeof(SceneLoader)) as SceneLoader;

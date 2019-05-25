@@ -21,6 +21,7 @@ namespace Tests
             LoadFindData.latitudine = -1;
             LoadFindData.longitudine = -1;
             Sprite imageNeeded = Resources.Load<Sprite>(imagePath + "No_Museum");
+
             SceneManager.LoadScene(0);
             yield return new WaitForSeconds(1);
 
@@ -34,7 +35,7 @@ namespace Tests
                 Image image = imageObject.GetComponent<Image>();
                 Text text = textObject.GetComponent<Text>();
 
-                if (text.text == "Enable the location to let the application access the current coordinates of your position." && image.sprite == imageNeeded)
+                if (text.text == "Activati locatia pentru a putea permite aplicatiei sa acceseze coordonatele actuale ale pozitiei dumneavoastra." && image.sprite == imageNeeded)
                 {
                     GameObject buttonARObject = GameObject.Find("ButtonAR");
                     GameObject buttonGalleryObject = GameObject.Find("ButtonGallery");
@@ -58,6 +59,7 @@ namespace Tests
             LoadFindData.latitudine = 1;
             LoadFindData.longitudine = 1;
             Sprite imageNeeded = Resources.Load<Sprite>(imagePath + "No_Museum");
+
             SceneManager.LoadScene(0);
             yield return new WaitForSeconds(1);
 
@@ -65,19 +67,19 @@ namespace Tests
 
             //Act
             GameObject imageObject = GameObject.Find("BackgroundImage");
-            GameObject textObject = GameObject.Find("TextBoxMuseum/Text");
+            GameObject textObject = GameObject.Find("TextBoxError/Text");
             if (imageObject != null && textObject != null)
             {
                 Image image = imageObject.GetComponent<Image>();
                 Text text = textObject.GetComponent<Text>();
 
-                if (text.text == "You are not\n inside a museum" && image.sprite == imageNeeded)
+                if (text.text == "Nu va aflati in\n incinta unui muzeu" && image.sprite == imageNeeded)
                 {
                     GameObject buttonARObject = GameObject.Find("ButtonAR");
                     GameObject buttonGalleryObject = GameObject.Find("ButtonGallery");
                     GameObject buttonGamesObject = GameObject.Find("ButtonGames");
 
-                    if (buttonARObject == null && buttonGalleryObject && buttonGamesObject)
+                    if (buttonARObject == null && buttonGalleryObject == null && buttonGamesObject == null)
                     {
                         rightLoader = true;
                     }
@@ -117,23 +119,11 @@ namespace Tests
 
             //Act
             GameObject imageObject = GameObject.Find("BackgroundImage");
+            Image image = imageObject.GetComponent<Image>();
             GameObject textObject = GameObject.Find("TextBoxMuseum/Text");
-            if (imageObject != null && textObject != null)
+            if (image.sprite != imageNeeded && textObject == null)
             {
-                Image image = imageObject.GetComponent<Image>();
-                Text text = textObject.GetComponent<Text>();
-
-                if (text.text == "Welcome to\nLiterary Museum" && image.sprite == imageNeeded)
-                {
-                    GameObject buttonARObject = GameObject.Find("ButtonAR");
-                    GameObject buttonGalleryObject = GameObject.Find("ButtonGallery");
-                    GameObject buttonGamesObject = GameObject.Find("ButtonGames");
-
-                    if (buttonARObject && buttonGalleryObject && buttonGamesObject)
-                    {
-                        rightLoader = true;
-                    }
-                }
+                rightLoader = true;
             }
 
             //Assert
@@ -161,23 +151,11 @@ namespace Tests
 
             //Act
             GameObject imageObject = GameObject.Find("BackgroundImage");
+            Image image = imageObject.GetComponent<Image>();
             GameObject textObject = GameObject.Find("TextBoxMuseum/Text");
-            if (imageObject != null && textObject != null)
+            if (image.sprite != imageNeeded && textObject == null)
             {
-                Image image = imageObject.GetComponent<Image>();
-                Text text = textObject.GetComponent<Text>();
-
-                if (text.text == "Welcome to\nUnion Museum" && image.sprite == imageNeeded)
-                {
-                    GameObject buttonARObject = GameObject.Find("ButtonAR");
-                    GameObject buttonGalleryObject = GameObject.Find("ButtonGallery");
-                    GameObject buttonGamesObject = GameObject.Find("ButtonGames");
-
-                    if (buttonARObject && buttonGalleryObject && buttonGamesObject)
-                    {
-                        rightLoader = true;
-                    }
-                }
+                rightLoader = true;
             }
 
             //Assert
@@ -199,7 +177,14 @@ namespace Tests
             }
             Sprite imageNeeded = Resources.Load<Sprite>(imagePath + "Muzeul_Mihai_Eminescu");
             SceneManager.LoadScene(0);
-            yield return new WaitForSeconds(1);
+            while (SceneManager.GetSceneByName("PreloadScene").isLoaded == false)
+            {
+                yield return new WaitForSeconds(1);
+            }
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
 
             bool rightLoader = false;
 
@@ -211,7 +196,7 @@ namespace Tests
                 Image image = imageObject.GetComponent<Image>();
                 Text text = textObject.GetComponent<Text>();
 
-                if (text.text == "Welcome to\nMihai Eminescu Museum" && image.sprite == imageNeeded)
+                if (text.text == "Bine ati venit la\nMuzeul Mihai Eminescu" && image.sprite == imageNeeded)
                 {
                     GameObject buttonARObject = GameObject.Find("ButtonAR");
                     GameObject buttonGalleryObject = GameObject.Find("ButtonGallery");
@@ -241,9 +226,16 @@ namespace Tests
                     LoadFindData.longitudine = museumData.museums[i].longitude;
                 }
             }
-            Sprite imageNeeded = Resources.Load<Sprite>(imagePath + "Muzeul_de_Istorie_Naturala");
+            Sprite imageNeeded = Resources.Load<Sprite>(imagePath + "Muzeul_de_Stiinta");
             SceneManager.LoadScene(0);
-            yield return new WaitForSeconds(1);
+            while(SceneManager.GetSceneByName("PreloadScene").isLoaded == false)
+            {
+                yield return new WaitForSeconds(1);
+            }
+            while (SceneManager.GetActiveScene().name != "MenuScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
 
             bool rightLoader = false;
 
@@ -255,7 +247,7 @@ namespace Tests
                 Image image = imageObject.GetComponent<Image>();
                 Text text = textObject.GetComponent<Text>();
 
-                if (text.text == "Welcome to\nNational History Museum" && image.sprite == imageNeeded)
+                if (text.text == "Bine ati venit la\nMuzeul de Stiinta" && image.sprite == imageNeeded)
                 {
                     GameObject buttonARObject = GameObject.Find("ButtonAR");
                     GameObject buttonGalleryObject = GameObject.Find("ButtonGallery");

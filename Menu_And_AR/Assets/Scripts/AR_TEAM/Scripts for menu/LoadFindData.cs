@@ -42,7 +42,7 @@ public class LoadFindData : MonoBehaviour
         if (latitudine == 0 && longitudine == 0)
         {
             // Testing in editor va fi facut pe muzeul Mihai Eminescu
-            latitudine =  47.17910387;//47.173975638;// 47.16686875;
+            latitudine = 47.17910387;//47.173975638;// 47.16686875;
             longitudine = 27.56697617; // 27.574884630;// 27.5841265;
         }
 #elif UNITY_ANDROID
