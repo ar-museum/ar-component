@@ -18,7 +18,6 @@ namespace Tests
         {
             //Arrange
             SceneManager.LoadScene("PreloadScene");
-            //yield return new WaitForSeconds(1);
             while (SceneManager.GetSceneByName("PreloadScene").isLoaded == false)
             {
                 yield return new WaitForSeconds(1);
@@ -55,7 +54,6 @@ namespace Tests
         {
             //Arrange
             SceneManager.LoadScene("PreloadScene");
-            //yield return new WaitForSeconds(1);
             while (SceneManager.GetSceneByName("PreloadScene").isLoaded == false)
             {
                 yield return new WaitForSeconds(1);
@@ -90,7 +88,6 @@ namespace Tests
         {
             //Arrange
             SceneManager.LoadScene("PreloadScene");
-            //yield return new WaitForSeconds(1);
             while (SceneManager.GetSceneByName("PreloadScene").isLoaded == false)
             {
                 yield return new WaitForSeconds(1);
@@ -129,10 +126,8 @@ namespace Tests
             {
                 yield return new WaitForSeconds(1);
             }
-            //while (SceneManager.GetActiveScene().name != "MenuScene")
-            //{
-                yield return new WaitForSeconds(1);
-            //}
+            yield return new WaitForSeconds(1);
+
             SceneManager.LoadScene("ARScene");
             yield return new WaitForSeconds(1);
 
@@ -193,10 +188,8 @@ namespace Tests
             {
                 yield return new WaitForSeconds(1);
             }
-            //while (SceneManager.GetActiveScene().name != "MenuScene")
-           // {
-                yield return new WaitForSeconds(1);
-           //}
+            yield return new WaitForSeconds(1);
+
             SceneManager.LoadScene("Menu");
             yield return new WaitForSeconds(1);
             
@@ -232,7 +225,6 @@ namespace Tests
         {
             //Arrange
             SceneManager.LoadScene("PreloadScene");
-            //yield return new WaitForSeconds(1);
             while (SceneManager.GetSceneByName("PreloadScene").isLoaded == false)
             {
                 yield return new WaitForSeconds(1);
@@ -257,7 +249,6 @@ namespace Tests
         {
             //Arrange
             SceneManager.LoadScene("PreloadScene");
-            //yield return new WaitForSeconds(1);
             while (SceneManager.GetSceneByName("PreloadScene").isLoaded == false)
             {
                 yield return new WaitForSeconds(1);

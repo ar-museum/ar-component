@@ -2,13 +2,14 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Threading.Tasks;
 
 public class SceneLoader : MonoBehaviour
 {
     Scene currentScene;
 
     float pausedTime;
-    double oldLatitude, oldLongitude;
+    double oldLatitude, oldLongitude, newLatitude, newLongitude;
     const double pi = 3.141592653589793;
     const double radius = 6371;
     const double distanceMuseum = 0.05; //50 m
@@ -57,7 +58,8 @@ public class SceneLoader : MonoBehaviour
         }
         else
         {
-            yield return LoadFindData.LocationService();
+            yield return LocationService();
+
             if (!verifyLocation(oldLatitude, oldLongitude))
             {
                 SceneManager.LoadScene("PreloadScene");
@@ -107,11 +109,11 @@ public class SceneLoader : MonoBehaviour
 
     public bool verifyLocation(double latitude, double longitude)
     {
-        double latitudeUserRad = degreesToRadians(LoadFindData.latitudine);
+        double latitudeUserRad = degreesToRadians(newLatitude);
         double latitudeLocationRad = degreesToRadians(latitude);
 
-        double distanceLatitudeRad = degreesToRadians(LoadFindData.latitudine - latitude);
-        double distanceLongitudeRad = degreesToRadians(LoadFindData.longitudine - longitude);
+        double distanceLatitudeRad = degreesToRadians(newLatitude - latitude);
+        double distanceLongitudeRad = degreesToRadians(newLongitude - longitude);
 
         double value = Math.Sin(distanceLatitudeRad / 2) * Math.Sin(distanceLatitudeRad / 2) + Math.Cos(latitudeUserRad) * Math.Cos(latitudeLocationRad) * Math.Sin(distanceLongitudeRad / 2) * Math.Sin(distanceLongitudeRad / 2);
         double result = 2 * radius * Math.Atan2(Math.Sqrt(value), Math.Sqrt(1 - value));
@@ -123,5 +125,48 @@ public class SceneLoader : MonoBehaviour
     public double degreesToRadians(double value)
     {
         return value * pi / 180.0;
+    }
+
+    IEnumerator LocationService()
+    {
+        if (!Input.location.isEnabledByUser)
+        {
+            print("Utlizatorul nu a activat GPS-ul.");
+            newLatitude = -1;
+            newLongitude = -1;
+            yield break;
+        }
+
+        Input.location.Start();
+
+        int maxWait = 20;
+        while (Input.location.status == LocationServiceStatus.Initializing && maxWait > 0)
+        {
+            yield return new WaitForSeconds(1);
+            maxWait--;
+        }
+
+        if (maxWait < 1)
+        {
+            print("Timpul a expirat.");
+            newLatitude = -1;
+            newLongitude = -1;
+            yield break;
+        }
+
+        if (Input.location.status == LocationServiceStatus.Failed)
+        {
+            print("Nu s-a putut determina locatia device-ului.");
+            newLatitude = -1;
+            newLongitude = -1;
+            yield break;
+        }
+        else
+        {
+            newLatitude = Input.location.lastData.latitude;
+            newLongitude = Input.location.lastData.longitude;
+        }
+
+        Input.location.Stop();
     }
 }
