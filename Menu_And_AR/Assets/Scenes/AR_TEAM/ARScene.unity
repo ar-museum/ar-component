@@ -1987,18 +1987,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1796134272}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1994079523}
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &1994079523
@@ -2013,6 +2002,7 @@ GameObject:
   - component: {fileID: 1994079527}
   - component: {fileID: 1994079526}
   - component: {fileID: 1994079525}
+  - component: {fileID: 1994079528}
   m_Layer: 5
   m_Name: ButtonToggle
   m_TagString: Untagged
@@ -2093,6 +2083,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1994079528}
+        m_MethodName: ChangeToggle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1994079526
@@ -2132,6 +2133,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1994079523}
   m_CullTransparentMesh: 0
+--- !u!114 &1994079528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994079523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eee4d3f4b80acc2468a62530159da3ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btn_Toggle: {fileID: 1994079525}
+  toggleOn: {fileID: 21300000, guid: 5ed9ab6b907b4c842b50d23538998a43, type: 3}
+  toggleOff: {fileID: 21300000, guid: 45575bac703cb1d49b841fd5a798708d, type: 3}
+  counter: 0
 --- !u!1 &2005542091
 GameObject:
   m_ObjectHideFlags: 0
