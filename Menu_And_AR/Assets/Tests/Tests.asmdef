@@ -4,7 +4,8 @@
         "ArTeamAsmdef",
         "VuforiaScripts",
         "VuforiaEditorScripts",
-        "Scripts"
+        "Scripts",
+		"Unity.TextMeshPro"
     ],
     "optionalUnityReferences": [
         "TestAssemblies"

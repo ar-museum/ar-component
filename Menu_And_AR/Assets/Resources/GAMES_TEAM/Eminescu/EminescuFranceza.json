@@ -4,11 +4,11 @@
         "question": "Qui était le contemporain Mihai Eminescu?",
         "difficult": "Easy",
         "allAnswers": [
-          "Ion Creangă et I.L Caragiale",
+          "Ion Creanga et I.L Caragiale",
           "Ion Iliescu",
           "Viorel Lis"
         ],
-        "rightAnswer": "Ion Creangă et I.L Caragiale"
+        "rightAnswer": "Ion Creanga et I.L Caragiale"
       },
       {
         "question": "Comment la petite amie de Mihai Eminescu l'a-t-elle appelée?",
@@ -221,10 +221,10 @@
         "rightAnswer": "Typhus"
       },
       {
-        "question": "Laquelle des deux sœurs haïra Mihai Eminescu au moment où la maladie s’établira?",
+        "question": "Laquelle des deux soeurs haïra Mihai Eminescu au moment où la maladie s’établira?",
         "difficult": "Medium",
         "allAnswers": [
-          "Aglae, la sœur aînée",
+          "Aglae, la soeur aînée",
           "Henrieta, la soeur cadette",
           "Les deux"
         ],

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using Trivia;
 using UnityEngine.SceneManagement;
 using manageQuestions;
+using TMPro;
 
 namespace Tests
 {
@@ -32,7 +33,7 @@ namespace Tests
 
             Button[] buttons = GameObject.FindObjectsOfType<Button>();
             Button b11 = buttons[0];
-            string rightAnswer = b11.GetComponentInChildren<Text>().text.ToString();
+            string rightAnswer = b11.GetComponentInChildren<TextMeshProUGUI>().text.ToString();
 
             var question = GameObject.Find("Question");
             List<Question> expectedQuestions = GameManager.questions;
@@ -42,11 +43,11 @@ namespace Tests
             for (int i = 0; i < expectedQuestions.Count; i++)
             {
 
-                if (question.GetComponentInChildren<Text>().text == expectedQuestions[i].question)
+                if (question.GetComponentInChildren<TextMeshProUGUI>().text == expectedQuestions[i].question)
                 {
                     expectedAnswer = expectedQuestions[i].getRightAnswer();
                     b11.onClick.Invoke();
-                    if (b11.GetComponentInChildren<Text>().text == "Correct!")
+                    if (b11.GetComponentInChildren<TextMeshProUGUI>().text == "Correct!")
                         Assert.AreEqual(expectedAnswer, rightAnswer);
                     else
                         Assert.AreNotEqual(expectedAnswer, rightAnswer);
@@ -66,7 +67,7 @@ namespace Tests
 
             Button[] buttons = GameObject.FindObjectsOfType<Button>();
             Button b = buttons[1];
-            string rightAnswer = b.GetComponentInChildren<Text>().text.ToString();
+            string rightAnswer = b.GetComponentInChildren<TextMeshProUGUI>().text.ToString();
 
             var question = GameObject.Find("Question");
             List<Question> expectedQuestions = GameManager.questions;
@@ -76,11 +77,11 @@ namespace Tests
             for (int i = 0; i < expectedQuestions.Count; i++)
             {
 
-                if (question.GetComponentInChildren<Text>().text == expectedQuestions[i].question)
+                if (question.GetComponentInChildren<TextMeshProUGUI>().text == expectedQuestions[i].question)
                 {
                     expectedAnswer = expectedQuestions[i].getRightAnswer();
                     b.onClick.Invoke();
-                    if (b.GetComponentInChildren<Text>().text == "Correct!")
+                    if (b.GetComponentInChildren<TextMeshProUGUI>().text == "Correct!")
                         Assert.AreEqual(expectedAnswer, rightAnswer);
                     else
                         Assert.AreNotEqual(expectedAnswer, rightAnswer);
@@ -98,7 +99,7 @@ namespace Tests
             yield return new WaitForSeconds(5);
             Button[] buttons = GameObject.FindObjectsOfType<Button>();
             Button b = buttons[2];
-            string rightAnswer = b.GetComponentInChildren<Text>().text.ToString();
+            string rightAnswer = b.GetComponentInChildren<TextMeshProUGUI>().text.ToString();
 
             var question = GameObject.Find("Question");
             List<Question> expectedQuestions = GameManager.questions;
@@ -108,11 +109,11 @@ namespace Tests
             for (int i = 0; i < expectedQuestions.Count; i++)
             {
 
-                if (question.GetComponentInChildren<Text>().text == expectedQuestions[i].question)
+                if (question.GetComponentInChildren<TextMeshProUGUI>().text == expectedQuestions[i].question)
                 {
                     expectedAnswer = expectedQuestions[i].getRightAnswer();
                     b.onClick.Invoke();
-                    if (b.GetComponentInChildren<Text>().text == "Correct!")
+                    if (b.GetComponentInChildren<TextMeshProUGUI>().text == "Correct!")
                         Assert.AreEqual(expectedAnswer, rightAnswer);
                     else
                         Assert.AreNotEqual(expectedAnswer, rightAnswer);
@@ -141,8 +142,8 @@ namespace Tests
 
             for (int i = 0; i < expectedQuestions.Count; i++)
             {
-                if (question.GetComponentInChildren<Text>().text == expectedQuestions[i].question)
-                    Assert.AreEqual(expectedQuestions[i].getAllAnswers()[0], b1.GetComponentInChildren<Text>().text);
+                if (question.GetComponentInChildren<TextMeshProUGUI>().text == expectedQuestions[i].question)
+                    Assert.AreEqual(expectedQuestions[i].getAllAnswers()[0], b1.GetComponentInChildren<TextMeshProUGUI>().text);
             }
 
         }
@@ -165,8 +166,8 @@ namespace Tests
 
             for (int i = 0; i < expectedQuestions.Count; i++)
             {
-                if (question.GetComponentInChildren<Text>().text == expectedQuestions[i].question)
-                    Assert.AreEqual(expectedQuestions[i].getAllAnswers()[1], b2.GetComponentInChildren<Text>().text);
+                if (question.GetComponentInChildren<TextMeshProUGUI>().text == expectedQuestions[i].question)
+                    Assert.AreEqual(expectedQuestions[i].getAllAnswers()[1], b2.GetComponentInChildren<TextMeshProUGUI>().text);
             }
 
         }
@@ -187,8 +188,8 @@ namespace Tests
 
             for (int i = 0; i < expectedQuestions.Count; i++)
             {
-                if (question.GetComponentInChildren<Text>().text == expectedQuestions[i].question)
-                    Assert.AreEqual(expectedQuestions[i].getAllAnswers()[2], b3.GetComponentInChildren<Text>().text);
+                if (question.GetComponentInChildren<TextMeshProUGUI>().text == expectedQuestions[i].question)
+                    Assert.AreEqual(expectedQuestions[i].getAllAnswers()[2], b3.GetComponentInChildren<TextMeshProUGUI>().text);
             }
 
         }
