@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -59,8 +58,7 @@ namespace Tests
             yield return new WaitForSeconds(6);
             Debug.Log(SceneManager.GetActiveScene());
             var question = GameObject.Find("Question");
-           //Debug.Log(question.GetComponentInChildren<Text>().text);
-            Assert.NotNull(question.GetComponentInChildren<Text>().text);
+            Assert.NotNull(question);
 
             yield return null;
         }

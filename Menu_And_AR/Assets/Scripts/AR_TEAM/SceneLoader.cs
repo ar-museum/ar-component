@@ -94,6 +94,16 @@ public class SceneLoader : MonoBehaviour
         }
     }
 
+    public void LoadBackToMenuScene()
+    {
+        if (string.Compare(currentScene.name, "Menu") == 0)
+        {
+            GameObject music = GameObject.FindGameObjectWithTag("music");
+            Destroy(music);
+        }
+        SceneManager.LoadScene("MenuScene");
+    }
+
     public void LoadNextScene(string sceneCamera)
     {
         if (Application.CanStreamedLevelBeLoaded(sceneCamera))

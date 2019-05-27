@@ -12,6 +12,7 @@ namespace meniu
         private static string difficulty;//in cazul in care nu se seteaza nimic
         private static string language;//
         private static string music;
+        private static bool wasMutedMusic = false;
         public TMP_Dropdown difficultyDropdownMenu;
         public TMP_Dropdown languageDropdownMenu;
         public Toggle musicOn;
@@ -19,7 +20,7 @@ namespace meniu
         public void Start()
         {
            if (music == null)
-                music = "On";
+                music = wasMutedMusic ? "Off": "On";
             if (music == "On") musicOn.isOn = true;
             else {
                 musicOn.isOn = false;
@@ -57,8 +58,15 @@ namespace meniu
         {
             AudioListener.pause = !AudioListener.pause;
             if (AudioListener.pause == true)
+            {
+                wasMutedMusic = true;
                 music = "Off";
-            else music = "On";
+            }
+            else
+            {
+                wasMutedMusic = true;
+                music = "On";
+            }
         }
 
         public static string getDifficulty()
