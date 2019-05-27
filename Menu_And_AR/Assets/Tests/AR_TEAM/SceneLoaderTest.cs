@@ -13,15 +13,17 @@ namespace Tests
         private bool isButtonClicked = false;
         private string sceneToLoad = null;
 
+        [SetUp]
+        public void Preload_Scene()
+        {
+            SceneManager.LoadScene("PreloadScene");
+        }
+
         [UnityTest]
         public IEnumerator MenuScene_ARButton_Press_Test()
         {
             //Arrange
-            SceneManager.LoadScene("PreloadScene");
-            while (SceneManager.GetSceneByName("PreloadScene").isLoaded == false)
-            {
-                yield return new WaitForSeconds(1);
-            }
+            yield return new WaitForSeconds(1);
             while (SceneManager.GetActiveScene().name != "MenuScene")
             {
                 yield return new WaitForSeconds(1);
@@ -53,11 +55,7 @@ namespace Tests
         public IEnumerator MenuScene_GalleryButton_Press_Test()
         {
             //Arrange
-            SceneManager.LoadScene("PreloadScene");
-            while (SceneManager.GetSceneByName("PreloadScene").isLoaded == false)
-            {
-                yield return new WaitForSeconds(1);
-            }
+            yield return new WaitForSeconds(1);
             while (SceneManager.GetActiveScene().name != "MenuScene")
             {
                 yield return new WaitForSeconds(1);
@@ -87,11 +85,7 @@ namespace Tests
         public IEnumerator MenuScene_GamesButton_Press_Test()
         {
             //Arrange
-            SceneManager.LoadScene("PreloadScene");
-            while (SceneManager.GetSceneByName("PreloadScene").isLoaded == false)
-            {
-                yield return new WaitForSeconds(1);
-            }
+            yield return new WaitForSeconds(1);
             while (SceneManager.GetActiveScene().name != "MenuScene")
             {
                 yield return new WaitForSeconds(1);
@@ -121,12 +115,9 @@ namespace Tests
         public IEnumerator ARScene_BackButton_Press_Test()
         {
             //Arrange
-            SceneManager.LoadScene("PreloadScene");
-            while (SceneManager.GetSceneByName("PreloadScene").isLoaded == false)
-            {
-                yield return new WaitForSeconds(1);
-            }
-            yield return new WaitForSeconds(1);
+            
+            //need to wait more for vuforia to load
+            yield return new WaitForSeconds(3);
 
             SceneManager.LoadScene("ARScene");
             yield return new WaitForSeconds(1);
@@ -142,7 +133,7 @@ namespace Tests
             //Act
             buttonBack.onClick.AddListener(() => { ClickButton(""); });
             buttonBack.onClick.Invoke();
-
+           
             //Assert
             Assert.True(isButtonClicked);
             if (isButtonClicked)
@@ -183,15 +174,11 @@ namespace Tests
         public IEnumerator GamesScene_BackButton_Press_Test()
         {
             //Arrange
-            SceneManager.LoadScene("PreloadScene");
-            while (SceneManager.GetSceneByName("PreloadScene").isLoaded == false)
-            {
-                yield return new WaitForSeconds(1);
-            }
+            
             yield return new WaitForSeconds(1);
 
             SceneManager.LoadScene("Menu");
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(2);
             
 
             var buttonBackObject = GameObject.Find("BackButton");
@@ -224,11 +211,7 @@ namespace Tests
         public IEnumerator LoadScene_WrongScene_Test()
         {
             //Arrange
-            SceneManager.LoadScene("PreloadScene");
-            while (SceneManager.GetSceneByName("PreloadScene").isLoaded == false)
-            {
-                yield return new WaitForSeconds(1);
-            }
+            yield return new WaitForSeconds(1);
             while (SceneManager.GetActiveScene().name != "MenuScene")
             {
                 yield return new WaitForSeconds(1);
@@ -248,13 +231,10 @@ namespace Tests
         public IEnumerator LoadScene_RightScene_Test()
         {
             //Arrange
-            SceneManager.LoadScene("PreloadScene");
-            while (SceneManager.GetSceneByName("PreloadScene").isLoaded == false)
-            {
-                yield return new WaitForSeconds(1);
-            }
+            yield return new WaitForSeconds(1);
             while (SceneManager.GetActiveScene().name != "MenuScene")
             {
+                Debug.Log(SceneManager.GetActiveScene().name);
                 yield return new WaitForSeconds(1);
             }
 
