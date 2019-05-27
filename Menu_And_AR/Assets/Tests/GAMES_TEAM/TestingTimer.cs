@@ -8,6 +8,7 @@ using Trivia;
 using manageQuestions;
 using UnityEngine.SceneManagement;
 using System;
+using TMPro;
 
 namespace Tests
 {
@@ -29,7 +30,7 @@ namespace Tests
             yield return new WaitForSeconds(1);
             SceneManager.LoadScene("MainLevel");
             yield return new WaitForSeconds(5);
-            yield return new WaitForSeconds(4.0f);
+            yield return new WaitForSeconds(14.0f);
           Text timer = GameObject.Find("Timer").GetComponent<Text>();
             Debug.Log(timer.text);
             Assert.AreEqual(timer.color, Color.red);
@@ -59,7 +60,7 @@ namespace Tests
             float myScore = GameManager.score;
           string difficulty = GameManager.difficulty;
 
-            Text question = GameObject.Find("Question").GetComponent<Text>();
+            TextMeshProUGUI question = GameObject.Find("Question").GetComponent<TextMeshProUGUI>();
             List < Question > myQuestions= GameManager.questions;
             Text timer = GameObject.Find("Timer").GetComponent<Text>();
 
@@ -75,23 +76,23 @@ namespace Tests
                     Button b3 = buttons[2];
                     //Debug.Log(b1);
                     
-                    if (b1.GetComponentInChildren<Text>().text == myQuestions[i].getRightAnswer())
+                    if (b1.GetComponentInChildren<TextMeshProUGUI>().text == myQuestions[i].getRightAnswer())
                     {
                         //yield return new WaitForSeconds(1.5f);
-                        Debug.Log(b1.GetComponentInChildren<Text>().text+" "+ myQuestions[i].getRightAnswer());
+                        Debug.Log(b1.GetComponentInChildren<TextMeshProUGUI>().text+" "+ myQuestions[i].getRightAnswer());
                         b1.onClick.Invoke();
                     }
-                    else if (b2.GetComponentInChildren<Text>().text == myQuestions[i].getRightAnswer())
+                    else if (b2.GetComponentInChildren<TextMeshProUGUI>().text == myQuestions[i].getRightAnswer())
                     {
                         //yield return new WaitForSeconds(1.5f);
-                        Debug.Log(b2.GetComponentInChildren<Text>().text + " " + myQuestions[i].getRightAnswer());
+                        Debug.Log(b2.GetComponentInChildren<TextMeshProUGUI>().text + " " + myQuestions[i].getRightAnswer());
                         b2.onClick.Invoke();
                     }
 
                     else
                     {
                         //yield return new WaitForSeconds(1.5f);
-                        Debug.Log(b3.GetComponentInChildren<Text>().text + " " + myQuestions[i].getRightAnswer());
+                        Debug.Log(b3.GetComponentInChildren<TextMeshProUGUI>().text + " " + myQuestions[i].getRightAnswer());
                         b3.onClick.Invoke();
                     }
                     

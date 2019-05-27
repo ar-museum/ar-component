@@ -55,7 +55,7 @@ using static UnityEditor.Menu;
             SceneManager.LoadScene("MainLevel");
             yield return new WaitForSeconds(1);
             string expectedAnswer2 = MenuManager.getMusic();
-            SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadScene("DragAndDrop");
             yield return new WaitForSeconds(1);
             string expectedAnswer3 = MenuManager.getMusic();
 
@@ -87,8 +87,8 @@ using static UnityEditor.Menu;
         public IEnumerator Check_DD_Button()
         {
             SceneManager.LoadScene("Menu");
-            string expectedAnswer = "SampleScene";
-            yield return new WaitForSeconds(1);
+            string expectedAnswer = "DragAndDrop";
+            yield return new WaitForSeconds(20);
 
             Button[] buttons = GameObject.FindObjectsOfType<Button>();
             Button a = buttons[0];

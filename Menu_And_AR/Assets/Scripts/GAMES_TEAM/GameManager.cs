@@ -27,7 +27,7 @@ namespace Trivia
         [SerializeField]//to be setted from unity
         private static float mainTimer;
 
-        private  float startTime;
+        private float startTime;
         private float fixedTime;
         [SerializeField]
         private Text timer;
@@ -39,11 +39,12 @@ namespace Trivia
         private TextMeshProUGUI toBeDisplayed;
         [SerializeField]
         public Button b1, b2, b3;
+        public Button bb;
         [SerializeField]
         private float timeBetweenQ = 1f;
         [SerializeField]
         public Button quit;
-
+        public bool flag;
         public void sendJSFiles()
         {
             Apelare apel = new Apelare();
@@ -67,29 +68,17 @@ namespace Trivia
 
                 JsonToObject deserializer = new JsonToObject();
                 quests = deserializer.loadJson();
-                //Debug.Log(quests.questions.Count);
                 questions = quests.questions;
 
                 Score.text = "Score: ";
                 score = 0;
-                //SceneManager.UnloadSceneAsync("GameOverScene");
             }
 
-            else if (questions.Count == 0)
-            {
-                //Debug.Log(questions.Count);
-                questions = null;
-                SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-                MenuManager.setDifficulty(difficulty);
-                MenuManager.setLanguage(language);
-                MenuManager.setMusic(music);
-                SceneManager.LoadScene("GameOverScene");
-            }
             difficulty = MenuManager.getDifficulty();
             language = MenuManager.getLanguage();
-            if (difficulty == "Easy") { mainTimer = 10.04f; scoreDifficulty = 1; }//setam dificultate +score+timp pe easy
-            else if (difficulty == "Medium") { mainTimer = 7.54f; scoreDifficulty = 2; }//setam pentru mediu
-            else { mainTimer = 5.04f; scoreDifficulty = 3; }
+            if (difficulty == "Easy") { mainTimer = 20.04f; scoreDifficulty = 1; }//setam dificultate +score+timp pe easy
+            else if (difficulty == "Medium") { mainTimer = 16.54f; scoreDifficulty = 2; }//setam pentru mediu
+            else { mainTimer = 10.04f; scoreDifficulty = 3; }
 
             startTime = mainTimer;
             timer.text = startTime.ToString();
@@ -121,7 +110,7 @@ namespace Trivia
         }
         public void setCurrentButtons()
         {
-              
+
             if (questions != null)
             {
                 //Debug.Log(b1.GetComponentInChildren<TextMeshPro>().text);
@@ -143,7 +132,17 @@ namespace Trivia
         {
             questions.Remove(currentQuestion);
             yield return new WaitForSeconds(timeBetweenQ);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            if (questions.Count != 0)
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            else
+            {
+                questions = null;
+                SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+                MenuManager.setDifficulty(difficulty);
+                MenuManager.setLanguage(language);
+                MenuManager.setMusic(music);
+                SceneManager.LoadScene("GameOverScene");
+            }
         }
 
         public void userSelect(Button b)
@@ -151,11 +150,13 @@ namespace Trivia
             if (wasClicked == false)
             {
                 fixedTime = startTime;
-                timer.text = fixedTime.ToString("F");
-                wasClicked = true;
+                timer.text = "Timer: " + ((int)fixedTime).ToString();
+
                 if (b.GetComponentInChildren<TextMeshProUGUI>().text == currentQuestion.getRightAnswer())
                 {
-                    b.GetComponentInChildren<TextMeshProUGUI>().color = Color.green;
+                    bb = b;
+                    flag = true;
+
                     b.GetComponentInChildren<TextMeshProUGUI>().text = "Correct!";
                     if ((difficulty == "Hard" && startTime > (5.04f / 2)) || (difficulty == "Medium" && startTime > (7.54f / 2)) || (difficulty == "Easy" && startTime > (7.54f / 2)))
                         score++;
@@ -164,18 +165,18 @@ namespace Trivia
                     score += scoreDifficulty;
                     Score.text = "Score:" + score.ToString();
 
+
                 }
                 else
                 {
+                    bb = b;
+                    flag = false;
                     b.GetComponentInChildren<TextMeshProUGUI>().text = "Wrong!";
                     timer.color = Color.red;
-                    b.GetComponentInChildren<TextMeshProUGUI>().enableVertexGradient = true;
-                    b.GetComponentInChildren<TextMeshProUGUI>().colorGradient = new VertexGradient(Color.red, Color.green, Color.blue, Color.yellow);
-                    getRightOption().GetComponentInChildren<TextMeshProUGUI>().color = Color.green;
-                    Debug.Log(getRightOption().GetComponentInChildren<TextMeshProUGUI>().text);
+                    getRightOption().GetComponent<Image>().color = Color.green;
                 }
 
-                StartCoroutine(nextQuestion());
+                wasClicked = true;
             }
         }
         private Button getRightOption()
@@ -202,18 +203,29 @@ namespace Trivia
                 if (!(startTime > 2f))
                     timer.color = Color.red;
                 startTime -= Time.deltaTime;
-                timer.text = startTime.ToString("F");
+                timer.text = "Timer: " + ((int)startTime).ToString();
             }
             else if (wasClicked == false)
             {
-                timer.text = "0.00";
-
-                Button b = getRightOption();
-
+                timer.text = "Timer: 0";
                 getRightOption().GetComponent<Image>().color = Color.green;
                 StartCoroutine(nextQuestion());
-                //nextQuestion();
-                //Start();
+
+            }
+            else if (wasClicked == true)
+            {
+                if (flag == true)
+                {
+                    bb.GetComponentInChildren<TextMeshProUGUI>().color = Color.green;
+                    bb.GetComponentInChildren<TextMeshProUGUI>().faceColor = Color.green;
+                }
+                else
+                {
+                    bb.GetComponentInChildren<TextMeshProUGUI>().color = Color.red;
+                    bb.GetComponentInChildren<TextMeshProUGUI>().faceColor = Color.red;
+                    getRightOption().GetComponent<Image>().color = Color.green;
+                }
+                StartCoroutine(nextQuestion());
             }
         }
 
@@ -227,6 +239,6 @@ namespace Trivia
             SceneManager.LoadScene("Menu");
         }
     }
-   
-    
+
+
 }
