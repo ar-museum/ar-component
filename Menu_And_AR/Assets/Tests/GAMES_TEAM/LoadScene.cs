@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using UnityEngine.UI;
 using meniu;
-
+using TMPro;
 namespace Tests
 {
     public class LoadScene
@@ -56,11 +56,11 @@ namespace Tests
             b.onClick.Invoke();
             MenuManager.setLanguage("Romanian");
             MenuManager.setDifficulty("Easy");
-            yield return new WaitForSeconds(6);
+            yield return new WaitForSeconds(10);
             Debug.Log(SceneManager.GetActiveScene());
             var question = GameObject.Find("Question");
            //Debug.Log(question.GetComponentInChildren<Text>().text);
-            Assert.NotNull(question.GetComponentInChildren<Text>().text);
+            Assert.NotNull(question.GetComponentInChildren<TextMeshProUGUI>().text);
 
             yield return null;
         }

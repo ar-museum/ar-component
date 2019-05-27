@@ -2,9 +2,9 @@
     "name": "Scripts",
     "references": [
         "Unity.TextMeshPro",
-        "Unity.TextMeshPro.Editor",
         "Unity.TextMeshPro.Editor.Tests",
-        "Unity.TextMeshPro.Tests"
+        "Unity.TextMeshPro.Tests",
+        "Unity.TextMeshPro.Editor"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
@@ -13,5 +13,6 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": []
+    "defineConstraints": [],
+    "versionDefines": []
 }

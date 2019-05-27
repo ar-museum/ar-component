@@ -5,34 +5,34 @@
         "question": "Cu cine a fost contemporan Mihai Eminescu?",
         "difficult": "Easy",
         "allAnswers": [
-          "Ion Creangă și I.L Caragiale",
+          "Ion Creanga si I.L Caragiale",
           "Ion Iliescu",
           "Viorel Lis "
         ],
-        "rightAnswer": "Ion Creangă și I.L Caragiale"
+        "rightAnswer": "Ion Creanga si I.L Caragiale"
       },
       {
         "question": "Cum o chema pe iubita lui Mihai Eminescu?",
         "difficult": "Easy",
         "allAnswers": [
-          "Sânziana Micle",
+          "Sanziana Micle",
           "Dana Criminala",
           "Veronica Micle"
         ],
         "rightAnswer": "Veronica Micle"
       },
       {
-        "question": "Care este numele societății literare din care Mihai Eminescu a făcut parte?",
+        "question": "Care este numele societații literare din care Mihai Eminescu a facut parte?",
         "difficult": "Easy",
         "allAnswers": [
           "Masonerie",
-          "Dacia Literară",
+          "Dacia Literara",
           "Junimea"
         ],
         "rightAnswer": "Junimea"
       },
       {
-        "question": "Cum se numește revista în care au apărut cele mai importante poezii ale lui Mihai Eminescu?",
+        "question": "Cum se numeste revista în care au aparut cele mai importante poezii ale lui Mihai Eminescu?",
         "difficult": "Easy",
         "allAnswers": [
           "Revista Dilema Veche",
@@ -42,7 +42,7 @@
         "rightAnswer": "Revista Convorbiri Literare"
       },
       {
-        "question": "Care era numele avut la naștere al lui Mihai Eminescu?",
+        "question": "Care era numele avut la nastere al lui Mihai Eminescu?",
         "difficult": "Easy",
         "allAnswers": [
           "Eminescovici",
@@ -52,7 +52,7 @@
         "rightAnswer": "Eminovici"
       },
       {
-        "question": "Câte scrisori a scris Mihai Eminescu?",
+        "question": "Cate scrisori a scris Mihai Eminescu?",
         "difficult": "Hard",
         "allAnswers": [
           "4 scrisori",
@@ -62,7 +62,7 @@
         "rightAnswer": "5 scrisori"
       },
       {
-        "question": "Câte strofe are poemul Luceafărul scris de Mihai Eminescu?",
+        "question": "Cate strofe are poemul Luceafarul scris de Mihai Eminescu?",
         "difficult": "Medium",
         "allAnswers": [
           "94 de strofe",
@@ -72,14 +72,14 @@
         "rightAnswer": "98 de strofe"
       },
       {
-        "question": "Cum se numește nuvela fantastică scrisă de Mihai Eminescu?",
+        "question": "Cum se numeste nuvela fantastica scrisa de Mihai Eminescu?",
         "difficult": "Medium",
         "allAnswers": [
-          "Sărmanul Dionis",
+          "Sarmanul Dionis",
           "Bossul Dionis",
-          "Săracul Dionis"
+          "Saracul Dionis"
         ],
-        "rightAnswer": "Sărmanul Dionis"
+        "rightAnswer": "Sarmanul Dionis"
       },
       {
         "question": "La ce varsta a murit Mihai Eminescu?",
